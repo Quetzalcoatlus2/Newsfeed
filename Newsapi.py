@@ -41,7 +41,7 @@ def display_articles_gui(articles):
         frame = ttk.Frame(root, padding="10")
         frame.grid(row=i, sticky=(tk.W, tk.E))
 
-        title = ttk.Label(frame, text=f"#{i} {article['title']}", font=("Arial", 16))
+        title = ttk.Label(frame, text=f"#{i} {article['title']}", font=("Verdana", 10))
         title.grid(row=0, column=0, sticky=(tk.W))
 
         source = ttk.Label(frame, text=f"Source: {article['source']['name']}", font=("Arial", 12))
@@ -75,5 +75,5 @@ if __name__ == "__main__":
     # For 'sources', fill in sources={'google-news', 'bbc-news', 'the-verge'}
     # ATTENTION!!! The "sources" field cannot be mixed with the "country" and "category" fields, so either use sources, or 
     # use "country" + "category"
-    articles = get_articles(apiKey, language='en', country= 'in', category='general', sources=None, pageSize=20, q=None)
-    display_articles_gui(articles)
+    articles = get_articles(apiKey, language=None, country= 'ro', category='general', sources=None, pageSize=20, q='hamas')
+    display_articles(articles)
