@@ -33,7 +33,7 @@ def get_articles(apiKey, language, country, category, pageSize, q, sources):
         return None
     
 
-#def display_articles_gui(articles):
+def display_articles_gui(articles):
     root = tk.Tk()
     root.title("News Articles")
 
