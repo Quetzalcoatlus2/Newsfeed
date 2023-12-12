@@ -1,8 +1,8 @@
 import requests
-#import tkinter as tk
+import tkinter as tk
 from requests.exceptions import RequestException
 from newsapi import NewsApiClient
-#from tkinter import ttk, scrolledtext
+from tkinter import ttk, scrolledtext
 
 newsapi = NewsApiClient(api_key='33064a07856d4cf98dd5fd5d759d3ef4')
 
@@ -33,7 +33,7 @@ def get_articles(apiKey, language, country, category, pageSize, q, sources):
         return None
     
 
-#def display_articles_gui(articles):
+def display_articles_gui(articles):
     root = tk.Tk()
     root.title("News Articles")
 
@@ -75,5 +75,5 @@ if __name__ == "__main__":
     # For 'sources', fill in sources={'google-news', 'bbc-news', 'the-verge'}
     # ATTENTION!!! The "sources" field cannot be mixed with the "country" and "category" fields, so either use sources, or 
     # use "country" + "category"
-    articles = get_articles(apiKey, language=None, country= 'gb', category='general', sources=None, pageSize=20, q='hamas')
+    articles = get_articles(apiKey, language=None, country= 'us', category='general', sources=None, pageSize=20, q='hamas')
     display_articles(articles)
