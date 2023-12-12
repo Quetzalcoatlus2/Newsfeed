@@ -75,5 +75,5 @@ if __name__ == "__main__":
     # For 'sources', fill in sources={'google-news', 'bbc-news', 'the-verge'}
     # ATTENTION!!! The "sources" field cannot be mixed with the "country" and "category" fields, so either use sources, or 
     # use "country" + "category"
-    articles = get_articles(apiKey, language=None, country= 'ro', category='general', sources=None, pageSize=20, q='hamas')
+    articles = get_articles(apiKey, language=None, country= 'gb', category='general', sources=None, pageSize=20, q='hamas')
     display_articles(articles)
