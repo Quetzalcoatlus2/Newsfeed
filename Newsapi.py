@@ -34,33 +34,36 @@ def get_articles(apiKey, language, country, category, pageSize, q, sources):
     
 
 def display_articles_gui(articles):
-    root = tk.Tk()
-    root.title("News Articles")
-
-    for i, article in enumerate(articles, start=1):
-        frame = ttk.Frame(root, padding="10")
-        frame.grid(row=i, sticky=(tk.W, tk.E))
-
-        title = ttk.Label(frame, text=f"#{i} {article['title']}", font=("Verdana", 10))
-        title.grid(row=0, column=0, sticky=(tk.W))
-
-        source = ttk.Label(frame, text=f"Source: {article['source']['name']}", font=("Arial", 12))
-        source.grid(row=1, column=0, sticky=(tk.W))
-
-        url = ttk.Label(frame, text=f"URL: {article['url']}", font=("Arial", 12))
-        url.grid(row=2, column=0, sticky=(tk.W))
-
-    root.mainloop()
-
-def display_articles(articles):
+    window = tk.Tk()
+    window.title("News Articles")
     if articles:
-        for i, article in enumerate(articles, start = 1):
-            print(f"#{i} {article['title']}")
-            print(f"   Article source: {article['source']['name']}")
-            print(f"   Link: {article['url']}")
-            print("\n")
+        for i, article in enumerate(articles, start=1):
+             frame = ttk.Frame(window, padding="10")
+             frame.grid(row=i, sticky=(tk.W, tk.E))
+
+             title = ttk.Label(frame, text=f"#{i} {article['title']}", font=("Verdana", 10))
+             title.grid(row=0, column=0, sticky=(tk.W))
+
+             source = ttk.Label(frame, text=f"Source: {article['source']['name']}", font=("Arial", 12))
+             source.grid(row=1, column=0, sticky=(tk.W))
+
+             url = ttk.Label(frame, text=f"URL: {article['url']}", font=("Arial", 12))
+             url.grid(row=2, column=0, sticky=(tk.W))
     else:
-        print("No articles found. Try again.")
+        message = ttk.Label(window, text="No articles found. Try again.", font=("Arial", 12))
+        message.grid(row=0, column=0, sticky=(tk.W))
+
+    window.mainloop()
+
+#def display_articles(articles):
+#    if articles:
+#        for i, article in enumerate(articles, start = 1):
+#            print(f"#{i} {article['title']}")
+#            print(f"   Article source: {article['source']['name']}")
+#            print(f"   Link: {article['url']}")
+#            print("\n")
+#    else:
+#        print("No articles found. Try again.")
 
 if __name__ == "__main__":
     # API key source: https://newsapi.org/
@@ -75,5 +78,5 @@ if __name__ == "__main__":
     # For 'sources', fill in sources={'google-news', 'bbc-news', 'the-verge'}
     # ATTENTION!!! The "sources" field cannot be mixed with the "country" and "category" fields, so either use sources, or 
     # use "country" + "category"
-    articles = get_articles(apiKey, language=None, country= 'us', category='general', sources=None, pageSize=20, q='hamas')
-    display_articles(articles)
+    articles = get_articles(apiKey, language=None, country=None, category=None, sources=None, pageSize=20, q='coronavirus')
+    display_articles_gui(articles)
