@@ -18,22 +18,25 @@ def get_articles(apiKey, language, country, category, pageSize, q, sources):
         'sources': sources
     }
 
+    articles = None
+    error = None
+
     try:
         response = requests.get(newsapi_url, parameters)
         response.raise_for_status()  # Raises a HTTPError if the status is 4xx, 5xx
-        return response.json()['articles']
-    except RequestException as error:
-        print(f"Network error: {error}")
-        return None, error
+        articles = response.json()['articles']
+    except RequestException as e:
+        print(f"Network error: {e}")
+        error = e
 
     if response.status_code == 200:
-        return response.json()['articles']
+        return articles, None, None, None
     else:
         print(f"ERROR {response.status_code}: {response.text}")
-        return None, response.status_code, response.text
+        return None, error, response.status_code, response.text
     
 
-def display_articles_gui(articles):
+def display_articles_gui(articles, error, status_code, text):
     window = tk.Tk()
     window.title("News Articles")
     if articles:
@@ -52,14 +55,13 @@ def display_articles_gui(articles):
     else:
         message = ttk.Label(window, text="No articles found. Try again.", font=("Arial", 12))
         message.grid(row=0, column=0, sticky=(tk.W))
-    if e:
+    if  error:
         error = ttk.Label(window, text=f"Network error: {error}", font=("Arial", 12))
         error.grid(row=1, column=0, sticky=(tk.W))
-    if response.status_code != 200:
-        response_error = ttk.Label(window, text=f"ERROR {response.status_code}: {response.text}", font=("Arial", 12))
-        response_error.grid(row=1, column=0, sticky=(tk.W))
-        print(f"ERROR {response.status_code}: {response.text}")
-        return None
+    if  (status_code != 200 and status_code != None):
+        response_error = ttk.Label(window, text=f"ERROR {status_code}: {text}", font=("Arial", 12))
+        response_error.grid(row=2, column=0, sticky=(tk.W))
+
     window.mainloop()
 
 #def display_articles(articles):
@@ -75,6 +77,7 @@ def display_articles_gui(articles):
 if __name__ == "__main__":
     # API key source: https://newsapi.org/
     apiKey = '33064a07856d4cf98dd5fd5d759d3ef4'
+    #error 401 if API key is invalid or missing
     
     # For 'country', fill in the country code in uppercase, lowercase, or both (NewsAPI supports 54 countries):
     # ae ar at AU be bg br CA ch cn co cu cz de eg FR GB gr HK hu id ie il IN it jp kr 
@@ -82,8 +85,14 @@ if __name__ == "__main__":
 
     # For 'category', fill in: general, business, entertainment, health, science, sports, technology
 
-    # For 'sources', fill in sources={'google-news', 'bbc-news', 'the-verge', 'cnn', 'fox-news', 'the-washington-post', 'the-new-york-times', 'the-wall-street-journal'}
-    # ATTENTION!!! The "sources" field cannot be mixed with the "country" and "category" fields, so either use sources, or 
-    # use "country" + "category"
-    articles, error, response.status_code, response.text = get_articles(apiKey, language=None, country=None, category=None, sources={'cnn', 'google-news'}, pageSize=20, q='biden')
-    display_articles_gui(articles)
+    # For 'sources', fill in sources={'google-news', 'bbc-news', 'the-verge', 'cnn', 'usa-today', 'abc-news', 
+    # 'associated-press', 'axios', 'bloomberg', 'business-insider', 'cbc-news', 'cbs-news', 'cnbc', 'engadget', 
+    # 'entertainment-weekly', 'fortune', 'fox-sports', 'google-news-ca', 'google-news-uk', 'hacker-news', 'ign', 
+    # 'medical-news-today', 'msnbc', 'mtv-news', 'national-geographic', 'nbc-news', 'news24', 'newsweek', 
+    # 'new-york-magazine', 'next-big-future', 'nfl-news', 'nhl-news', 'politico', 'polygon', 'recode', 'reddit-r-all', 
+    # 'reuters', 'techcrunch', 'techradar', 'the-american-conservative', 'the-hill', 'the-huffington-post', 
+    # 'the-next-web', 'the-sport-bible', 'the-times-of-india', 'the-washington-times', 'time', 'usa-today', 'vice-news', 'wired'}
+    #
+    # ATTENTION!!! The "sources" field cannot be mixed with the "country" and "category" fields, so either use sources, or use "country" + "category"
+    articles, error, status_code, text = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=5, q='sex')
+    display_articles_gui(articles, error, status_code, text)
