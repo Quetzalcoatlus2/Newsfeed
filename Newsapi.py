@@ -1,3 +1,7 @@
+#Implementați o aplicație GUI cu ajutorul căreia utilizatorul poate să vizioneze cele mai recente news feeds legat de 
+#un anume subiect. Informațiile ar trebui să provină din diverse surse (cel puțin 4 surse), de preferat folosindu-se 
+#API-urile puse la dispoziție de platformele respective (Reddit, BBc, Google News, etc.). Pentru partea de GUI se poate 
+#folosi tkinter sau alte biblioteci asemănătoare.
 import requests
 import tkinter as tk
 from requests.exceptions import RequestException
@@ -65,22 +69,9 @@ def display_articles_gui(articles, error, status_code, text):
     window.mainloop()
 
 
-def gui(articles):
-    window = tk.Tk()
-    window.title("News Articles")
-    if articles:
-        for i, article in enumerate(articles, start=1):
-             frame = ttk.Frame(window, padding="10")
-             frame.grid(row=i, sticky=(tk.W, tk.E))
 
-             title = ttk.Label(frame, text=f"#{i} {article['title']}", font=("Verdana", 10))
-             title.grid(row=0, column=0, sticky=(tk.W))
 
-             source = ttk.Label(frame, text=f"Source: {article['source']['name']}", font=("Arial", 12))
-             source.grid(row=1, column=0, sticky=(tk.W))
-
-             url = ttk.Label(frame, text=f"URL: {article['url']}", font=("Arial", 12))
-             url.grid(row=2, column=0, sticky=(tk.W))
+    window.mainloop()
     
 """def display_articles(articles):
     if articles:

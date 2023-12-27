@@ -1,71 +1,120 @@
-#Implementați o aplicație GUI cu ajutorul căreia utilizatorul poate să vizioneze cele mai recente news feeds legat de un anume subiect.
-#Informațiile ar trebui să provină din diverse surse (cel puțin 4 surse), de preferat folosindu-se API-urile puse la dispoziție de
-#platformele respective (Reddit, BBc, Google News, etc.). Pentru partea de GUI se poate folosi tkinter sau alte biblioteci asemănătoare.
-import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.svm import LinearSVC
-import schedule
-import time
-import pickle
-import json
-import gspread
+#Implementați o aplicație GUI cu ajutorul căreia utilizatorul poate să vizioneze cele mai recente news feeds legat de 
+#un anume subiect. Informațiile ar trebui să provină din diverse surse (cel puțin 4 surse), de preferat folosindu-se 
+#API-urile puse la dispoziție de platformele respective (Reddit, BBc, Google News, etc.). Pentru partea de GUI se poate 
+#folosi tkinter sau alte biblioteci asemănătoare.
+
 import requests
-from oauth2client.client import SignedJwtAssertionCredentials
-from bs4 import BeautifulSoup
+import tkinter as tk
+from requests.exceptions import RequestException
+from newsapi import NewsApiClient
+from tkinter import ttk, Entry, Label
 
-pd.set_option('display.max_colwidth', 250)
+newsapi = NewsApiClient(api_key='33064a07856d4cf98dd5fd5d759d3ef4')
 
-def fetch_news():
+def get_articles(apiKey, language, country, category, pageSize, q, sources):
+    newsapi_url = 'https://newsapi.org/v2/top-headlines'
+    parameters = {
+        'apiKey': apiKey,
+        'language': language,
+        'country': country,
+        'category': category,
+        'pageSize': pageSize,
+        'q': q,
+        'sources': sources
+    }
+
+    articles = None
+    error = None
+
     try:
-        vect = pickle.load(open(r'/Users/alexcombs/Downloads/news_vect_pickle.p', 'rb'))
-        model = pickle.load(open(r'/Users/alexcombs/Downloads/news_model_pickle.p', 'rb'))
+        response = requests.get(newsapi_url, parameters)
+        response.raise_for_status()  # Raises a HTTPError if the status is 4xx, 5xx
+        articles = response.json()['articles']
+    except RequestException as e:
+        print(f"Network error: {e}")
+        error = e
 
-        json_key = json.load(open(r'/Users/alexcombs/Downloads/API Project-5d8d50bccf0b.json'))
-        scope = ['https://spreadsheets.google.com/feeds']
-        credentials = SignedJwtAssertionCredentials(json_key['client_email'], json_key['private_key'].encode(), scope)
-        gc = gspread.authorize(credentials)
+    if response.status_code == 200:
+        return articles, None, None, None
+    else:
+        print(f"ERROR {response.status_code}: {response.text}")
+        return None, error, response.status_code, response.text
+    
+
+def display_articles_gui(articles, error, status_code, text):
+    apiKey = '33064a07856d4cf98dd5fd5d759d3ef4'
+    keyword = E1.get()
+    articles, error, status_code, text = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=5, q=f{'keyword'})    
+    display_articles_gui(articles, error, status_code, text)
+    articles, error, status_code, text = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=5, q=None)    
+    display_articles_gui(articles, error, status_code, text)
+    window = tk.Tk()
+    window.title("News Articles")
+    if articles:
+        for i, article in enumerate(articles, start=1):
+             frame = ttk.Frame(window, padding="10")
+             frame.grid(row=i, sticky=(tk.W, tk.E))
+
+             title = ttk.Label(frame, text=f"#{i} {article['title']}", font=("Verdana", 10))
+             title.grid(row=0, column=0, sticky=(tk.W))
+
+             source = ttk.Label(frame, text=f"Source: {article['source']['name']}", font=("Arial", 12))
+             source.grid(row=1, column=0, sticky=(tk.W))
+
+             url = ttk.Label(frame, text=f"URL: {article['url']}", font=("Arial", 12))
+             url.grid(row=2, column=0, sticky=(tk.W))
+    else:
+        message = ttk.Label(window, text="No articles found. Try again.", font=("Arial", 12))
+        message.grid(row=0, column=0, sticky=(tk.W))
+    if  error:
+        error_number = ttk.Label(window, text=f"Network error: {error}", font=("Arial", 12))
+        error_number.grid(row=1, column=0, sticky=(tk.W))
+    if  (status_code != 200 and status_code != None):
+        response_error = ttk.Label(window, text=f"ERROR {status_code}: {text}", font=("Arial", 12))
+        response_error.grid(row=2, column=0, sticky=(tk.W))
+    L1 = Label(window, text = 'Cuvânt cheie:')
+    L1.grid(row=6, column=0, sticky=(tk.W))
+    E1 = Entry(window, bd =5)
+    E1.grid(row=7, column=0, sticky=(tk.W))
+    button = tk.Button(window, text="Căutare", command=display_articles_gui)
+    button.grid(row=8, column=0, sticky=(tk.W))
+    window.mainloop()
+    
+"""def display_articles(articles):
+    if articles:
+        for i, article in enumerate(articles, start = 1):
+            print(f"#{i} {article['title']}")
+            print(f"   Article source: {article['source']['name']}")
+            print(f"   Link: {article['url']}")
+            print("\n")
+    else:
+        print("No articles found. Try again.")"""
+
+if __name__ == "__main__":
+    apiKey = '33064a07856d4cf98dd5fd5d759d3ef4'
+    articles, error, status_code, text = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=5, q=None)    
+    display_articles_gui(articles, error, status_code, text)
 
 
-        ws = gc.open("NewStories")
-        sh = ws.sheet1
-        zd = list(zip(sh.col_values(2),sh.col_values(3), sh.col_values(4)))
-        zf = pd.DataFrame(zd, columns=['title','urls','html'])
-        zf.replace('', pd.np.nan, inplace=True)
-        zf.dropna(inplace=True)
+"""
+API key source: https://newsapi.org/
+error 401 if API key is invalid or missing
 
-        def get_text(x):
-            soup = BeautifulSoup(x, 'lxml')
-            text = soup.get_text()
-            return text
+For 'country', fill in the country code in uppercase, lowercase, or both (NewsAPI supports 54 countries):
+ae ar at AU be bg br CA ch cn co cu cz de eg FR GB gr HK hu id ie il IN it jp kr 
+lt lv ma mx my ng nl no NZ ph pl pt RO rs ru sa se sg si sk th tr tw ua US ve za
 
-        zf.loc[:,'text'] = zf['html'].map(get_text)
+For 'category', fill in: general, business, entertainment, health, science, sports, technology
 
-        tv = vect.transform(zf['text'])
-        res = model.predict(tv)
-
-        rf = pd.DataFrame(res, columns=['wanted'])
-        rez = pd.merge(rf, zf, left_index=True, right_index=True)
-
-        news_str = ''
-        for t, u in zip(rez[rez['wanted']=='y']['title'], rez[rez['wanted']=='y']['urls']):
-            news_str = news_str + t + '\n' + u + '\n'
-
-        payload = {"value1" : news_str}
-        r = requests.post('https://maker.ifttt.com/trigger/news_event/with/key/banZCjMLOotibc4WguJx0B', data=payload)
-
-        # clean up worksheet
-        lenv = len(sh.col_values(1))
-        cell_list = sh.range('A1:F' + str(lenv))
-        for cell in cell_list:
-            cell.value = ""
-        sh.update_cells(cell_list)
-        print(r.text)
-        
-    except:
-        print('Failed')
-
-schedule.every(480).minutes.do(fetch_news)
-
-while 1:
-    schedule.run_pending()
-    time.sleep(1)
+For 'sources', fill in sources={'google-news', 'bbc-news', 'the-verge', 'cnn', 'usa-today', 'abc-news', 
+'associated-press', 'axios', 'bloomberg', 'business-insider', 'cbc-news', 'cbs-news', 'cnbc', 'engadget', 
+'entertainment-weekly', 'fortune', 'fox-sports', 'google-news-ca', 'google-news-uk', 'hacker-news', 'ign', 
+'medical-news-today', 'msnbc', 'mtv-news', 'national-geographic', 'nbc-news', 'news24', 'newsweek', 
+'new-york-magazine', 'next-big-future', 'nfl-news', 'nhl-news', 'politico', 'polygon', 'recode', 'reddit-r-all', 
+'reuters', 'techcrunch', 'techradar', 'the-american-conservative', 'the-hill', 'the-huffington-post', 
+'the-next-web', 'the-sport-bible', 'the-times-of-india', 'the-washington-times', 'time', 'usa-today', 'vice-news', 
+'wired'}
+    
+ ATTENTION!!! The "sources" field cannot be mixed with the "country" and "category" fields, so either use sources, 
+ or use "country" + "category
+ """
