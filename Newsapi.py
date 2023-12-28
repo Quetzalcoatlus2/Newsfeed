@@ -13,6 +13,15 @@ newsapi = NewsApiClient(api_key='33064a07856d4cf98dd5fd5d759d3ef4')
 
 
 
+def buttons(i):
+    L1 = Label(window, text = 'Cuvânt cheie:')
+    L1.grid(row=i, sticky=(W))
+    E1 = Entry(window, bd=5)
+    E1.grid(row=i, padx = 80, sticky=(W))
+    button = Button(window, text="Căutare", command=lambda: keyword_articles(E1.get()))
+    button.grid(row=i, padx = 220, sticky=(W))
+    L2 = Label(window, text = f"Număr rezultate:{number_results}")
+    L2.grid(row=i+1, sticky=(W))
 
 def get_articles(apiKey, language, country, category, pageSize, q, sources):
     newsapi_url = 'https://newsapi.org/v2/top-headlines'
@@ -39,7 +48,6 @@ def get_articles(apiKey, language, country, category, pageSize, q, sources):
         articles = response.json()['articles']
         number_results = response.json()['totalResults']
         status = response.json()['status']
-        status_code = response.status_code
     except RequestException as e:
         print(f"Network error: {e}")
         error = e
@@ -65,6 +73,7 @@ previous_window = None
 
 def display_articles_gui(articles, number_results, error, status, code, message):
     global previous_window
+    global window
     if previous_window is not None:
         previous_window.destroy()
     window = tk.Tk()
@@ -95,23 +104,14 @@ def display_articles_gui(articles, number_results, error, status, code, message)
              publishedAt = Label(frame, text=f"Publicat la: {article['publishedAt']}", font=("Arial", 12))
              publishedAt.grid(row=6, sticky=(W))
 
-             content = Label(frame, text=f"Conținut articol: {article['content']}", font=("Arial", 8))
+             content = Label(frame, text=f"Conținut articol: {article['content']}", font=("Arial", 3))
              content.grid(row=7, sticky=(W))
-        L1 = Label(window, text = 'Cuvânt cheie:')
-        L1.grid(row=i+1, sticky=(W))
-        E1 = Entry(window, bd=5)
-        E1.grid(row=i+1, padx = 80, sticky=(W))
-        button = Button(window, text="Căutare", command=lambda: keyword_articles(E1.get()))
-        button.grid(row=i+1, padx = 220, sticky=(W))
-        L2 = Label(window, text = f"Număr rezultate:{number_results}")
-        L2.grid(row=i+2, sticky=(W))
+        buttons(i+1)
 
             
            
-    else:
-        no_articles = Label(window, text="Nu s-au găsit articole. Încercați din nou.", font=("Arial", 12))
-        no_articles.grid(row=0, column=0, sticky=(W))
-    if  error:
+    
+    elif error:
         error = Label(window, text=f"Network error: {error}", font=("Arial", 12))
         error.grid(row=1, column=0, sticky=(W))
         status = Label(window, text=f"Status: {status}", font=("Arial", 12))
@@ -120,6 +120,13 @@ def display_articles_gui(articles, number_results, error, status, code, message)
         code.grid(row=3, column=0, sticky=(W))
         message = Label(window, text=f"Mesaj: {message}", font=("Arial", 12))
         message.grid(row=4, column=0, sticky=(W))
+        buttons(5)
+
+    else:
+        no_articles = Label(window, text="Nu s-au găsit articole. Încercați din nou.", font=("Arial", 12))
+        no_articles.grid(row=0, column=0, sticky=(W))
+        buttons(1)
+        
     
     
     previous_window = window
@@ -128,7 +135,7 @@ def display_articles_gui(articles, number_results, error, status, code, message)
 
 if __name__ == "__main__":
     apiKey = '33064a07856d4cf98dd5fd5d759d3ef4'
-    articles, number_results, error, status, code, message = get_articles(apiKey, language='en', country=None, category='entertainment', sources=None , pageSize=2, q=None)    
+    articles, number_results, error, status, code, message = get_articles(apiKey, language='en', country=None, category= None, sources=None , pageSize=2, q=None)    
     display_articles_gui(articles, number_results, error, status, code, message)
 
     
