@@ -125,7 +125,7 @@ def display_articles_gui(articles, error, status, code, message):
 
 
 if __name__ == "__main__":
-    apiKey = '33064a07856d4cf98dd5fd5d759d3ef'
+    apiKey = '33064a07856d4cf98dd5fd5d759d3ef4'
     articles, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=5, q=None)    
     display_articles_gui(articles, error, status, code, message)
 
