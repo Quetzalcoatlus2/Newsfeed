@@ -20,7 +20,7 @@ def buttons(i):
     E1.grid(row=i, padx = 80, sticky=(W))
     button = Button(window, text="Căutare", command=lambda: keyword_articles(E1.get()))
     button.grid(row=i, padx = 220, sticky=(W))
-    L2 = Label(window, text = f"Număr rezultate:{number_results}")
+    L2 = Label(window, text = f"Număr rezultate:{totalResults}")
     L2.grid(row=i+1, sticky=(W))
 
 def get_articles(apiKey, language, country, category, pageSize, q, sources):
@@ -37,7 +37,7 @@ def get_articles(apiKey, language, country, category, pageSize, q, sources):
 
     articles = None
     error = None
-    number_results = None
+    totalResults = None
     status = None
     code = None
     message = None
@@ -46,7 +46,7 @@ def get_articles(apiKey, language, country, category, pageSize, q, sources):
         response = requests.get(newsapi_url, parameters)
         response.raise_for_status()  # Raises a HTTPError if the status is 4xx, 5xx
         articles = response.json()['articles']
-        number_results = response.json()['totalResults']
+        totalResults = response.json()['totalResults']
         status = response.json()['status']
     except RequestException as e:
         print(f"Network error: {e}")
@@ -54,7 +54,7 @@ def get_articles(apiKey, language, country, category, pageSize, q, sources):
         
 
     if response.status_code == 200:
-        return articles, number_results, None, None, None, None
+        return articles, totalResults, None, None, None, None
     else:
         
         status = response.json()['status']
@@ -66,16 +66,17 @@ def get_articles(apiKey, language, country, category, pageSize, q, sources):
         return None, None, error, status, code, message
     
 def keyword_articles(E1):
-    articles, number_results, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=2, q=f'{E1}')    
-    display_articles_gui(articles, number_results, error, status, code, message)
+    articles, totalResults, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=2, q=f'{E1}')    
+    display_articles_gui(articles, totalResults, error, status, code, message)
 
 previous_window = None
 
-def display_articles_gui(articles, number_results, error, status, code, message):
+def display_articles_gui(articles, totalResults, error, status, code, message):
     global previous_window
     global window
     if previous_window is not None:
         previous_window.destroy()
+        
     window = tk.Tk()
     window.title("Articole")
     if articles:
@@ -135,8 +136,8 @@ def display_articles_gui(articles, number_results, error, status, code, message)
 
 if __name__ == "__main__":
     apiKey = '33064a07856d4cf98dd5fd5d759d3ef4'
-    articles, number_results, error, status, code, message = get_articles(apiKey, language='en', country=None, category= None, sources=None , pageSize=2, q=None)    
-    display_articles_gui(articles, number_results, error, status, code, message)
+    articles, totalResults, error, status, code, message = get_articles(apiKey, language='en', country=None, category= None, sources=None , pageSize=2, q=None)    
+    display_articles_gui(articles, totalResults, error, status, code, message)
 
     
 """def display_articles(articles):
