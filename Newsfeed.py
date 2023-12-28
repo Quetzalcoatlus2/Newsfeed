@@ -76,7 +76,7 @@ def display_articles_gui(articles, error, status_code, text):
     L1.grid(row=6, column=0, sticky=(W))
     E1 = Entry(window, bd=5)
     E1.grid(row=7, column=0, sticky=(W))
-    button = Button(window, text="Căutare", command=keyword_articles(E1))
+    button = Button(window, text="Căutare", command=lambda: keyword_articles(E1.get()))
     button.grid(row=8, column=0, sticky=(W))
     window.mainloop()
     
