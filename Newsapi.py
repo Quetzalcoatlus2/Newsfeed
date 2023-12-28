@@ -58,7 +58,7 @@ def get_articles(apiKey, language, country, category, pageSize, q, sources):
         return None, None, error, status, code, message
     
 def keyword_articles(E1):
-    articles, number_results, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=5, q=f'{E1}')    
+    articles, number_results, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=1, q=f'{E1}')    
     display_articles_gui(articles, number_results, error, status, code, message)
 
 previous_window = None
@@ -70,14 +70,6 @@ def display_articles_gui(articles, number_results, error, status, code, message)
     window = tk.Tk()
     window.title("Articole")
     if articles:
-        L1 = Label(window, text = 'Cuvânt cheie:')
-        L1.grid(row=6, column=0, sticky=(W))
-        L2 = Label(window, text = f"Număr rezultate:{number_results}")
-        L1.grid(row=6, column=0, sticky=(W))
-        E1 = Entry(window, bd=5)
-        E1.grid(row=7, column=0, sticky=(W))
-        button = Button(window, text="Căutare", command=lambda: keyword_articles(E1.get()))
-        button.grid(row=8, column=0, sticky=(W))
         for i, article in enumerate(articles, start=1):
              frame = Frame(window, padx=10)
              frame.grid(row=i, sticky=(W, E))
@@ -105,7 +97,14 @@ def display_articles_gui(articles, number_results, error, status, code, message)
 
              content = Label(frame, text=f"Conținut articol: {article['content']}", font=("Arial", 12))
              content.grid(row=7, column=0, sticky=(W))
-
+        L1 = Label(window, text = 'Cuvânt cheie:')
+        L1.grid(row=0, column=0, sticky=(W))
+        E1 = Entry(window, bd=5)
+        E1.grid(row=1, column=0, sticky=(W))
+        button = Button(window, text="Căutare", command=lambda: keyword_articles(E1.get()))
+        button.grid(row=2, column=0, sticky=(W))
+        L2 = Label(window, text = f"Număr rezultate:{number_results}")
+        L2.grid(row=3, column=0, sticky=(W))
 
             
            
@@ -129,7 +128,7 @@ def display_articles_gui(articles, number_results, error, status, code, message)
 
 if __name__ == "__main__":
     apiKey = '33064a07856d4cf98dd5fd5d759d3ef4'
-    articles, number_results, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=5, q=None)    
+    articles, number_results, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=1, q=None)    
     display_articles_gui(articles, number_results, error, status, code, message)
 
     
