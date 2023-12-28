@@ -98,13 +98,13 @@ def display_articles_gui(articles, number_results, error, status, code, message)
              content = Label(frame, text=f"Conținut articol: {article['content']}", font=("Arial", 12))
              content.grid(row=7, column=0, sticky=(W))
         L1 = Label(window, text = 'Cuvânt cheie:')
-        L1.grid(row=0, column=0, sticky=(W))
+        L1.grid(row=i+1, column=0, sticky=(W))
         E1 = Entry(window, bd=5)
-        E1.grid(row=1, column=0, sticky=(W))
+        E1.grid(row=i+2, column=0, sticky=(W))
         button = Button(window, text="Căutare", command=lambda: keyword_articles(E1.get()))
-        button.grid(row=2, column=0, sticky=(W))
+        button.grid(row=i+3, column=0, sticky=(W))
         L2 = Label(window, text = f"Număr rezultate:{number_results}")
-        L2.grid(row=3, column=0, sticky=(W))
+        L2.grid(row=i+4, column=0, sticky=(W))
 
             
            
