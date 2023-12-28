@@ -7,7 +7,7 @@ import requests
 import tkinter as tk
 from requests.exceptions import RequestException
 from newsapi import NewsApiClient
-from tkinter import ttk, Entry, Label
+from tkinter import *
 
 newsapi = NewsApiClient(api_key='33064a07856d4cf98dd5fd5d759d3ef4')
 
@@ -40,44 +40,44 @@ def get_articles(apiKey, language, country, category, pageSize, q, sources):
         print(f"ERROR {response.status_code}: {response.text}")
         return None, error, response.status_code, response.text
     
+def keyword_articles(E1):
+    apiKey = '33064a07856d4cf98dd5fd5d759d3ef4'
+    articles, error, status_code, text = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=5, q=f'{E1}')    
+    display_articles_gui(articles, error, status_code, text)
 
 def display_articles_gui(articles, error, status_code, text):
-    apiKey = '33064a07856d4cf98dd5fd5d759d3ef4'
-    keyword = E1.get()
-    articles, error, status_code, text = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=5, q=f{'keyword'})    
-    display_articles_gui(articles, error, status_code, text)
-    articles, error, status_code, text = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=5, q=None)    
-    display_articles_gui(articles, error, status_code, text)
+    
+
     window = tk.Tk()
     window.title("News Articles")
     if articles:
         for i, article in enumerate(articles, start=1):
-             frame = ttk.Frame(window, padding="10")
-             frame.grid(row=i, sticky=(tk.W, tk.E))
+             frame = Frame(window, padding="10")
+             frame.grid(row=i, sticky=(W, E))
 
-             title = ttk.Label(frame, text=f"#{i} {article['title']}", font=("Verdana", 10))
-             title.grid(row=0, column=0, sticky=(tk.W))
+             title = Label(frame, text=f"#{i} {article['title']}", font=("Verdana", 10))
+             title.grid(row=0, column=0, sticky=(W))
 
-             source = ttk.Label(frame, text=f"Source: {article['source']['name']}", font=("Arial", 12))
-             source.grid(row=1, column=0, sticky=(tk.W))
+             source = Label(frame, text=f"Source: {article['source']['name']}", font=("Arial", 12))
+             source.grid(row=1, column=0, sticky=(W))
 
-             url = ttk.Label(frame, text=f"URL: {article['url']}", font=("Arial", 12))
-             url.grid(row=2, column=0, sticky=(tk.W))
+             url = Label(frame, text=f"URL: {article['url']}", font=("Arial", 12))
+             url.grid(row=2, column=0, sticky=(W))
     else:
-        message = ttk.Label(window, text="No articles found. Try again.", font=("Arial", 12))
-        message.grid(row=0, column=0, sticky=(tk.W))
+        message = Label(window, text="No articles found. Try again.", font=("Arial", 12))
+        message.grid(row=0, column=0, sticky=(W))
     if  error:
-        error_number = ttk.Label(window, text=f"Network error: {error}", font=("Arial", 12))
-        error_number.grid(row=1, column=0, sticky=(tk.W))
+        error_number = Label(window, text=f"Network error: {error}", font=("Arial", 12))
+        error_number.grid(row=1, column=0, sticky=(W))
     if  (status_code != 200 and status_code != None):
-        response_error = ttk.Label(window, text=f"ERROR {status_code}: {text}", font=("Arial", 12))
-        response_error.grid(row=2, column=0, sticky=(tk.W))
+        response_error = Label(window, text=f"ERROR {status_code}: {text}", font=("Arial", 12))
+        response_error.grid(row=2, column=0, sticky=(W))
     L1 = Label(window, text = 'Cuvânt cheie:')
-    L1.grid(row=6, column=0, sticky=(tk.W))
-    E1 = Entry(window, bd =5)
-    E1.grid(row=7, column=0, sticky=(tk.W))
-    button = tk.Button(window, text="Căutare", command=display_articles_gui)
-    button.grid(row=8, column=0, sticky=(tk.W))
+    L1.grid(row=6, column=0, sticky=(W))
+    E1 = Entry(window, bd=5)
+    E1.grid(row=7, column=0, sticky=(W))
+    button = Button(window, text="Căutare", command=keyword_articles(E1))
+    button.grid(row=8, column=0, sticky=(W))
     window.mainloop()
     
 """def display_articles(articles):
@@ -90,10 +90,6 @@ def display_articles_gui(articles, error, status_code, text):
     else:
         print("No articles found. Try again.")"""
 
-if __name__ == "__main__":
-    apiKey = '33064a07856d4cf98dd5fd5d759d3ef4'
-    articles, error, status_code, text = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=5, q=None)    
-    display_articles_gui(articles, error, status_code, text)
 
 
 """
