@@ -46,7 +46,7 @@ def get_articles(apiKey, language, country, category, pageSize, q, sources):
         
 
     if response.status_code == 200:
-        return articles, None, None, None, None
+        return articles, number_results, None, None, None, None
     else:
         
         status = response.json()['status']
@@ -55,24 +55,32 @@ def get_articles(apiKey, language, country, category, pageSize, q, sources):
         print(f"Code: {code}")
         message = response.json()['message']
         print(f"Message: {message}")
-        return None, error, status, code, message
+        return None, None, error, status, code, message
     
 def keyword_articles(E1):
-    articles, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=5, q=f'{E1}')    
-    display_articles_gui(articles, error, status, code, message)
+    articles, number_results, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=5, q=f'{E1}')    
+    display_articles_gui(articles, number_results, error, status, code, message)
 
 previous_window = None
 
-def display_articles_gui(articles, error, status, code, message):
+def display_articles_gui(articles, number_results, error, status, code, message):
     global previous_window
     if previous_window is not None:
         previous_window.destroy()
     window = tk.Tk()
     window.title("Articole")
     if articles:
+        L1 = Label(window, text = 'Cuvânt cheie:')
+        L1.grid(row=6, column=0, sticky=(W))
+        L2 = Label(window, text = f"Număr rezultate:{number_results}")
+        L1.grid(row=6, column=0, sticky=(W))
+        E1 = Entry(window, bd=5)
+        E1.grid(row=7, column=0, sticky=(W))
+        button = Button(window, text="Căutare", command=lambda: keyword_articles(E1.get()))
+        button.grid(row=8, column=0, sticky=(W))
         for i, article in enumerate(articles, start=1):
              frame = Frame(window, padx=10)
-             frame.grid(row=i+2, sticky=(W, E))
+             frame.grid(row=i, sticky=(W, E))
 
              title = Label(frame, text=f"#{i} {article['title']}", font=("Verdana", 10))
              title.grid(row=0, column=0, sticky=(W))
@@ -114,20 +122,15 @@ def display_articles_gui(articles, error, status, code, message):
         message = Label(window, text=f"Mesaj: {message}", font=("Arial", 12))
         message.grid(row=4, column=0, sticky=(W))
     
-    L1 = Label(window, text = 'Cuvânt cheie:')
-    L1.grid(row=6, column=0, sticky=(W))
-    E1 = Entry(window, bd=5)
-    E1.grid(row=7, column=0, sticky=(W))
-    button = Button(window, text="Căutare", command=lambda: keyword_articles(E1.get()))
-    button.grid(row=8, column=0, sticky=(W))
+    
     previous_window = window
     window.mainloop()
 
 
 if __name__ == "__main__":
     apiKey = '33064a07856d4cf98dd5fd5d759d3ef4'
-    articles, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=5, q=None)    
-    display_articles_gui(articles, error, status, code, message)
+    articles, number_results, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=5, q=None)    
+    display_articles_gui(articles, number_results, error, status, code, message)
 
     
 """def display_articles(articles):
