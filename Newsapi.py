@@ -75,36 +75,36 @@ def display_articles_gui(articles, number_results, error, status, code, message)
              frame.grid(row=i, sticky=(W, E))
 
              title = Label(frame, text=f"#{i} {article['title']}", font=("Verdana", 10))
-             title.grid(row=0, column=0, sticky=(W))
+             title.grid(row=0, sticky=(W))
 
              source = Label(frame, text=f"Sursă: {article['source']['name']}", font=("Arial", 12))
-             source.grid(row=1, column=0, sticky=(W))
+             source.grid(row=1, sticky=(W))
 
              author = Label(frame, text=f"Autori: {article['author']}", font=("Arial", 12))
-             author.grid(row=2, column=0, sticky=(W))
+             author.grid(row=2, sticky=(W))
 
              description = Label(frame, text=f"Scurtă descriere: {article['description']}", font=("Arial", 12))
-             description.grid(row=3, column=0, sticky=(W))
+             description.grid(row=3, sticky=(W))
 
              url = Label(frame, text=f"Link: {article['url']}", font=("Arial", 12))
-             url.grid(row=4, column=0, sticky=(W))
+             url.grid(row=4, sticky=(W))
 
              urlToImage = Label(frame, text=f"Link imagine: {article['urlToImage']}", font=("Arial", 12))
-             urlToImage.grid(row=5, column=0, sticky=(W))
+             urlToImage.grid(row=5, sticky=(W))
 
              publishedAt = Label(frame, text=f"Publicat la: {article['publishedAt']}", font=("Arial", 12))
-             publishedAt.grid(row=6, column=0, sticky=(W))
+             publishedAt.grid(row=6, sticky=(W))
 
-             content = Label(frame, text=f"Conținut articol: {article['content']}", font=("Arial", 12))
-             content.grid(row=7, column=0, sticky=(W))
+             content = Label(frame, text=f"Conținut articol: {article['content']}", font=("Arial", 8))
+             content.grid(row=7, sticky=(W))
         L1 = Label(window, text = 'Cuvânt cheie:')
-        L1.grid(row=i+1, column=0, sticky=(W))
+        L1.grid(row=i+1, sticky=(W))
         E1 = Entry(window, bd=5)
-        E1.grid(row=i+2, column=0, sticky=(W))
+        E1.grid(row=i+1, padx = 80, sticky=(W))
         button = Button(window, text="Căutare", command=lambda: keyword_articles(E1.get()))
-        button.grid(row=i+3, column=0, sticky=(W))
+        button.grid(row=i+1, padx = 220, sticky=(W))
         L2 = Label(window, text = f"Număr rezultate:{number_results}")
-        L2.grid(row=i+4, column=0, sticky=(W))
+        L2.grid(row=i+2, sticky=(W))
 
             
            
