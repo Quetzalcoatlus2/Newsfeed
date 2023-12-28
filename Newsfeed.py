@@ -11,16 +11,19 @@ from tkinter import *
 
 newsapi = NewsApiClient(api_key='33064a07856d4cf98dd5fd5d759d3ef4')
 
+
+
+
 def get_articles(apiKey, language, country, category, pageSize, q, sources):
     newsapi_url = 'https://newsapi.org/v2/top-headlines'
     parameters = {
-        'apiKey': apiKey,
+        'apiKey': apiKey, # '33064a07856d4cf98dd5fd5d759d3ef4
         'language': language,
         'country': country,
         'category': category,
         'pageSize': pageSize,
         'q': q,
-        'sources': sources
+        'sources': ','.join(sources) if sources else None
     }
 
     articles = None
@@ -41,18 +44,20 @@ def get_articles(apiKey, language, country, category, pageSize, q, sources):
         return None, error, response.status_code, response.text
     
 def keyword_articles(E1):
-    apiKey = '33064a07856d4cf98dd5fd5d759d3ef4'
     articles, error, status_code, text = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=5, q=f'{E1}')    
     display_articles_gui(articles, error, status_code, text)
 
-def display_articles_gui(articles, error, status_code, text):
-    
+previous_window = None
 
+def display_articles_gui(articles, error, status_code, text):
+    global previous_window
+    if previous_window is not None:
+        previous_window.destroy()
     window = tk.Tk()
-    window.title("News Articles")
+    window.title("Articole")
     if articles:
         for i, article in enumerate(articles, start=1):
-             frame = Frame(window, padding="10")
+             frame = Frame(window, padx=10)
              frame.grid(row=i, sticky=(W, E))
 
              title = Label(frame, text=f"#{i} {article['title']}", font=("Verdana", 10))
@@ -64,7 +69,7 @@ def display_articles_gui(articles, error, status_code, text):
              url = Label(frame, text=f"URL: {article['url']}", font=("Arial", 12))
              url.grid(row=2, column=0, sticky=(W))
     else:
-        message = Label(window, text="No articles found. Try again.", font=("Arial", 12))
+        message = Label(window, text="Nu s-au găsit articole. Încercați din nou.", font=("Arial", 12))
         message.grid(row=0, column=0, sticky=(W))
     if  error:
         error_number = Label(window, text=f"Network error: {error}", font=("Arial", 12))
@@ -78,7 +83,15 @@ def display_articles_gui(articles, error, status_code, text):
     E1.grid(row=7, column=0, sticky=(W))
     button = Button(window, text="Căutare", command=lambda: keyword_articles(E1.get()))
     button.grid(row=8, column=0, sticky=(W))
+    previous_window = window
     window.mainloop()
+
+
+if __name__ == "__main__":
+    apiKey = '33064a07856d4cf98dd5fd5d759d3ef4'
+    articles, error, status_code, text = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=5, q=None)    
+    display_articles_gui(articles, error, status_code, text)
+
     
 """def display_articles(articles):
     if articles:
