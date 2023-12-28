@@ -88,7 +88,7 @@ def display_articles_gui(articles, error, status_code, text):
 
 
 if __name__ == "__main__":
-    apiKey = '33064a07856d4cf98dd5fd5d759d3ef4'
+    apiKey = '33064a07856d4cf98dd5fd5d759d3ef'
     articles, error, status_code, text = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=5, q=None)    
     display_articles_gui(articles, error, status_code, text)
 
