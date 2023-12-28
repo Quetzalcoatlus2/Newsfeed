@@ -32,8 +32,6 @@ def get_articles(apiKey, language, country, category, pageSize, q, sources):
     status = None
     code = None
     message = None
-    status_code = None
-    error_number = None
 
     try:
         response = requests.get(newsapi_url, parameters)
@@ -57,16 +55,15 @@ def get_articles(apiKey, language, country, category, pageSize, q, sources):
         print(f"Code: {code}")
         message = response.json()['message']
         print(f"Message: {message}")
-        print(f"Error number: {error_number}") 
-        return None, error, status, code, message, status_code
+        return None, error, status, code, message
     
 def keyword_articles(E1):
     articles, error, status, code, message, status_code = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=5, q=f'{E1}')    
-    display_articles_gui(articles, error, status, code, message, status_code)
+    display_articles_gui(articles, error, status, code, message)
 
 previous_window = None
 
-def display_articles_gui(articles, error, status, code, message, status_code):
+def display_articles_gui(articles, error, status, code, message):
     global previous_window
     if previous_window is not None:
         previous_window.destroy()
@@ -108,16 +105,14 @@ def display_articles_gui(articles, error, status, code, message, status_code):
         no_articles = Label(window, text="Nu s-au găsit articole. Încercați din nou.", font=("Arial", 12))
         no_articles.grid(row=0, column=0, sticky=(W))
     if  error:
-        error_number = Label(window, text=f"Network error: {error}", font=("Arial", 12))
-        error_number.grid(row=1, column=0, sticky=(W))
+        error = Label(window, text=f"Network error: {error}", font=("Arial", 12))
+        error.grid(row=1, column=0, sticky=(W))
         status = Label(window, text=f"Status: {status}", font=("Arial", 12))
         status.grid(row=2, column=0, sticky=(W))
         code = Label(window, text=f"Cod: {code}", font=("Arial", 12))
         code.grid(row=3, column=0, sticky=(W))
         message = Label(window, text=f"Mesaj: {message}", font=("Arial", 12))
         message.grid(row=4, column=0, sticky=(W))
-        status_code = Label(window, text=f"Status code: {status_code}", font=("Arial", 12))
-        status_code.grid(row=5, column=0, sticky=(W))
     
     L1 = Label(window, text = 'Cuvânt cheie:')
     L1.grid(row=6, column=0, sticky=(W))
@@ -131,8 +126,8 @@ def display_articles_gui(articles, error, status, code, message, status_code):
 
 if __name__ == "__main__":
     apiKey = '33064a07856d4cf98dd5fd5d759d3ef'
-    articles, error, status, code, message, status_code = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=5, q=None)    
-    display_articles_gui(articles, error, status, code, message, status_code)
+    articles, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=5, q=None)    
+    display_articles_gui(articles, error, status, code, message)
 
     
 """def display_articles(articles):
