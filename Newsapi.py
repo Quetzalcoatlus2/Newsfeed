@@ -46,7 +46,7 @@ def get_articles(apiKey, language, country, category, pageSize, q, sources):
         
 
     if response.status_code == 200:
-        return articles, None, None, None, None, None
+        return articles, None, None, None, None
     else:
         
         status = response.json()['status']
@@ -58,7 +58,7 @@ def get_articles(apiKey, language, country, category, pageSize, q, sources):
         return None, error, status, code, message
     
 def keyword_articles(E1):
-    articles, error, status, code, message, status_code = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=5, q=f'{E1}')    
+    articles, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=5, q=f'{E1}')    
     display_articles_gui(articles, error, status, code, message)
 
 previous_window = None
