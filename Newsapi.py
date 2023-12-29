@@ -11,8 +11,8 @@ newsapi = NewsApiClient(api_key='33064a07856d4cf98dd5fd5d759d3ef4')
 
 previous_window = None
 
-def open_url(event):
-    webbrowser.open(articles['url'])
+def open_url(event, url):
+    webbrowser.open(url)
 
 def buttons(i):
     L1 = Label(window, text = 'Cuvânt cheie:')
