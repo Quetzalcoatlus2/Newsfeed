@@ -99,11 +99,11 @@ def display_articles_gui(articles, error, status, code, message):
 
             url = Label(frame, text=f"Link: {article['url']}", font=("Arial", 12), fg="blue", cursor="hand2")
             url.grid(row=4, sticky=(W))
-            url.bind("<Button-1>", lambda: webbrowser.open(articles['url']))
+            url.bind("<Button-1>", lambda event: open_url(event, article['url']))
 
             urlToImage = Label(frame, text=f"Link imagine: {article['urlToImage']}", font=("Arial", 12), fg="blue", cursor="hand2")
             urlToImage.grid(row=5, sticky=(W))
-            urlToImage.bind("<Button-1>", lambda: webbrowser.open(articles['urlToImage']))
+            urlToImage.bind("<Button-1>", lambda event: open_url(event, article['urlToImage']))
 
             
             response = requests.get(article['urlToImage'])
