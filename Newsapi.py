@@ -2,7 +2,7 @@ import requests
 import tkinter as tk
 from requests.exceptions import RequestException
 from newsapi import NewsApiClient
-from tkinter import ttk, Label, Button, Entry, Frame, Text, Scrollbar, W, E, N, S
+from tkinter import ttk, Label, Button, Entry, Frame, Text, Scrollbar, Canvas, W, E, N, S
 from PIL import Image, ImageTk
 from io import BytesIO
 import webbrowser
@@ -69,44 +69,57 @@ def keyword_articles(E1):
     articles, totalResults, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=2, q=f'{E1}')    
     display_articles_gui(articles, error, status, code, message)
 
+def exit_fullscreen(event):
+    window.attributes('-fullscreen', False)
+
 def display_articles_gui(articles, error, status, code, message):
+
     global previous_window
     global window
+
     if previous_window is not None:
         previous_window.destroy()
 
     window = tk.Tk()
     window.title("Articole")
-    scrollbar = Scrollbar(window, orient='vertical', command=Text.yview)
+    window.attributes('-fullscreen', True)
+    window.bind('<Escape>', exit_fullscreen)
+
+    canvas = Canvas(window)
+    scrollbar = Scrollbar(window, orient='vertical', command=canvas.yview)
+    canvas.configure(yscrollcommand=scrollbar.set) 
+    frame = Frame(canvas)
+    canvas.grid(row=0, column=0, sticky=(N, S, E, W))
     scrollbar.grid(row=0, column=1, sticky=(N, S))
-    Text['yscrollcommand'] = scrollbar.set   
+    canvas.create_window((0, 0), window=frame, anchor='nw')
+
     if articles:
         for i, article in enumerate(articles, start=1):
-            frame = Frame(window, padx=10)
-            frame.grid(row=i, sticky=(W, E))
+            article_frame = Frame(frame, padx=10)
+            article_frame.grid(row=i, sticky=(W, E))
 
-            title = Label(frame, text=f"#{i} {article['title']}", font=("Verdana", 10))
-            title.grid(row=0, sticky=(W))
+            title_label = Label(frame, text=f"#{i} {article['title']}", font=("Verdana", 10))
+            title_label.grid(row=0, sticky=(W))
 
-            source = Label(frame, text=f"Sursă: {article['source']['name']}", font=("Arial", 12))
-            source.grid(row=1, sticky=(W))
+            source_label = Label(frame, text=f"Sursă: {article['source']['name']}", font=("Arial", 12))
+            source_label.grid(row=1, sticky=(W))
 
-            author = Label(frame, text=f"Autori: {article['author']}", font=("Arial", 12))
-            author.grid(row=2, sticky=(W))
+            author_label = Label(frame, text=f"Autori: {article['author']}", font=("Arial", 12))
+            author_label.grid(row=2, sticky=(W))
 
-            description = Label(frame, text=f"Scurtă descriere: {article['description']}", font=("Arial", 12))
-            description.grid(row=3, sticky=(W))
+            description_label = Label(frame, text=f"Scurtă descriere: {article['description']}", font=("Arial", 12))
+            description_label.grid(row=3, sticky=(W))
 
-            publishedAt = Label(frame, text=f"Publicat la: {article['publishedAt']}", font=("Arial", 12))
-            publishedAt.grid(row=7, sticky=(W))
+            publishedAt_label = Label(frame, text=f"Publicat la: {article['publishedAt']}", font=("Arial", 12))
+            publishedAt_label.grid(row=7, sticky=(W))
 
-            url = Label(frame, text=f"Link: {article['url']}", font=("Arial", 12), fg="blue", cursor="hand2")
-            url.grid(row=4, sticky=(W))
-            url.bind("<Button-1>", lambda event, url=article['url']: open_url(event, url))
+            url_label = Label(frame, text=f"Link: {article['url']}", font=("Arial", 12), fg="blue", cursor="hand2")
+            url_label.grid(row=4, sticky=(W))
+            url_label.bind("<Button-1>", lambda event, url=article['url']: open_url(event, url))
 
-            urlToImage = Label(frame, text=f"Link imagine: {article['urlToImage']}", font=("Arial", 12), fg="blue", cursor="hand2")
-            urlToImage.grid(row=5, sticky=(W))
-            urlToImage.bind("<Button-1>", lambda event, url=article['urlToImage']: open_url(event, url))
+            urlToImage_label = Label(frame, text=f"Link imagine: {article['urlToImage']}", font=("Arial", 12), fg="blue", cursor="hand2")
+            urlToImage_label.grid(row=5, sticky=(W))
+            urlToImage_label.bind("<Button-1>", lambda event, url=article['urlToImage']: open_url(event, url))
 
             
             response = requests.get(article['urlToImage'])
@@ -138,6 +151,9 @@ def display_articles_gui(articles, error, status, code, message):
         no_articles = Label(window, text="Nu s-au găsit articole. Încercați din nou.", font=("Arial", 12))
         no_articles.grid(row=0, column=0, sticky=(W))
         buttons(1)
+    
+    window.update()
+    canvas.configure(scrollregion=canvas.bbox('all'))
 
     previous_window = window
     window.mainloop()
