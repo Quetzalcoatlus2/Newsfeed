@@ -2,7 +2,7 @@ import requests
 import tkinter as tk
 from requests.exceptions import RequestException
 from newsapi import NewsApiClient
-from tkinter import ttk, Label, Button, Entry, Frame, W, E, text
+from tkinter import ttk, Label, Button, Entry, Frame, Text, Scrollbar, W, E, N, S
 from PIL import Image, ImageTk
 from io import BytesIO
 import webbrowser
@@ -77,9 +77,9 @@ def display_articles_gui(articles, error, status, code, message):
 
     window = tk.Tk()
     window.title("Articole")
-    scrollbar = ttk.Scrollbar(window, orient='vertical', command=text.yview)
-    scrollbar.grid(row=0, column=1, sticky=tk.NS)
-    text['yscrollcommand'] = scrollbar.set   
+    scrollbar = Scrollbar(window, orient='vertical', command=Text.yview)
+    scrollbar.grid(row=0, column=1, sticky=(N, S))
+    Text['yscrollcommand'] = scrollbar.set   
     if articles:
         for i, article in enumerate(articles, start=1):
             frame = Frame(window, padx=10)
