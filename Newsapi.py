@@ -16,13 +16,13 @@ def open_url(event, url):
 
 def buttons(i):
     L1 = Label(window, text = 'Cuvânt cheie:')
-    L1.grid(row=i, sticky=(W))
+    L1.grid(row = i, sticky = W)
     E1 = Entry(window, bd=5)
-    E1.grid(row=i, padx = 80, sticky=(W))
-    button = Button(window, text="Căutare", command=lambda: keyword_articles(E1.get()))
-    button.grid(row=i, padx = 220, sticky=(W))
+    E1.grid(row = i, padx = 80, sticky = W)
+    button = Button(window, text = "Căutare", command = lambda: keyword_articles(E1.get()))
+    button.grid(row = i, padx = 220, sticky = W)
     L2 = Label(window, text = f"Număr rezultate:{totalResults}")
-    L2.grid(row=i+1, sticky=(W))
+    L2.grid(row=i+1, sticky=(W)) 
 
 def get_articles(apiKey, language, country, category, pageSize, q, sources):
     newsapi_url = 'https://newsapi.org/v2/top-headlines'
