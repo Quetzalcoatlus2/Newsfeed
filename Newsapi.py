@@ -5,10 +5,14 @@ from newsapi import NewsApiClient
 from tkinter import *
 from PIL import Image, ImageTk
 from io import BytesIO
+import webbrowser
 
 newsapi = NewsApiClient(api_key='33064a07856d4cf98dd5fd5d759d3ef4')
 
 previous_window = None
+
+def open_url(event):
+    webbrowser.open(articles['url'])
 
 def buttons(i):
     L1 = Label(window, text = 'Cuvânt cheie:')
@@ -90,22 +94,29 @@ def display_articles_gui(articles, error, status, code, message):
             description = Label(frame, text=f"Scurtă descriere: {article['description']}", font=("Arial", 12))
             description.grid(row=3, sticky=(W))
 
-            url = Label(frame, text=f"Link: {article['url']}", font=("Arial", 12))
-            url.grid(row=4, sticky=(W))
+            publishedAt = Label(frame, text=f"Publicat la: {article['publishedAt']}", font=("Arial", 12))
+            publishedAt.grid(row=7, sticky=(W))
 
-            # Fetch the image from the URL
+            url = Label(frame, text=f"Link: {article['url']}", font=("Arial", 12), fg="blue", cursor="hand2")
+            url.grid(row=4, sticky=(W))
+            url.bind("<Button-1>", lambda: webbrowser.open(articles['url']))
+
+            urlToImage = Label(frame, text=f"Link imagine: {article['urlToImage']}", font=("Arial", 12), fg="blue", cursor="hand2")
+            urlToImage.grid(row=5, sticky=(W))
+            urlToImage.bind("<Button-1>", lambda: webbrowser.open(articles['urlToImage']))
+
+            
             response = requests.get(article['urlToImage'])
             img_data = response.content
             img = Image.open(BytesIO(img_data))
             photo = ImageTk.PhotoImage(img)
 
-            # Create a label for the image and display it
-            img_label = tk.Label(frame, image=photo)
-            img_label.image = photo  # keep a reference to the image
-            img_label.grid(row=5, sticky=(tk.W))
+            
+            img_label = Label(frame, image=photo)
+            img_label.image = photo 
+            img_label.grid(row=6, sticky=(W))
 
-            publishedAt = Label(frame, text=f"Publicat la: {article['publishedAt']}", font=("Arial", 12))
-            publishedAt.grid(row=6, sticky=(W))
+           
 
         buttons(i+1)
 
