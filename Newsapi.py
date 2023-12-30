@@ -11,10 +11,7 @@ newsapi = NewsApiClient(api_key='33064a07856d4cf98dd5fd5d759d3ef4')
 previous_window = None
 
 def open_url(action, url):
-    if url != None:
         webbrowser.open(url)
-    else:
-        return None
 
 
 def on_mousewheel(action):
@@ -42,7 +39,6 @@ def get_articles(apiKey, language, country, category, pageSize, q, sources):
         'q': q,
         'sources': ','.join(sources) if sources else None
     }
-
     global totalResults
     articles = None
     error = None
@@ -159,23 +155,26 @@ def display_articles_gui(articles, error, status, code, message):
                 url_label.grid(row=4, sticky=(tk.W))
 
             if article['urlToImage'] != None:
+                image_link_label = tk.Label(article_frame, text="Link imagine: ", font=("Arial", 12))
+                image_link_label.grid(row=5, sticky=(tk.W))
                 urlToImage_label = tk.Label(article_frame, text=f"Link imagine: {article['urlToImage']}", font=("Arial", 12), fg="blue", cursor="hand2")
-                urlToImage_label.grid(row=5, sticky=(tk.W))
+                urlToImage_label.grid(row=5, pady = 60, sticky=(tk.W))
                 urlToImage_label.bind("<Button-1>", lambda event, url=article['urlToImage']: open_url(event, url))
+
+                response_urlToImage = requests.get(article['urlToImage'])
+                img_data = response_urlToImage.content
+                img = Image.open(BytesIO(img_data))
+                photo = ImageTk.PhotoImage(img)
+
+                img_label = tk.Label(article_frame, image=photo)
+                img_label.image = photo 
+                img_label.grid(row=5, sticky=(tk.W))
             else:
                 urlToImage_label = tk.Label(article_frame, text=f"Link imagine: Nu am identificat link-ul imaginii articolului", font=("Arial", 12))
                 urlToImage_label.grid(row=5, sticky=(tk.W))
 
             
-            response_urlToImage = requests.get(article['urlToImage'])
-            img_data = response_urlToImage.content
-            img = Image.open(BytesIO(img_data))
-            photo = ImageTk.PhotoImage(img)
-
-            
-            img_label = tk.Label(article_frame, image=photo)
-            img_label.image = photo 
-            img_label.grid(row=5, sticky=(tk.W))
+          
 
            
 
