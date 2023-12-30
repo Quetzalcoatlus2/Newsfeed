@@ -162,13 +162,21 @@ def display_articles_gui(articles, error, status, code, message):
                 urlToImage_label = tk.Label(article_frame, text=f"{article['urlToImage']}", font=("Arial", 12), fg="blue", cursor="hand2")
                 urlToImage_label.grid(row=5, pady = 60, sticky=(tk.W))
                 urlToImage_label.bind("<Button-1>", lambda event, url=article['urlToImage']: open_url(event, url))
-
-                response_urlToImage = requests.get(article['urlToImage'])
-                img_data = response_urlToImage.content
                 
-                img = Image.open(BytesIO(img_data))
-                photo = ImageTk.PhotoImage(img)
+                try:
+                    response_urlToImage = requests.get(article['urlToImage'])
+                    img_data = response_urlToImage.content
+                
+                    if response_urlToImage.headers['Content-Type'].startswith('image'):
+                        img = Image.open(BytesIO(img_data))
+                        photo = ImageTk.PhotoImage(img)
+                    else:
+                        raise ValueError('URL does not point to an image')
 
+                    response_urlToImage.raise_for_status()
+                except (RequestException, ValueError) as a:
+                     print(f"Error: {a}")
+                    
                 img_label = tk.Label(article_frame, image=photo)
                 img_label.image = photo 
                 img_label.grid(row=6, sticky=(tk.W))
