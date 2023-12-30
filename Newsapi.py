@@ -171,7 +171,7 @@ def display_articles_gui(articles, error, status, code, message):
                         img = Image.open(BytesIO(img_data))
                         photo = ImageTk.PhotoImage(img)
                     else:
-                        raise ValueError('URL does not point to an image')
+                        raise ValueError('URL format not supported.')
 
                     response_urlToImage.raise_for_status()
                 except (RequestException, ValueError) as a:
