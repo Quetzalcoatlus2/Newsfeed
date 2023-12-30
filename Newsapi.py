@@ -155,7 +155,7 @@ def display_articles_gui(articles, error, status, code, message):
                 url_label.grid(row=4, sticky=(tk.W))
                 url_label.bind("<Button-1>", lambda event, url=article['url']: open_url(event, url))
             else:
-                url_label = tk.Label(article_frame, text=f"Link: Nu am identificat link-ul articolului, font=("Arial", 12))
+                url_label = tk.Label(article_frame, text=f"Link: Nu am identificat link-ul articolului", font=("Arial", 12))
                 url_label.grid(row=4, sticky=(tk.W))
 
             if article['urlToImage'] != None:
@@ -211,15 +211,7 @@ if __name__ == "__main__":
     display_articles_gui(articles, error, status, code, message)
 
     
-"""def display_articles(articles):
-    if articles:
-        for i, article in enumerate(articles, start = 1):
-            print(f"#{i} {article['title']}")
-            print(f"   Article source: {article['source']['name']}")
-            print(f"   Link: {article['url']}")
-            print("\n")
-    else:
-        print("No articles found. Try again.")"""
+
 
 
 
