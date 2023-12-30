@@ -82,15 +82,17 @@ def display_articles_gui(articles, error, status, code, message):
 
     window = tk.Tk()
     window.title("Articole")
-    window.attributes('-fullscreen', True)
-    window.bind('<Escape>', exit_fullscreen)
+    #window.attributes('-fullscreen', True)
+    #window.bind('<Escape>', exit_fullscreen)
 
     canvas = Canvas(window)
     scrollbar = Scrollbar(window, orient='vertical', command=canvas.yview)
     canvas.configure(yscrollcommand=scrollbar.set) 
     frame = Frame(canvas)
-    canvas.grid(row=0, column=0, sticky=(N, S, E, W))
-    scrollbar.grid(row=0, column=1, sticky=(N, S))
+    canvas.pack(side='left', fill='both', expand=True)
+    scrollbar.pack(side='right', fill='y')
+    # canvas.grid(row=0, column=0, sticky=(N, S, E, W))
+    # scrollbar.grid(row=0, column=1, sticky=(N, S))
     canvas.create_window((0, 0), window=frame, anchor='nw')
 
     if articles:
@@ -98,26 +100,26 @@ def display_articles_gui(articles, error, status, code, message):
             article_frame = Frame(frame, padx=10)
             article_frame.grid(row=i, sticky=(W, E))
 
-            title_label = Label(frame, text=f"#{i} {article['title']}", font=("Verdana", 10))
+            title_label = Label(article_frame, text=f"#{i} {article['title']}", font=("Verdana", 10))
             title_label.grid(row=0, sticky=(W))
 
-            source_label = Label(frame, text=f"Sursă: {article['source']['name']}", font=("Arial", 12))
+            source_label = Label(article_frame, text=f"Sursă: {article['source']['name']}", font=("Arial", 12))
             source_label.grid(row=1, sticky=(W))
 
-            author_label = Label(frame, text=f"Autori: {article['author']}", font=("Arial", 12))
+            author_label = Label(article_frame, text=f"Autori: {article['author']}", font=("Arial", 12))
             author_label.grid(row=2, sticky=(W))
 
-            description_label = Label(frame, text=f"Scurtă descriere: {article['description']}", font=("Arial", 12))
+            description_label = Label(article_frame, text=f"Scurtă descriere: {article['description']}", font=("Arial", 12))
             description_label.grid(row=3, sticky=(W))
 
-            publishedAt_label = Label(frame, text=f"Publicat la: {article['publishedAt']}", font=("Arial", 12))
+            publishedAt_label = Label(article_frame, text=f"Publicat la: {article['publishedAt']}", font=("Arial", 12))
             publishedAt_label.grid(row=7, sticky=(W))
 
-            url_label = Label(frame, text=f"Link: {article['url']}", font=("Arial", 12), fg="blue", cursor="hand2")
+            url_label = Label(article_frame, text=f"Link: {article['url']}", font=("Arial", 12), fg="blue", cursor="hand2")
             url_label.grid(row=4, sticky=(W))
             url_label.bind("<Button-1>", lambda event, url=article['url']: open_url(event, url))
 
-            urlToImage_label = Label(frame, text=f"Link imagine: {article['urlToImage']}", font=("Arial", 12), fg="blue", cursor="hand2")
+            urlToImage_label = Label(article_frame, text=f"Link imagine: {article['urlToImage']}", font=("Arial", 12), fg="blue", cursor="hand2")
             urlToImage_label.grid(row=5, sticky=(W))
             urlToImage_label.bind("<Button-1>", lambda event, url=article['urlToImage']: open_url(event, url))
 
@@ -128,7 +130,7 @@ def display_articles_gui(articles, error, status, code, message):
             photo = ImageTk.PhotoImage(img)
 
             
-            img_label = Label(frame, image=photo)
+            img_label = Label(article_frame, image=photo)
             img_label.image = photo 
             img_label.grid(row=6, sticky=(W))
 
