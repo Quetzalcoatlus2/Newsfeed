@@ -9,6 +9,7 @@ import webbrowser
 newsapi = NewsApiClient(api_key='33064a07856d4cf98dd5fd5d759d3ef4')
 
 previous_window = None
+articles_per_page = 10
 
 def open_url(action, url):
         webbrowser.open(url)
@@ -20,6 +21,10 @@ def on_mousewheel(action):
 
 def buttons(i):
     L1 = tk.Label(window, text = 'Cuvânt cheie:')
+    L1.grid(row = i, sticky = tk.W)
+    E1 = tk.Entry(window, bd=5)
+    E1.grid(row = i, padx = 80, sticky = tk.W)
+    L2 = tk.Label(window, text = 'Număr rezultate de afișat:')
     L1.grid(row = i, sticky = tk.W)
     E1 = tk.Entry(window, bd=5)
     E1.grid(row = i, padx = 80, sticky = tk.W)
@@ -79,7 +84,7 @@ def exit_fullscreen():
 
 
 
-def display_articles_gui(articles, error, status, code, message):
+def display_articles_gui(articles, totalResults, error, status, code, message):
 
     global previous_window
     global window
@@ -118,7 +123,7 @@ def display_articles_gui(articles, error, status, code, message):
                 title_label = tk.Label(article_frame, text=f"#{i} Titlu: Nu am identificat titlul articolului.", font=("Verdana", 10))
                 title_label.grid(row=0, sticky=(tk.W))
 
-            if article['content'] != None:
+            if article['source'] != None:
                 source_label = tk.Label(article_frame, text=f"Sursă: {article['source']['name']}", font=("Arial", 12))
                 source_label.grid(row=1, sticky=(tk.W))
             else:
@@ -169,8 +174,11 @@ def display_articles_gui(articles, error, status, code, message):
                 
                     if response_urlToImage.headers['Content-Type'].startswith('image'):
                         img = Image.open(BytesIO(img_data))
-                        img = img.resize((400, 1200))
+                        img = img.resize((1500, 500))
                         photo = ImageTk.PhotoImage(img)
+                        img_label = tk.Label(article_frame, image=photo)
+                        img_label.image = photo 
+                        img_label.grid(row=7, sticky=(tk.W))
                     else:
                         raise ValueError('URL format not supported.')
 
@@ -178,9 +186,7 @@ def display_articles_gui(articles, error, status, code, message):
                 except (RequestException, ValueError) as a:
                      print(f"Error: {a}")
                     
-                img_label = tk.Label(article_frame, image=photo)
-                img_label.image = photo 
-                img_label.grid(row=7, sticky=(tk.W))
+       
             else:
                 urlToImage_label = tk.Label(article_frame, text=f"Link imagine: Nu am identificat link-ul imaginii articolului", font=("Arial", 12))
                 urlToImage_label.grid(row=6, sticky=(tk.W))
@@ -218,8 +224,8 @@ def display_articles_gui(articles, error, status, code, message):
 
 if __name__ == "__main__":
     apiKey = '33064a07856d4cf98dd5fd5d759d3ef4'
-    articles, totalResults, error, status, code, message = get_articles(apiKey, language='en', country=None, category= None, sources=None , pageSize= 10, q=None)    
-    display_articles_gui(articles, error, status, code, message)
+    articles, totalResults, error, status, code, message = get_articles(apiKey, language='en', country=None, category= None, sources=None , pageSize= articles_per_page, q=None)    
+    display_articles_gui(articles, totalResults, error, status, code, message)
 
     
 
