@@ -71,7 +71,7 @@ def get_articles(apiKey, language, country, category, pageSize, q, sources):
 
 def keyword_articles(E1):
     global totalResults
-    articles, totalResults, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=10, q=f'{E1}')    
+    articles, totalResults, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize= 10, q=f'{E1}')    
     display_articles_gui(articles, error, status, code, message)
 
 def exit_fullscreen():
@@ -146,21 +146,21 @@ def display_articles_gui(articles, error, status, code, message):
                 publishedAt_label = tk.Label(article_frame, text=f"Publicat la: Nu am identificat momentul publicării.", font=("Arial", 12))
                 publishedAt_label.grid(row=4, sticky=(tk.W))
 
-            if article['content'] != None:
-                article_url_label = tk.Label(article_frame, text="Link articol: ", font=("Arial", 12))
+            if article['url'] != None:
+                article_url_label = tk.Label(article_frame, text="Link articol:  ", font=("Arial", 12))
                 article_url_label.grid(row=5, sticky=(tk.W))
-                url_label = tk.Label(article_frame, text=f"Link: {article['url']}", font=("Arial", 12), fg="blue", cursor="hand2")
-                url_label.grid(row=5, pady = 60, sticky=(tk.W))
+                url_label = tk.Label(article_frame, text=f"{article['url']}", font=("Arial", 12), fg="blue", cursor="hand2")
+                url_label.grid(row=5, padx = 100, sticky=(tk.W))
                 url_label.bind("<Button-1>", lambda event, url=article['url']: open_url(event, url))
             else:
-                url_label = tk.Label(article_frame, text=f"Link: Nu am identificat link-ul articolului", font=("Arial", 12))
-                url_label.grid(row=4, sticky=(tk.W))
+                url_label = tk.Label(article_frame, text=f"Link articol: Nu am identificat link-ul articolului", font=("Arial", 12))
+                url_label.grid(row=5, sticky=(tk.W))
 
             if article['urlToImage'] != None:
                 image_link_label = tk.Label(article_frame, text="Link imagine: ", font=("Arial", 12))
-                image_link_label.grid(row=5, sticky=(tk.W))
+                image_link_label.grid(row=6, sticky=(tk.W))
                 urlToImage_label = tk.Label(article_frame, text=f"{article['urlToImage']}", font=("Arial", 12), fg="blue", cursor="hand2")
-                urlToImage_label.grid(row=5, pady = 60, sticky=(tk.W))
+                urlToImage_label.grid(row=6, padx = 100, sticky=(tk.W))
                 urlToImage_label.bind("<Button-1>", lambda event, url=article['urlToImage']: open_url(event, url))
                 
                 try:
@@ -169,6 +169,7 @@ def display_articles_gui(articles, error, status, code, message):
                 
                     if response_urlToImage.headers['Content-Type'].startswith('image'):
                         img = Image.open(BytesIO(img_data))
+                        img = img.resize((1000, 800))
                         photo = ImageTk.PhotoImage(img)
                     else:
                         raise ValueError('URL format not supported.')
@@ -179,10 +180,10 @@ def display_articles_gui(articles, error, status, code, message):
                     
                 img_label = tk.Label(article_frame, image=photo)
                 img_label.image = photo 
-                img_label.grid(row=6, sticky=(tk.W))
+                img_label.grid(row=7, sticky=(tk.W))
             else:
                 urlToImage_label = tk.Label(article_frame, text=f"Link imagine: Nu am identificat link-ul imaginii articolului", font=("Arial", 12))
-                urlToImage_label.grid(row=5, sticky=(tk.W))
+                urlToImage_label.grid(row=6, sticky=(tk.W))
 
             
           
@@ -217,7 +218,7 @@ def display_articles_gui(articles, error, status, code, message):
 
 if __name__ == "__main__":
     apiKey = '33064a07856d4cf98dd5fd5d759d3ef4'
-    articles, totalResults, error, status, code, message = get_articles(apiKey, language='en', country=None, category= None, sources=None , pageSize=10, q=None)    
+    articles, totalResults, error, status, code, message = get_articles(apiKey, language='en', country=None, category= None, sources=None , pageSize= 10, q=None)    
     display_articles_gui(articles, error, status, code, message)
 
     
