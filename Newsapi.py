@@ -11,7 +11,10 @@ newsapi = NewsApiClient(api_key='33064a07856d4cf98dd5fd5d759d3ef4')
 previous_window = None
 
 def open_url(action, url):
-    webbrowser.open(url)
+    if url != None:
+        webbrowser.open(url)
+    else:
+        return None
 
 
 def on_mousewheel(action):
@@ -67,6 +70,8 @@ def get_articles(apiKey, language, country, category, pageSize, q, sources):
         message = response.json()['message']
         print(f"Message: {message}")
         return None, None, error, status, code, message
+    
+    
 
 def keyword_articles(E1):
     global totalResults
@@ -84,6 +89,7 @@ def display_articles_gui(articles, error, status, code, message):
     global window
     global canvas
 
+    
     if previous_window is not None:
         previous_window.destroy()
 
@@ -103,33 +109,62 @@ def display_articles_gui(articles, error, status, code, message):
     window.grid_rowconfigure(0, weight=1)
     window.grid_columnconfigure(0, weight=1)
 
+
     if articles:
         for i, article in enumerate(articles, start=1):
             article_frame = tk.Frame(frame, padx=10)
             article_frame.grid(row=i, sticky=(tk.W, tk.E))
 
-            title_label = tk.Label(article_frame, text=f"#{i} {article['title']}", font=("Verdana", 10))
-            title_label.grid(row=0, sticky=(tk.W))
+            if article['title'] != None:
+                title_label = tk.Label(article_frame, text=f"#{i} {article['title']}", font=("Verdana", 10))
+                title_label.grid(row=0, sticky=(tk.W))
+            else:
+                title_label = tk.Label(article_frame, text=f"#{i} Titlu: Nu am identificat titlul articolului.", font=("Verdana", 10))
+                title_label.grid(row=0, sticky=(tk.W))
 
-            source_label = tk.Label(article_frame, text=f"Sursă: {article['source']['name']}", font=("Arial", 12))
-            source_label.grid(row=1, sticky=(tk.W))
+            if article['content'] != None:
+                source_label = tk.Label(article_frame, text=f"Sursă: {article['source']['name']}", font=("Arial", 12))
+                source_label.grid(row=1, sticky=(tk.W))
+            else:
+                source_label = tk.Label(article_frame, text=f"Sursă: Nu am identificat sursa articolului.", font=("Arial", 12))
+                source_label.grid(row=1, sticky=(tk.W))
 
-            author_label = tk.Label(article_frame, text=f"Autori: {article['author']}", font=("Arial", 12))
-            author_label.grid(row=2, sticky=(tk.W))
+            if article['author'] != None:
+                author_label = tk.Label(article_frame, text=f"Autori: {article['author']}", font=("Arial", 12))
+                author_label.grid(row=2, sticky=(tk.W))
+            else:
+                author_label = tk.Label(article_frame, text=f"Autori: Nu am identificat autorul/autorii.", font=("Arial", 12))
+                author_label.grid(row=2, sticky=(tk.W))
 
-            description_label = tk.Label(article_frame, text=f"Scurtă descriere: {article['description']}", font=("Arial", 12))
-            description_label.grid(row=3, sticky=(tk.W))
+            if article['description'] != None:
+                description_label = tk.Label(article_frame, text=f"Scurtă descriere: {article['description']}", font=("Arial", 12))
+                description_label.grid(row=3, sticky=(tk.W))
+            else:
+                description_label = tk.Label(article_frame, text=f"Scurtă descriere: Nu am identificat descrierea articolului.", font=("Arial", 12))
+                description_label.grid(row=3, sticky=(tk.W))
 
-            publishedAt_label = tk.Label(article_frame, text=f"Publicat la: {article['publishedAt']}", font=("Arial", 12))
-            publishedAt_label.grid(row=7, sticky=(tk.W))
+            if article['publishedAt'] != None:
+                publishedAt_label = tk.Label(article_frame, text=f"Publicat la: {article['publishedAt']}", font=("Arial", 12))
+                publishedAt_label.grid(row=7, sticky=(tk.W))
+            else:
+                publishedAt_label = tk.Label(article_frame, text=f"Publicat la: Nu am identificat momentul publicării.", font=("Arial", 12))
+                publishedAt_label.grid(row=7, sticky=(tk.W))
 
-            url_label = tk.Label(article_frame, text=f"Link: {article['url']}", font=("Arial", 12), fg="blue", cursor="hand2")
-            url_label.grid(row=4, sticky=(tk.W))
-            url_label.bind("<Button-1>", lambda event, url=article['url']: open_url(event, url))
+            if article['content'] != None:
+                url_label = tk.Label(article_frame, text=f"Link: {article['url']}", font=("Arial", 12), fg="blue", cursor="hand2")
+                url_label.grid(row=4, sticky=(tk.W))
+                url_label.bind("<Button-1>", lambda event, url=article['url']: open_url(event, url))
+            else:
+                url_label = tk.Label(article_frame, text=f"Link: Nu am identificat link-ul articolului, font=("Arial", 12))
+                url_label.grid(row=4, sticky=(tk.W))
 
-            urlToImage_label = tk.Label(article_frame, text=f"Link imagine: {article['urlToImage']}", font=("Arial", 12), fg="blue", cursor="hand2")
-            urlToImage_label.grid(row=5, sticky=(tk.W))
-            urlToImage_label.bind("<Button-1>", lambda event, url=article['urlToImage']: open_url(event, url))
+            if article['urlToImage'] != None:
+                urlToImage_label = tk.Label(article_frame, text=f"Link imagine: {article['urlToImage']}", font=("Arial", 12), fg="blue", cursor="hand2")
+                urlToImage_label.grid(row=5, sticky=(tk.W))
+                urlToImage_label.bind("<Button-1>", lambda event, url=article['urlToImage']: open_url(event, url))
+            else:
+                urlToImage_label = tk.Label(article_frame, text=f"Link imagine: Nu am identificat link-ul imaginii articolului", font=("Arial", 12))
+                urlToImage_label.grid(row=5, sticky=(tk.W))
 
             
             response_urlToImage = requests.get(article['urlToImage'])
@@ -145,6 +180,8 @@ def display_articles_gui(articles, error, status, code, message):
            
 
         buttons(i+1)
+
+    
 
     elif error:
         error = tk.Label(window, text=f"Network error: {error}", font=("Arial", 12))
