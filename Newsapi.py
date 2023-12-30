@@ -71,7 +71,7 @@ def get_articles(apiKey, language, country, category, pageSize, q, sources):
 
 def keyword_articles(E1):
     global totalResults
-    articles, totalResults, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=2, q=f'{E1}')    
+    articles, totalResults, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=10, q=f'{E1}')    
     display_articles_gui(articles, error, status, code, message)
 
 def exit_fullscreen():
@@ -168,7 +168,7 @@ def display_articles_gui(articles, error, status, code, message):
 
                 img_label = tk.Label(article_frame, image=photo)
                 img_label.image = photo 
-                img_label.grid(row=5, sticky=(tk.W))
+                img_label.grid(row=6, sticky=(tk.W))
             else:
                 urlToImage_label = tk.Label(article_frame, text=f"Link imagine: Nu am identificat link-ul imaginii articolului", font=("Arial", 12))
                 urlToImage_label.grid(row=5, sticky=(tk.W))
@@ -206,7 +206,7 @@ def display_articles_gui(articles, error, status, code, message):
 
 if __name__ == "__main__":
     apiKey = '33064a07856d4cf98dd5fd5d759d3ef4'
-    articles, totalResults, error, status, code, message = get_articles(apiKey, language='en', country=None, category= None, sources=None , pageSize=2, q=None)    
+    articles, totalResults, error, status, code, message = get_articles(apiKey, language='en', country=None, category= None, sources=None , pageSize=10, q=None)    
     display_articles_gui(articles, error, status, code, message)
 
     
