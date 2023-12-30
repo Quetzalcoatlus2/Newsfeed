@@ -169,7 +169,7 @@ def display_articles_gui(articles, error, status, code, message):
                 
                     if response_urlToImage.headers['Content-Type'].startswith('image'):
                         img = Image.open(BytesIO(img_data))
-                        img = img.resize((1000, 800))
+                        img = img.resize((400, 1200))
                         photo = ImageTk.PhotoImage(img)
                     else:
                         raise ValueError('URL format not supported.')
