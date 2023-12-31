@@ -20,20 +20,21 @@ def on_mousewheel(action):
 
 
 def buttons(i):
+    global totalResults
     L1 = tk.Label(window, text = 'Cuvânt cheie:')
     L1.grid(row = i, sticky = tk.W)
     E1 = tk.Entry(window, bd=5)
     E1.grid(row = i, padx = 80, sticky = tk.W)
-    L2 = tk.Label(window, text = 'Număr rezultate de afișat:')
-    L1.grid(row = i, sticky = tk.W)
-    E1 = tk.Entry(window, bd=5)
-    E1.grid(row = i, padx = 80, sticky = tk.W)
-    button = tk.Button(window, text = "Căutare", command = lambda: keyword_articles(E1.get()))
+    L2 = tk.Label(window, text = 'Introduceți numărul paginii:')
+    L2.grid(row = i, padx = 300, sticky = tk.W)
+    E2 = tk.Entry(window, bd=5)
+    E2.grid(row = i, padx = 380, sticky = tk.W)
+    button = tk.Button(window, text = "Căutare", command = lambda: keyword_articles(E1.get(), E2.get()))
     button.grid(row = i, padx = 220, sticky = tk.W)
-    L2 = tk.Label(window, text = f"Număr rezultate:{totalResults}")
-    L2.grid(row=i+1, sticky=(tk.W)) 
+    L3 = tk.Label(window, text = f"Număr rezultate:{totalResults}")
+    L3.grid(row=i+1, sticky=(tk.W)) 
 
-def get_articles(apiKey, language, country, category, pageSize, q, sources):
+def get_articles(apiKey, language, country, category, pageSize, page, q, sources):
     newsapi_url = 'https://newsapi.org/v2/top-headlines'
     parameters = {
         'apiKey': apiKey,
@@ -41,6 +42,7 @@ def get_articles(apiKey, language, country, category, pageSize, q, sources):
         'country': country,
         'category': category,
         'pageSize': pageSize,
+        'page': page,
         'q': q,
         'sources': ','.join(sources) if sources else None
     }
@@ -62,7 +64,7 @@ def get_articles(apiKey, language, country, category, pageSize, q, sources):
         error = e
 
     if response.status_code == 200:
-        return articles, totalResults, None, None, None, None
+        return articles, None, None, None, None
     else:
         status = response.json()['status']
         print(f"Status: {status}")
@@ -70,13 +72,13 @@ def get_articles(apiKey, language, country, category, pageSize, q, sources):
         print(f"Code: {code}")
         message = response.json()['message']
         print(f"Message: {message}")
-        return None, None, error, status, code, message
+        return None, error, status, code, message
     
     
 
-def keyword_articles(E1):
+def keyword_articles(E1, E2):
     global totalResults
-    articles, totalResults, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize= 10, q=f'{E1}')    
+    articles, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize= 2, page =f'{E2}', q=f'{E1}')    
     display_articles_gui(articles, error, status, code, message)
 
 def exit_fullscreen():
@@ -84,7 +86,7 @@ def exit_fullscreen():
 
 
 
-def display_articles_gui(articles, totalResults, error, status, code, message):
+def display_articles_gui(articles, error, status, code, message):
 
     global previous_window
     global window
@@ -110,7 +112,7 @@ def display_articles_gui(articles, totalResults, error, status, code, message):
     window.grid_rowconfigure(0, weight=1)
     window.grid_columnconfigure(0, weight=1)
 
-
+    
     if articles:
         for i, article in enumerate(articles, start=1):
             article_frame = tk.Frame(frame, padx=10)
@@ -224,8 +226,8 @@ def display_articles_gui(articles, totalResults, error, status, code, message):
 
 if __name__ == "__main__":
     apiKey = '33064a07856d4cf98dd5fd5d759d3ef4'
-    articles, totalResults, error, status, code, message = get_articles(apiKey, language='en', country=None, category= None, sources=None , pageSize= articles_per_page, q=None)    
-    display_articles_gui(articles, totalResults, error, status, code, message)
+    articles, error, status, code, message = get_articles(apiKey, language='en', country=None, category= None, sources=None , pageSize= None, page = None, q=None)    
+    display_articles_gui(articles, error, status, code, message)
 
     
 
