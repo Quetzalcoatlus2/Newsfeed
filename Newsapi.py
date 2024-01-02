@@ -1,12 +1,11 @@
 import requests
 import tkinter as tk
 from requests.exceptions import RequestException
-from newsapi import NewsApiClient
+import Newsapi
 from PIL import Image, ImageTk
 from io import BytesIO
 import webbrowser
 
-newsapi = NewsApiClient(api_key='33064a07856d4cf98dd5fd5d759d3ef4')
 
 previous_window = None
 articles_per_page = 10
