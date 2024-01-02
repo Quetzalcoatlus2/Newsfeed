@@ -1,17 +1,19 @@
+from newsapi import NewsApiClient
 import requests
 import tkinter as tk
 from requests.exceptions import RequestException
-import Newsapi
 from PIL import Image, ImageTk
 from io import BytesIO
 import webbrowser
 
 
+newsapi = NewsApiClient(api_key='33064a07856d4cf98dd5fd5d759d3ef4')
+
 previous_window = None
 articles_per_page = 10
 
-def open_url(action, url):
-        webbrowser.open(url)
+def open_url(url):
+    webbrowser.open(url)
 
 
 def on_mousewheel(action):
@@ -114,85 +116,89 @@ def display_articles_gui(articles, error, status, code, message):
     
     if articles:
         for i, article in enumerate(articles, start=1):
-            article_frame = tk.Frame(frame, padx=10)
-            article_frame.grid(row=i, sticky=(tk.W, tk.E))
-
-            if article['title'] != None:
-                title_label = tk.Label(article_frame, text=f"#{i} {article['title']}", font=("Verdana", 10))
-                title_label.grid(row=0, sticky=(tk.W))
-            else:
-                title_label = tk.Label(article_frame, text=f"#{i} Titlu: Nu am identificat titlul articolului.", font=("Verdana", 10))
-                title_label.grid(row=0, sticky=(tk.W))
-
-            if article['source'] != None:
-                source_label = tk.Label(article_frame, text=f"Sursă: {article['source']['name']}", font=("Arial", 12))
-                source_label.grid(row=1, sticky=(tk.W))
-            else:
-                source_label = tk.Label(article_frame, text=f"Sursă: Nu am identificat sursa articolului.", font=("Arial", 12))
-                source_label.grid(row=1, sticky=(tk.W))
-
-            if article['author'] != None:
-                author_label = tk.Label(article_frame, text=f"Autori: {article['author']}", font=("Arial", 12))
-                author_label.grid(row=2, sticky=(tk.W))
-            else:
-                author_label = tk.Label(article_frame, text=f"Autori: Nu am identificat autorul/autorii.", font=("Arial", 12))
-                author_label.grid(row=2, sticky=(tk.W))
-
-            if article['description'] != None:
-                description_label = tk.Label(article_frame, text=f"Scurtă descriere: {article['description']}", font=("Arial", 12))
-                description_label.grid(row=3, sticky=(tk.W))
-            else:
-                description_label = tk.Label(article_frame, text=f"Scurtă descriere: Nu am identificat descrierea articolului.", font=("Arial", 12))
-                description_label.grid(row=3, sticky=(tk.W))
-
-            if article['publishedAt'] != None:
-                publishedAt_label = tk.Label(article_frame, text=f"Publicat la: {article['publishedAt']}", font=("Arial", 12))
-                publishedAt_label.grid(row=4, sticky=(tk.W))
-            else:
-                publishedAt_label = tk.Label(article_frame, text=f"Publicat la: Nu am identificat momentul publicării.", font=("Arial", 12))
-                publishedAt_label.grid(row=4, sticky=(tk.W))
-
-            if article['url'] != None:
-                article_url_label = tk.Label(article_frame, text="Link articol:  ", font=("Arial", 12))
-                article_url_label.grid(row=5, sticky=(tk.W))
-                url_label = tk.Label(article_frame, text=f"{article['url']}", font=("Arial", 12), fg="blue", cursor="hand2")
-                url_label.grid(row=5, padx = 100, sticky=(tk.W))
-                url_label.bind("<Button-1>", lambda event, url=article['url']: open_url(event, url))
-            else:
-                url_label = tk.Label(article_frame, text=f"Link articol: Nu am identificat link-ul articolului", font=("Arial", 12))
-                url_label.grid(row=5, sticky=(tk.W))
-
-            if article['urlToImage'] != None:
-                image_link_label = tk.Label(article_frame, text="Link imagine: ", font=("Arial", 12))
-                image_link_label.grid(row=6, sticky=(tk.W))
-                urlToImage_label = tk.Label(article_frame, text=f"{article['urlToImage']}", font=("Arial", 12), fg="blue", cursor="hand2")
-                urlToImage_label.grid(row=6, padx = 100, sticky=(tk.W))
-                urlToImage_label.bind("<Button-1>", lambda event, url=article['urlToImage']: open_url(event, url))
+            if article['title'] != '[Removed]':
                 
-                try:
-                    response_urlToImage = requests.get(article['urlToImage'])
-                    img_data = response_urlToImage.content
-                
-                    if response_urlToImage.headers['Content-Type'].startswith('image'):
-                        img = Image.open(BytesIO(img_data))
-                        img = img.resize((1500, 500))
-                        photo = ImageTk.PhotoImage(img)
-                        img_label = tk.Label(article_frame, image=photo)
-                        img_label.image = photo 
-                        img_label.grid(row=7, sticky=(tk.W))
-                    else:
-                        raise ValueError('URL format not supported.')
+                article_frame = tk.Frame(frame, padx=10)
+                article_frame.grid(row=i, sticky=(tk.W, tk.E))
+            
 
-                    response_urlToImage.raise_for_status()
-                except (RequestException, ValueError) as a:
-                     print(f"Error: {a}")
+                if article['title'] != None:
+                    title_label = tk.Label(article_frame, text=f"#{i} {article['title']}", font=("Verdana", 10))
+                    title_label.grid(row=0, sticky=(tk.W))
+                else:
+                    title_label = tk.Label(article_frame, text=f"#{i} Titlu: Nu am identificat titlul articolului.", font=("Verdana", 10))
+                    title_label.grid(row=0, sticky=(tk.W))
+
+                if article['source'] != None:
+                    source_label = tk.Label(article_frame, text=f"Sursă: {article['source']['name']}", font=("Arial", 12))
+                    source_label.grid(row=1, sticky=(tk.W))
+                else:
+                    source_label = tk.Label(article_frame, text=f"Sursă: Nu am identificat sursa articolului.", font=("Arial", 12))
+                    source_label.grid(row=1, sticky=(tk.W))
+
+                if article['author'] != None:
+                    author_label = tk.Label(article_frame, text=f"Autori: {article['author']}", font=("Arial", 12))
+                    author_label.grid(row=2, sticky=(tk.W))
+                else:
+                    author_label = tk.Label(article_frame, text=f"Autori: Nu am identificat autorul/autorii.", font=("Arial", 12))
+                    author_label.grid(row=2, sticky=(tk.W))
+
+                if article['description'] != None:
+                    description_label = tk.Label(article_frame, text=f"Scurtă descriere: {article['description']}", font=("Arial", 12))
+                    description_label.grid(row=3, sticky=(tk.W))
+                else:
+                    description_label = tk.Label(article_frame, text=f"Scurtă descriere: Nu am identificat descrierea articolului.", font=("Arial", 12))
+                    description_label.grid(row=3, sticky=(tk.W))
+
+                if article['publishedAt'] != None:
+                    publishedAt_label = tk.Label(article_frame, text=f"Publicat la: {article['publishedAt']}", font=("Arial", 12))
+                    publishedAt_label.grid(row=4, sticky=(tk.W))
+                else:
+                    publishedAt_label = tk.Label(article_frame, text=f"Publicat la: Nu am identificat momentul publicării.", font=("Arial", 12))
+                    publishedAt_label.grid(row=4, sticky=(tk.W))
+
+                if article['url'] != None:
+                    article_url_label = tk.Label(article_frame, text="Link articol:  ", font=("Arial", 12))
+                    article_url_label.grid(row=5, sticky=(tk.W))
+                    url_label = tk.Label(article_frame, text=f"{article['url']}", font=("Arial", 12), fg="blue", cursor="hand2")
+                    url_label.grid(row=5, padx = 100, sticky=(tk.W))
+                    url_label.bind("<Button-1>", lambda event, url=article['url']: open_url(event, url))
+                else:
+                    url_label = tk.Label(article_frame, text=f"Link articol: Nu am identificat link-ul articolului", font=("Arial", 12))
+                    url_label.grid(row=5, sticky=(tk.W))
+
+                if article['urlToImage'] != None:
+                    image_link_label = tk.Label(article_frame, text="Link imagine: ", font=("Arial", 12))
+                    image_link_label.grid(row=6, sticky=(tk.W))
+                    urlToImage_label = tk.Label(article_frame, text=f"{article['urlToImage']}", font=("Arial", 12), fg="blue", cursor="hand2")
+                    urlToImage_label.grid(row=6, padx = 100, sticky=(tk.W))
+                    urlToImage_label.bind("<Button-1>", lambda event, url=article['urlToImage']: open_url(event, url))
+                
+                    try:
+                        response_urlToImage = requests.get(article['urlToImage'])
+                        img_data = response_urlToImage.content
+                
+                        if response_urlToImage.headers['Content-Type'].startswith('image'):
+                            img = Image.open(BytesIO(img_data))
+                            img = img.resize((1500, 500))
+                            photo = ImageTk.PhotoImage(img)
+                            img_label = tk.Label(article_frame, image=photo)
+                            img_label.image = photo 
+                            img_label.grid(row=7, sticky=(tk.W))
+                        else:
+                            raise ValueError('URL format not supported.')
+
+                        response_urlToImage.raise_for_status()
+                    except (RequestException, ValueError) as a:
+                         print(f"Error: {a}")
                     
        
-            else:
-                urlToImage_label = tk.Label(article_frame, text=f"Link imagine: Nu am identificat link-ul imaginii articolului", font=("Arial", 12))
-                urlToImage_label.grid(row=6, sticky=(tk.W))
+                else:
+                    urlToImage_label = tk.Label(article_frame, text=f"Link imagine: Nu am identificat link-ul imaginii articolului", font=("Arial", 12))
+                    urlToImage_label.grid(row=6, sticky=(tk.W))
 
-            
+            else:
+                return
           
 
            
