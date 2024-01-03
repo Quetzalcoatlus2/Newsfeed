@@ -22,25 +22,31 @@ def on_mousewheel(action):
 
 def buttons(i):
     global totalResults
-    L1 = tk.Label(window, text='Cuvânt cheie:')
-    L1.grid(row=i, column = 0, sticky=tk.W)
-    E1 = tk.Entry(window, bd=5)
-    E1.grid(row=i, column = 1, sticky=tk.W)
-    L2 = tk.Label(window, text='Introduceți numărul paginii:')
-    L2.grid(row=i, column = 2, sticky=tk.W)
-    E2 = tk.Entry(window, bd=5)
-    E2.grid(row=i, column = 3, sticky=tk.W)
-    L3 = tk.Label(window, text='Introduceți numărul de rezultate per pagină (20 din oficiu):')
-    L3.grid(row=i, column = 4, sticky=tk.W)
-    E3 = tk.Entry(window, bd=5)
-    E3.grid(row=i, column = 5, sticky=tk.W)
+    buttons_frame = tk.Frame(window, padx=10)
+    buttons_frame.grid(row=i, sticky=(tk.W, tk.E))
 
+    L1 = tk.Label(buttons_frame, text='Cuvânt cheie:')
+    L1.grid(row=0, column=0, sticky=tk.W)
+    E1 = tk.Entry(buttons_frame, bd=5)
+    E1.grid(row=0, column=1, sticky=tk.W)
 
-    
-    L4 = tk.Label(window, text=f"Număr rezultate:{totalResults}")
-    L4.grid(row=i+1, column = 0, sticky=tk.W)
-    button = tk.Button(window, text="Căutare", command=lambda: keyword_articles(E1.get(), E2.get(), E3.get()))
-    button.grid(row=i+1, padx=120, sticky=tk.W)
+    L2 = tk.Label(buttons_frame, text='Introduceți numărul paginii:')
+    L2.grid(row=0, column=2, sticky=tk.W)
+    E2 = tk.Entry(buttons_frame, bd=5)
+    E2.grid(row=0, column=3, sticky=tk.W)
+
+    L3 = tk.Label(buttons_frame, text='Introduceți numărul de rezultate per pagină (20 din oficiu):')
+    L3.grid(row=0, column=4, sticky=tk.W)
+    E3 = tk.Entry(buttons_frame, bd=5)
+    E3.grid(row=0, column=5, sticky=tk.W)
+
+    L4 = tk.Label(buttons_frame, text=f"Număr rezultate:{totalResults}")
+    L4.grid(row=1, column=0, sticky=tk.W)
+    button = tk.Button(buttons_frame, text="Căutare", command=lambda: keyword_articles(E1.get(), E2.get(), E3.get()))
+    button.grid(row=1, column=1, padx=120, sticky=tk.W)
+
+    w = tk.Spinbox(buttons_frame, from_=0, to=10)
+    w.grid(row=1, column=1, padx=240, sticky=tk.W)
 
 def get_articles(apiKey, language, country, category, pageSize, page, q, sources):
     newsapi_url = 'https://newsapi.org/v2/top-headlines'
@@ -110,9 +116,7 @@ def display_articles_gui(articles, error, status, code, message):
     #window.attributes('-fullscreen', True)
     #window.bind('<Escape>', exit_fullscreen)
 
-    screen_width = window.winfo_screenwidth()
-    screen_height = window.winfo_screenheight()
-    window.geometry(f'{screen_width}x{screen_height}')
+    
 
     canvas = tk.Canvas(window)
     scrollbar = tk.Scrollbar(window, orient='vertical', command=canvas.yview)
