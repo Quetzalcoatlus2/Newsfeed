@@ -2,7 +2,6 @@ from newsapi import NewsApiClient
 import requests
 from requests.exceptions import RequestException
 import tkinter as tk
-from tkinter import *
 from PIL import Image, ImageTk
 from io import BytesIO
 import webbrowser
@@ -43,20 +42,88 @@ def buttons(i):
 
     L4 = tk.Label(buttons_frame, text=f"Număr rezultate:{totalResults}")
     L4.grid(row=1, column=0, sticky=tk.W)
-    button = tk.Button(buttons_frame, text="Căutare", command=lambda: keyword_articles(E1.get(), E2.get(), E3.get()))
+    button = tk.Button(buttons_frame, text="Căutare", command=lambda: keyword_articles(E1.get(), E2.get(), E3.get(), lang.get()))
     button.grid(row=1, column=1, padx=120, sticky=tk.W)
 
     w = tk.Spinbox(buttons_frame, from_=0, to=10)
     w.grid(row=1, column=1, padx=240, sticky=tk.W)
 
-    option = StringVar(window)
+    option = tk.StringVar(buttons_frame)
+    option.trace_add('write', language)
+    def language(*args):
+        print(option.get())
+        def Arabă():
+            return 'ar'
 
-    choices = {'Option 1', 'Option 2', 'Option 3'}
-    option.set('Option 1')  # set the default option
+        def Chineză():
+            return 'zh'
+        
+        def Ebraică():
+            return 'he'
+        
+        def Engleză():
+            return 'en'
+        
+        def Franceză():
+            return 'fr'
+        
+        def Germană():
+            return 'de'
+        
+        def Italiană():
+            return 'it'
+        
+        def Norvegiană():
+            return 'no'
+        
+        def Olandeză():
+            return 'nl'
+        
+        def Portugheză():
+            return 'pt'
+        
+        def Rusă():
+            return 'ru'
+        
+        def Spaniolă():
+            return 'es'
+        
+        def Suedeză():
+            return 'sv'
+        
+        def Turcă():
+            return 'ud'
 
-    popupMenu = OptionMenu(window, option, *choices)
-    Label(window, text="Choose an option").grid(row=1, column=1)
-    popupMenu.grid(row=2, column=1)
+
+        switch = {
+            'Arabă': Arabă,
+            'Chineză': Chineză,
+            'Ebraică': Ebraică,
+            'Engleză': Engleză,
+            'Franceză': Franceză,
+            'Germană': Germană,
+            'Italiană': Italiană,
+            'Norvegiană': Norvegiană,
+            'Olandeză': Olandeză,
+            'Portugheză': Portugheză,
+            'Rusă': Rusă,
+            'Spaniolă': Spaniolă,
+            'Suedeză': Suedeză,
+            'Turcă': Turcă
+            }
+        case=option.get()
+        switch_case = switch.get(case)
+        switch_case()
+    lang=language()
+
+
+    choices = {'Arabă', 'Chineză', 'Ebraică', 'Engleză', 'Franceză', 'Germană', 'Italiană', 'Norvegiană', 'Olandeză', 'Portugheză', 'Rusă', 'Spaniolă', 'Suedeză', 'Turcă'}
+    option.set('Engleză')  
+
+    popupMenu = tk.OptionMenu(buttons_frame, option, *choices)
+    L5=tk.Label(buttons_frame, text="Alegeți limba: ")
+    L5.grid(row=1, column=1, padx=360, sticky=tk.W)
+    popupMenu.grid(row=1, column=1, padx=440, sticky=tk.W)
 
 def get_articles(apiKey, language, country, category, pageSize, page, q, sources):
     newsapi_url = 'https://newsapi.org/v2/top-headlines'
@@ -100,11 +167,12 @@ def get_articles(apiKey, language, country, category, pageSize, page, q, sources
     
     
 
-def keyword_articles(E1, E2, E3):
+def keyword_articles(E1, E2, E3, lang):
     q = E1 if E1 else None
     page = E2 if E2 else None
     pageSize = E3 if E3 else None
-    articles, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=pageSize, page=page, q=q)    
+    language = lang if lang else None
+    articles, error, status, code, message = get_articles(apiKey, language=language, country=None, category=None, sources=None , pageSize=pageSize, page=page, q=q)    
     display_articles_gui(articles, error, status, code, message)
 
 
