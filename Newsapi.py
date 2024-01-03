@@ -12,7 +12,7 @@ newsapi = NewsApiClient(api_key='33064a07856d4cf98dd5fd5d759d3ef4')
 previous_window = None
 articles_per_page = 10
 
-def open_url(url):
+def open_url(action, url):
     webbrowser.open(url)
 
 
@@ -29,7 +29,7 @@ def buttons(i):
     L2 = tk.Label(window, text = 'Introduceți numărul paginii:')
     L2.grid(row = i, padx = 300, sticky = tk.W)
     E2 = tk.Entry(window, bd=5)
-    E2.grid(row = i, padx = 380, sticky = tk.W)
+    E2.grid(row = i, padx = 500, sticky = tk.W)
     button = tk.Button(window, text = "Căutare", command = lambda: keyword_articles(E1.get(), E2.get()))
     button.grid(row = i, padx = 220, sticky = tk.W)
     L3 = tk.Label(window, text = f"Număr rezultate:{totalResults}")
@@ -79,7 +79,7 @@ def get_articles(apiKey, language, country, category, pageSize, page, q, sources
 
 def keyword_articles(E1, E2):
     global totalResults
-    articles, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize= 2, page =f'{E2}', q=f'{E1}')    
+    articles, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize= None, page =f'{E2}', q=f'{E1}')    
     display_articles_gui(articles, error, status, code, message)
 
 def exit_fullscreen():
@@ -116,8 +116,8 @@ def display_articles_gui(articles, error, status, code, message):
     
     if articles:
         for i, article in enumerate(articles, start=1):
-            if article['title'] != '[Removed]':
-                
+            
+            if article['title'] != '[Removed]':    
                 article_frame = tk.Frame(frame, padx=10)
                 article_frame.grid(row=i, sticky=(tk.W, tk.E))
             
@@ -198,7 +198,8 @@ def display_articles_gui(articles, error, status, code, message):
                     urlToImage_label.grid(row=6, sticky=(tk.W))
 
             else:
-                return
+                continue
+           
           
 
            
