@@ -2,6 +2,7 @@ from newsapi import NewsApiClient
 import requests
 from requests.exceptions import RequestException
 import tkinter as tk
+from tkinter import *
 from PIL import Image, ImageTk
 from io import BytesIO
 import webbrowser
@@ -47,6 +48,15 @@ def buttons(i):
 
     w = tk.Spinbox(buttons_frame, from_=0, to=10)
     w.grid(row=1, column=1, padx=240, sticky=tk.W)
+
+    option = StringVar(window)
+
+    choices = {'Option 1', 'Option 2', 'Option 3'}
+    option.set('Option 1')  # set the default option
+
+    popupMenu = OptionMenu(window, option, *choices)
+    Label(window, text="Choose an option").grid(row=1, column=1)
+    popupMenu.grid(row=2, column=1)
 
 def get_articles(apiKey, language, country, category, pageSize, page, q, sources):
     newsapi_url = 'https://newsapi.org/v2/top-headlines'
