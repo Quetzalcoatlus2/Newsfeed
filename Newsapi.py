@@ -1,7 +1,7 @@
 from newsapi import NewsApiClient
 import requests
-import tkinter as tk
 from requests.exceptions import RequestException
+import tkinter as tk
 from PIL import Image, ImageTk
 from io import BytesIO
 import webbrowser
@@ -28,8 +28,16 @@ def buttons(i):
     E1.grid(row = i, padx = 80, sticky = tk.W)
     L2 = tk.Label(window, text = 'Introduceți numărul paginii:')
     L2.grid(row = i, padx = 300, sticky = tk.W)
+    w = tk.Spinbox(window, from_=0, to=int(totalResults/articles_per_page), width=5)
     E2 = tk.Entry(window, bd=5)
     E2.grid(row = i, padx = 500, sticky = tk.W)
+    Lb1 = tk.Listbox(window)
+    Lb1.insert(1, "Arabă")
+    Lb1.insert(2, "Perl")
+    Lb1.insert(3, "C")
+    Lb1.insert(4, "PHP")
+    Lb1.insert(5, "JSP")
+    Lb1.insert(6, "Ruby")
     button = tk.Button(window, text = "Căutare", command = lambda: keyword_articles(E1.get(), E2.get()))
     button.grid(row = i, padx = 220, sticky = tk.W)
     L3 = tk.Label(window, text = f"Număr rezultate:{totalResults}")
@@ -232,7 +240,7 @@ def display_articles_gui(articles, error, status, code, message):
 
 if __name__ == "__main__":
     apiKey = '33064a07856d4cf98dd5fd5d759d3ef4'
-    articles, error, status, code, message = get_articles(apiKey, language='en', country=None, category= None, sources=None , pageSize= None, page = None, q=None)    
+    articles, error, status, code, message = get_articles(apiKey, language=None , country=, category= None, sources=None , pageSize= None, page = None, q=None)    
     display_articles_gui(articles, error, status, code, message)
 
     
