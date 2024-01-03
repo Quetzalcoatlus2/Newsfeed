@@ -10,9 +10,9 @@ import webbrowser
 newsapi = NewsApiClient(api_key='33064a07856d4cf98dd5fd5d759d3ef4')
 
 previous_window = None
-articles_per_page = 10
+totalResults = 0
 
-def open_url(action, url):
+def open_url(url):
     webbrowser.open(url)
 
 
@@ -22,15 +22,19 @@ def on_mousewheel(action):
 
 def buttons(i):
     global totalResults
-    L1 = tk.Label(window, text = 'Cuvânt cheie:')
-    L1.grid(row = i, sticky = tk.W)
+    L1 = tk.Label(window, text='Cuvânt cheie:')
+    L1.grid(row=i, sticky=tk.W)
     E1 = tk.Entry(window, bd=5)
-    E1.grid(row = i, padx = 80, sticky = tk.W)
-    L2 = tk.Label(window, text = 'Introduceți numărul paginii:')
-    L2.grid(row = i, padx = 300, sticky = tk.W)
-    w = tk.Spinbox(window, from_=0, to=int(totalResults/articles_per_page), width=5)
+    E1.grid(row=i, padx=80, sticky=tk.W)
+    L2 = tk.Label(window, text='Introduceți numărul paginii:')
+    L2.grid(row=i, padx=300, sticky=tk.W)
     E2 = tk.Entry(window, bd=5)
-    E2.grid(row = i, padx = 500, sticky = tk.W)
+    E2.grid(row=i, padx=500, sticky=tk.W)
+    L3 = tk.Label(window, text='Introduceți numărul de rezultate per pagină (20 din oficiu):')
+    L3.grid(row=i, padx=700, sticky=tk.W)
+    E3 = tk.Entry(window, bd=5)
+    E3.grid(row=i, padx=500, sticky=tk.W)
+
     Lb1 = tk.Listbox(window)
     Lb1.insert(1, "Arabă")
     Lb1.insert(2, "Perl")
@@ -38,10 +42,10 @@ def buttons(i):
     Lb1.insert(4, "PHP")
     Lb1.insert(5, "JSP")
     Lb1.insert(6, "Ruby")
-    button = tk.Button(window, text = "Căutare", command = lambda: keyword_articles(E1.get(), E2.get()))
-    button.grid(row = i, padx = 220, sticky = tk.W)
-    L3 = tk.Label(window, text = f"Număr rezultate:{totalResults}")
-    L3.grid(row=i+1, sticky=(tk.W)) 
+    button = tk.Button(window, text="Căutare", command=lambda: keyword_articles(E1.get(), E2.get(), E3.get()))
+    button.grid(row=i, padx=220, sticky=tk.W)
+    L3 = tk.Label(window, text=f"Număr rezultate:{totalResults}")
+    L3.grid(row=i+1, sticky=tk.W)
 
 def get_articles(apiKey, language, country, category, pageSize, page, q, sources):
     newsapi_url = 'https://newsapi.org/v2/top-headlines'
@@ -85,13 +89,10 @@ def get_articles(apiKey, language, country, category, pageSize, page, q, sources
     
     
 
-def keyword_articles(E1, E2):
-    global totalResults
-    articles, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize= None, page =f'{E2}', q=f'{E1}')    
+def keyword_articles(E1, E2, E3):
+    articles, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize= f'{E3}', page =f'{E2}', q=f'{E1}')    
     display_articles_gui(articles, error, status, code, message)
 
-def exit_fullscreen():
-    window.attributes('-fullscreen', False)
 
 
 
@@ -240,7 +241,7 @@ def display_articles_gui(articles, error, status, code, message):
 
 if __name__ == "__main__":
     apiKey = '33064a07856d4cf98dd5fd5d759d3ef4'
-    articles, error, status, code, message = get_articles(apiKey, language=None , country=, category= None, sources=None , pageSize= None, page = None, q=None)    
+    articles, error, status, code, message = get_articles(apiKey, language='en' , country=None, category= None, sources=None , pageSize= None, page = None, q=None)    
     display_articles_gui(articles, error, status, code, message)
 
     
