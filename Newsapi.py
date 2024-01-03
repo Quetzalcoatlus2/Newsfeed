@@ -42,16 +42,14 @@ def buttons(i):
 
     L4 = tk.Label(buttons_frame, text=f"Număr rezultate:{totalResults}")
     L4.grid(row=1, column=0, sticky=tk.W)
-    button = tk.Button(buttons_frame, text="Căutare", command=lambda: keyword_articles(E1.get(), E2.get(), E3.get(), lang.get()))
-    button.grid(row=1, column=1, padx=120, sticky=tk.W)
 
-    w = tk.Spinbox(buttons_frame, from_=0, to=10)
-    w.grid(row=1, column=1, padx=240, sticky=tk.W)
+    #w = tk.Spinbox(buttons_frame, from_=0, to=10)
+    #w.grid(row=1, column=1, padx=240, sticky=tk.W)
 
     option = tk.StringVar(buttons_frame)
-    option.trace_add('write', language)
+    option.set('Engleză')  
     def language(*args):
-        print(option.get())
+
         def Arabă():
             return 'ar'
 
@@ -113,17 +111,25 @@ def buttons(i):
             }
         case=option.get()
         switch_case = switch.get(case)
-        switch_case()
+        return switch_case()
+    
+    option.trace_add('write', language)
     lang=language()
+
+        
+   
 
 
     choices = {'Arabă', 'Chineză', 'Ebraică', 'Engleză', 'Franceză', 'Germană', 'Italiană', 'Norvegiană', 'Olandeză', 'Portugheză', 'Rusă', 'Spaniolă', 'Suedeză', 'Turcă'}
-    option.set('Engleză')  
+    
 
     popupMenu = tk.OptionMenu(buttons_frame, option, *choices)
     L5=tk.Label(buttons_frame, text="Alegeți limba: ")
     L5.grid(row=1, column=1, padx=360, sticky=tk.W)
     popupMenu.grid(row=1, column=1, padx=440, sticky=tk.W)
+
+    button = tk.Button(buttons_frame, text="Căutare", command=lambda: keyword_articles(E1.get(), E2.get(), E3.get(), lang))
+    button.grid(row=1, column=1, padx=120, sticky=tk.W)
 
 def get_articles(apiKey, language, country, category, pageSize, page, q, sources):
     newsapi_url = 'https://newsapi.org/v2/top-headlines'
