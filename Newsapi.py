@@ -23,29 +23,24 @@ def on_mousewheel(action):
 def buttons(i):
     global totalResults
     L1 = tk.Label(window, text='Cuvânt cheie:')
-    L1.grid(row=i, sticky=tk.W)
+    L1.grid(row=i, column = 0, sticky=tk.W)
     E1 = tk.Entry(window, bd=5)
-    E1.grid(row=i, padx=80, sticky=tk.W)
+    E1.grid(row=i, column = 1, sticky=tk.W)
     L2 = tk.Label(window, text='Introduceți numărul paginii:')
-    L2.grid(row=i, padx=300, sticky=tk.W)
+    L2.grid(row=i, column = 2, sticky=tk.W)
     E2 = tk.Entry(window, bd=5)
-    E2.grid(row=i, padx=500, sticky=tk.W)
+    E2.grid(row=i, column = 3, sticky=tk.W)
     L3 = tk.Label(window, text='Introduceți numărul de rezultate per pagină (20 din oficiu):')
-    L3.grid(row=i, padx=700, sticky=tk.W)
+    L3.grid(row=i, column = 4, sticky=tk.W)
     E3 = tk.Entry(window, bd=5)
-    E3.grid(row=i, padx=500, sticky=tk.W)
+    E3.grid(row=i, column = 5, sticky=tk.W)
 
-    Lb1 = tk.Listbox(window)
-    Lb1.insert(1, "Arabă")
-    Lb1.insert(2, "Perl")
-    Lb1.insert(3, "C")
-    Lb1.insert(4, "PHP")
-    Lb1.insert(5, "JSP")
-    Lb1.insert(6, "Ruby")
+
+    
+    L4 = tk.Label(window, text=f"Număr rezultate:{totalResults}")
+    L4.grid(row=i+1, column = 0, sticky=tk.W)
     button = tk.Button(window, text="Căutare", command=lambda: keyword_articles(E1.get(), E2.get(), E3.get()))
-    button.grid(row=i, padx=220, sticky=tk.W)
-    L3 = tk.Label(window, text=f"Număr rezultate:{totalResults}")
-    L3.grid(row=i+1, sticky=tk.W)
+    button.grid(row=i+1, padx=120, sticky=tk.W)
 
 def get_articles(apiKey, language, country, category, pageSize, page, q, sources):
     newsapi_url = 'https://newsapi.org/v2/top-headlines'
@@ -90,7 +85,10 @@ def get_articles(apiKey, language, country, category, pageSize, page, q, sources
     
 
 def keyword_articles(E1, E2, E3):
-    articles, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize= f'{E3}', page =f'{E2}', q=f'{E1}')    
+    q = E1 if E1 else None
+    page = E2 if E2 else None
+    pageSize = E3 if E3 else None
+    articles, error, status, code, message = get_articles(apiKey, language='en', country=None, category=None, sources=None , pageSize=pageSize, page=page, q=q)    
     display_articles_gui(articles, error, status, code, message)
 
 
@@ -105,11 +103,16 @@ def display_articles_gui(articles, error, status, code, message):
     
     if previous_window is not None:
         previous_window.destroy()
-
+        
+    
     window = tk.Tk()
     window.title("Articole")
     #window.attributes('-fullscreen', True)
     #window.bind('<Escape>', exit_fullscreen)
+
+    screen_width = window.winfo_screenwidth()
+    screen_height = window.winfo_screenheight()
+    window.geometry(f'{screen_width}x{screen_height}')
 
     canvas = tk.Canvas(window)
     scrollbar = tk.Scrollbar(window, orient='vertical', command=canvas.yview)
@@ -241,7 +244,7 @@ def display_articles_gui(articles, error, status, code, message):
 
 if __name__ == "__main__":
     apiKey = '33064a07856d4cf98dd5fd5d759d3ef4'
-    articles, error, status, code, message = get_articles(apiKey, language='en' , country=None, category= None, sources=None , pageSize= None, page = None, q=None)    
+    articles, error, status, code, message = get_articles(apiKey, language='en' , country=None, category= None, sources=None , pageSize= 3, page = None, q=None)    
     display_articles_gui(articles, error, status, code, message)
 
     
