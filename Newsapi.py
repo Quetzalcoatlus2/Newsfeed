@@ -114,9 +114,6 @@ def buttons(i):
         return switch_case()
     option = tk.StringVar(buttons_frame)
     option.set('Engleză')  
-    option.trace_add('write', language)
-    lang=language()
-    print(f"lang este {lang}")
 
     choices = {'Arabă', 'Chineză', 'Ebraică', 'Engleză', 'Franceză', 'Germană', 'Italiană', 'Norvegiană', 'Olandeză', 'Portugheză', 'Rusă', 'Spaniolă', 'Suedeză', 'Turcă'}
     
@@ -126,6 +123,10 @@ def buttons(i):
     L5=tk.Label(buttons_frame, text="Alegeți limba: ")
     L5.grid(row=1, column=1, padx=360, sticky=tk.W)
     popupMenu.grid(row=1, column=1, padx=440, sticky=tk.W)
+    
+    option.trace_add('write', language)
+    lang=language()
+    print(f"lang este {lang}")
 
     button = tk.Button(buttons_frame, text="Căutare", command=lambda: keyword_articles(E1.get(), E2.get(), E3.get(), lang))
     button.grid(row=1, column=1, padx=120, sticky=tk.W)
