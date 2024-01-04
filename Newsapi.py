@@ -26,6 +26,63 @@ language_codes = {
     'Turcă': 'tr'
 }
 
+country_codes = {
+    'Africa de Sud' : 'za',
+    'Arabia Saudită' : 'sa',
+    'Argentina' : 'ar',
+    'Australia' : 'au',
+    'Austria' : 'at',
+    'Belgia' : 'be',
+    'Brazilia' : 'br',
+    'Bulgaria' : 'bg',
+    'Canada' : 'ca',
+    'Cehia' : 'cz',
+    'China' : 'cn',
+    'Columbia' : 'co',
+    'Coreea de Sud' : 'kr',
+    'Cuba' : 'cu',
+    'Egipt' : 'eg',
+    'Elveția' : 'ch',
+    'Emiratele Arabe Unite' : 'ae',
+    'Filipine' : 'ph',
+    'Franța' : 'fr',
+    'Germania' : 'de',
+    'Grecia' : 'gr',
+    'Hong Kong' : 'hk',
+    'India' : 'in',
+    'Indonezia' : 'id',
+    'Irlanda' : 'ie',
+    'Israel' : 'il',
+    'Italia' : 'it',
+    'Japonia' : 'jp',
+    'Letonia' : 'lv',
+    'Lituania' : 'lt',
+    'Malaezia' : 'my',
+    'Marea Britanie' : 'gb',
+    'Maroc' : 'ma',
+    'Mexic' : 'mx',
+    'Nigeria' : 'ng',
+    'Norvegia' : 'no',
+    'Noua Zeelandă' : 'nz',
+    'Olanda' : 'nl',
+    'Polonia' : 'pl',
+    'Portugalia' : 'pt',
+    'România' : 'ro',
+    'Rusia' : 'ru',
+    'Serbia' : 'rs',
+    'Singapore' : 'sg',
+    'Slovacia' : 'sk',
+    'Slovenia' : 'si',
+    'Statele Unite ale Americii' : 'us',
+    'Suedia' : 'se',
+    'Taiwan' : 'tw',
+    'Thailanda' : 'th',
+    'Turcia' : 'tr',
+    'Ucraina' : 'ua',
+    'Ungaria' : 'hu',
+    'Venezuela' : 've'
+}
+
 previous_window = None
 totalResults = 0
 
@@ -129,22 +186,34 @@ def buttons(i):
         switch_case = switch.get(case)
         print(f"switch_case este {switch_case}")
         return switch_case()"""
+    
+
     option = tk.StringVar(buttons_frame)
     option.set(option.get())  
-
     choices = {'Arabă', 'Chineză', 'Ebraică', 'Engleză', 'Franceză', 'Germană', 'Italiană', 'Norvegiană', 'Olandeză', 'Portugheză', 'Rusă', 'Spaniolă', 'Suedeză', 'Turcă'}
-    
     popupMenu = tk.OptionMenu(buttons_frame, option, *choices)
-    
     option.trace_add('write', option.get())
     L5=tk.Label(buttons_frame, text="Alegeți limba: ")
     L5.grid(row=1, column=1, padx=360, sticky=tk.W)
     popupMenu.grid(row=1, column=1, padx=440, sticky=tk.W)
+
+    country_option = tk.StringVar(buttons_frame)
+    country_option.set(country_option.get())  
+    country_choices = {'Africa de Sud', 'Arabia Saudită', 'Argentina', 'Australia' , 'Austria', 'Belgia', 'Brazilia', 'Bulgaria', 'Canada', 'Cehia', 
+                       'China', 'Columbia', 'Coreea de Sud', 'Cuba', 'Egipt', 'Elveția', 'Emiratele Arabe Unite', 'Filipine', 'Franța', 'Germania',
+                       'Grecia', 'Hong Kong', 'India', 'Indonezia', 'Irlanda', 'Israel', 'Italia', 'Japonia', 'Letonia', 'Lituania', 'Malaezia',
+                       'Marea Britanie', 'Maroc', 'Mexic', 'Nigeria', 'Norvegia', 'Noua Zeelandă', 'Olanda', 'Polonia', 'Portugalia', 'România',
+                       'Rusia', 'Serbia', 'Singapore', 'Slovacia', 'Slovenia', 'Statele Unite ale Americii', 'Suedia', 'Taiwan', 'Thailanda',
+                       'Turcia', 'Ucraina', 'Ungaria', 'Venezuela'}
+    country_popupMenu = tk.OptionMenu(buttons_frame, country_option, *country_choices)
+    country_option.trace_add('write', country_option.get())
+    L6=tk.Label(buttons_frame, text="Alegeți țara: ")
+    L6.grid(row=1, column=1, padx=500, sticky=tk.W)
+    country_popupMenu.grid(row=1, column=1, padx=580, sticky=tk.W)
     
 
-    button = tk.Button(buttons_frame, text="Căutare", command=lambda: keyword_articles(E1.get(), E2.get(), E3.get(), option.get()))
+    button = tk.Button(buttons_frame, text="Căutare", command=lambda: keyword_articles(E1.get(), E2.get(), E3.get(), option.get(), country_option.get()))
     button.grid(row=1, column=1, padx=120, sticky=tk.W)
-    print(f"option.get este {option.get()}")
 
 def get_articles(apiKey, language, country, category, pageSize, page, q, sources):
     newsapi_url = 'https://newsapi.org/v2/top-headlines'
@@ -193,7 +262,8 @@ def keyword_articles(E1, E2, E3, option):
     page = E2 if E2 else None
     pageSize = E3 if E3 else None
     language = language_codes.get(option) if option else None
-    articles, error, status, code, message = get_articles(apiKey, language=language, country=None, category=None, sources=None , pageSize=pageSize, page=page, q=q)    
+    country = country_codes.get(option) if option else None
+    articles, error, status, code, message = get_articles(apiKey, language=language, country=country, category=None, sources=None , pageSize=pageSize, page=page, q=q)    
     display_articles_gui(articles, error, status, code, message)
 
 
@@ -377,3 +447,5 @@ For 'sources', fill in sources={'google-news', 'bbc-news', 'the-verge', 'cnn', '
  ATTENTION!!! The "sources" field cannot be mixed with the "country" and "category" fields, so either use sources, 
  or use "country" + "category
  """
+
+
