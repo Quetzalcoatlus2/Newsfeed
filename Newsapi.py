@@ -83,6 +83,16 @@ country_codes = {
     'Venezuela' : 've'
 }
 
+category_codes = {
+    'Afaceri': 'business',
+    'Divertisment': 'entertainment',
+    'General': 'general',
+    'Sănătate': 'health',
+    'Sport': 'sport',
+    'Știință': 'science',
+    'Tehnologie': 'technology'
+}
+
 previous_window = None
 totalResults = 0
 
@@ -188,31 +198,43 @@ def buttons(i):
         return switch_case()"""
     
 
-    option = tk.StringVar(buttons_frame)
-    option.set(option.get())  
-    choices = {'Arabă', 'Chineză', 'Ebraică', 'Engleză', 'Franceză', 'Germană', 'Italiană', 'Norvegiană', 'Olandeză', 'Portugheză', 'Rusă', 'Spaniolă', 'Suedeză', 'Turcă'}
-    popupMenu = tk.OptionMenu(buttons_frame, option, *choices)
-    option.trace_add('write', option.get())
     L5=tk.Label(buttons_frame, text="Alegeți limba: ")
     L5.grid(row=1, column=1, padx=360, sticky=tk.W)
+    option = tk.StringVar(buttons_frame)
+    option.set(option.get())  
+    choices = {'Arabă', 'Chineză', 'Ebraică', 'Engleză', 'Franceză', 'Germană', 'Italiană', 'Norvegiană', 'Olandeză', 'Portugheză', 
+               'Rusă', 'Spaniolă', 'Suedeză', 'Turcă'}
+    popupMenu = tk.OptionMenu(buttons_frame, option, *choices)
     popupMenu.grid(row=1, column=1, padx=440, sticky=tk.W)
+    option.trace_add('write', option.get())
 
-    country_option = tk.StringVar(buttons_frame)
-    country_option.set(country_option.get())  
-    country_choices = {'Africa de Sud', 'Arabia Saudită', 'Argentina', 'Australia' , 'Austria', 'Belgia', 'Brazilia', 'Bulgaria', 'Canada', 'Cehia', 
-                       'China', 'Columbia', 'Coreea de Sud', 'Cuba', 'Egipt', 'Elveția', 'Emiratele Arabe Unite', 'Filipine', 'Franța', 'Germania',
-                       'Grecia', 'Hong Kong', 'India', 'Indonezia', 'Irlanda', 'Israel', 'Italia', 'Japonia', 'Letonia', 'Lituania', 'Malaezia',
-                       'Marea Britanie', 'Maroc', 'Mexic', 'Nigeria', 'Norvegia', 'Noua Zeelandă', 'Olanda', 'Polonia', 'Portugalia', 'România',
-                       'Rusia', 'Serbia', 'Singapore', 'Slovacia', 'Slovenia', 'Statele Unite ale Americii', 'Suedia', 'Taiwan', 'Thailanda',
-                       'Turcia', 'Ucraina', 'Ungaria', 'Venezuela'}
-    country_popupMenu = tk.OptionMenu(buttons_frame, country_option, *country_choices)
-    country_option.trace_add('write', country_option.get())
+
     L6=tk.Label(buttons_frame, text="Alegeți țara: ")
     L6.grid(row=1, column=1, padx=500, sticky=tk.W)
+    country_option = tk.StringVar(buttons_frame)
+    country_option.set(country_option.get())  
+    country_choices = {'Africa de Sud', 'Arabia Saudită', 'Argentina', 'Australia' , 'Austria', 'Belgia', 'Brazilia', 'Bulgaria', 
+                       'Canada', 'Cehia', 'China', 'Columbia', 'Coreea de Sud', 'Cuba', 'Egipt', 'Elveția', 'Emiratele Arabe Unite', 
+                       'Filipine', 'Franța', 'Germania', 'Grecia', 'Hong Kong', 'India', 'Indonezia', 'Irlanda', 'Israel', 'Italia', 
+                       'Japonia', 'Letonia', 'Lituania', 'Malaezia', 'Marea Britanie', 'Maroc', 'Mexic', 'Nigeria', 'Norvegia', 
+                       'Noua Zeelandă', 'Olanda', 'Polonia', 'Portugalia', 'România', 'Rusia', 'Serbia', 'Singapore', 'Slovacia', 
+                       'Slovenia', 'Statele Unite ale Americii', 'Suedia', 'Taiwan', 'Thailanda', 'Turcia', 'Ucraina', 'Ungaria', 
+                       'Venezuela'}
+    country_popupMenu = tk.OptionMenu(buttons_frame, country_option, *country_choices)
     country_popupMenu.grid(row=1, column=1, padx=580, sticky=tk.W)
+    country_option.trace_add('write', country_option.get())
+
+    L7=tk.Label(buttons_frame, text="Alegeți categoria: ")
+    L7.grid(row=1, column=1, padx=650, sticky=tk.W)
+    category_option = tk.StringVar(buttons_frame)
+    category_option.set(category_option.get())  
+    category_choices = {'Arabă', 'Chineză', 'General', 'Sănătate', 'Sport', 'Știință', 'Tehnologie'}
+    category_popupMenu = tk.OptionMenu(buttons_frame, category_option, *category_choices)
+    category_popupMenu.grid(row=1, column=1, padx=700, sticky=tk.W)
+    category_option.trace_add('write', category_option.get())
     
 
-    button = tk.Button(buttons_frame, text="Căutare", command=lambda: keyword_articles(E1.get(), E2.get(), E3.get(), option.get(), country_option.get()))
+    button = tk.Button(buttons_frame, text="Căutare", command=lambda: keyword_articles(E1.get(), E2.get(), E3.get(), option.get(), country_option.get(), category_option.get()))
     button.grid(row=1, column=1, padx=120, sticky=tk.W)
 
 def get_articles(apiKey, language, country, category, pageSize, page, q, sources):
@@ -257,13 +279,14 @@ def get_articles(apiKey, language, country, category, pageSize, page, q, sources
     
     
 
-def keyword_articles(E1, E2, E3, option):
+def keyword_articles(E1, E2, E3, option, country_option, category_option):
     q = E1 if E1 else None
     page = E2 if E2 else None
     pageSize = E3 if E3 else None
     language = language_codes.get(option) if option else None
-    country = country_codes.get(option) if option else None
-    articles, error, status, code, message = get_articles(apiKey, language=language, country=country, category=None, sources=None , pageSize=pageSize, page=page, q=q)    
+    country = country_codes.get(country_option) if option else None
+    category = category_codes.get(category_option) if option else None
+    articles, error, status, code, message = get_articles(apiKey, language=language, country=country, category=category, sources=None , pageSize=pageSize, page=page, q=q)    
     display_articles_gui(articles, error, status, code, message)
 
 
@@ -449,3 +472,51 @@ For 'sources', fill in sources={'google-news', 'bbc-news', 'the-verge', 'cnn', '
  """
 
 
+{'Google News' : 'google-news', 
+ 'BBC News' : 'bbc-news',
+ 'The Verge': 'the-verge', 
+ 'CNN' : 'cnn', 
+ 'USA Today' : 'usa-today', 
+ 'ABC News' : 'abc-news', 
+ 'Associated Press' : 'associated-press', 
+ 'Axios' : 'axios', 
+ 'Bloomberg' : 'bloomberg', 
+ 'Bussiness Insider' : 'business-insider', 
+ 'CBC News' : 'cbc-news', 
+ 'CNBC' : 'cnbc', 
+ 'Engadget' : 'engadget', 
+ 'Entertainment Weekly' : 'entertainment-weekly', 
+ 'Fortune' : 'fortune', 
+ 'For Sports' : 'fox-sports', 
+ 'Google News California' : 'google-news-ca', 
+ 'Google News Marea Britanie' : 'google-news-uk', 
+ 'Hacker News' : 'hacker-news', 
+ 'IGN' : 'ign', 
+ 'Medical News Today' : 'medical-news-today', 
+ 'MSNBC' : 'msnbc', 
+ 'MTV News' : 'mtv-news', 
+ 'National Geographic' : 'national-geographic', 
+ 'NBC News' : 'nbc-news', 
+ 'News24' : 'news24', 
+ 'Newsweek' : 'newsweek', 
+ 'New York Magazine' : 'new-york-magazine', 
+ 'Next Big Future' : 'next-big-future', 
+ 'NFL News' : 'nfl-news', 
+ 'NHL News' : 'nhl-news', 
+ 'Politico' : 'politico', 
+ 'Polygon' : 'polygon', 
+ 'Recode' : 'recode', 
+ 'Reddit r/all' : 'reddit-r-all', 
+ 'Reuters' : 'reuters', 
+ 'Techcrunch' : 'techcrunch', 
+ 'Techradar' : 'techradar', 
+ 'The American Conservative' : 'the-american-conservative', 
+ 'The Hill' : 'the-hill', 
+ 'The Huffington Post' : 'the-huffington-post', 
+ 'The Next Web' : 'the-next-web', 
+ 'The Sport Bible' : 'the-sport-bible', 
+ 'The Times of India' : 'the-times-of-india', 
+ 'The Washignton Post' : 'the-washington-times', 
+ 'Time' : 'time', 
+ 'Vice News' : 'vice-news', 
+ 'Wired' : 'wired'}
