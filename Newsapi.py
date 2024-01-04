@@ -9,6 +9,23 @@ import webbrowser
 
 newsapi = NewsApiClient(api_key='33064a07856d4cf98dd5fd5d759d3ef4')
 
+language_codes = {
+    'Arabă': 'ar',
+    'Chineză': 'zh',
+    'Ebraică': 'he',
+    'Engleză': 'en',
+    'Franceză': 'fr',
+    'Germană': 'de',
+    'Italiană': 'it',
+    'Norvegiană': 'no',
+    'Olandeză': 'nl',
+    'Portugheză': 'pt',
+    'Rusă': 'ru',
+    'Spaniolă': 'es',
+    'Suedeză': 'sv',
+    'Turcă': 'tr'
+}
+
 previous_window = None
 totalResults = 0
 
@@ -47,7 +64,7 @@ def buttons(i):
     #w.grid(row=1, column=1, padx=240, sticky=tk.W)
 
     
-    def language(*args):
+    """def language(*args):
 
         def Arabă():
             return 'ar'
@@ -111,24 +128,21 @@ def buttons(i):
         case=option.get()
         switch_case = switch.get(case)
         print(f"switch_case este {switch_case}")
-        return switch_case()
+        return switch_case()"""
     option = tk.StringVar(buttons_frame)
-    option.set('Engleză')  
+    option.set(option.get())  
 
     choices = {'Arabă', 'Chineză', 'Ebraică', 'Engleză', 'Franceză', 'Germană', 'Italiană', 'Norvegiană', 'Olandeză', 'Portugheză', 'Rusă', 'Spaniolă', 'Suedeză', 'Turcă'}
     
     popupMenu = tk.OptionMenu(buttons_frame, option, *choices)
     
-    print(f"option.get este {option.get()}")
+    option.trace_add('write', option.get())
     L5=tk.Label(buttons_frame, text="Alegeți limba: ")
     L5.grid(row=1, column=1, padx=360, sticky=tk.W)
     popupMenu.grid(row=1, column=1, padx=440, sticky=tk.W)
     
-    option.trace_add('write', language)
-    lang=language()
-    print(f"lang este {lang}")
 
-    button = tk.Button(buttons_frame, text="Căutare", command=lambda: keyword_articles(E1.get(), E2.get(), E3.get(), lang))
+    button = tk.Button(buttons_frame, text="Căutare", command=lambda: keyword_articles(E1.get(), E2.get(), E3.get(), option.get()))
     button.grid(row=1, column=1, padx=120, sticky=tk.W)
     print(f"option.get este {option.get()}")
 
@@ -174,11 +188,11 @@ def get_articles(apiKey, language, country, category, pageSize, page, q, sources
     
     
 
-def keyword_articles(E1, E2, E3, lang):
+def keyword_articles(E1, E2, E3, option):
     q = E1 if E1 else None
     page = E2 if E2 else None
     pageSize = E3 if E3 else None
-    language = lang if lang else None
+    language = language_codes.get(option) if option else None
     articles, error, status, code, message = get_articles(apiKey, language=language, country=None, category=None, sources=None , pageSize=pageSize, page=page, q=q)    
     display_articles_gui(articles, error, status, code, message)
 
