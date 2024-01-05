@@ -292,11 +292,11 @@ def buttons(i):
     category_option.set(category_option.get())  
     category_choices = {'Afaceri', 'Divertisment', 'General', 'Sănătate', 'Sport', 'Știință', 'Tehnologie'}
     category_popupMenu = tk.OptionMenu(buttons_frame, category_option, *category_choices)
-    category_popupMenu.grid(row=1, padx=620, sticky=tk.W)
+    category_popupMenu.grid(row=1, padx=630, sticky=tk.W)
     category_option.trace_add('write', category_option_changed)
 
     L8=tk.Label(buttons_frame, text="Alegeți sursa: ")
-    L8.grid(row=1, padx=750, sticky=tk.W)
+    L8.grid(row=1, padx=800, sticky=tk.W)
     sources_option = tk.StringVar(buttons_frame)
     sources_option.set(sources_option.get())  
     sources_choices = {'Google News', 'BBC News', 'The Verge', 'CNN', 'USA Today', 'ABC News', 'Associated Press', 'Axios', 'Bloomberg',
@@ -307,7 +307,7 @@ def buttons(i):
                        'The American Conservative', 'The Hill', 'The Huffington Post', 'The Next Web', 'The Sport Bible', 
                        'The Times of India', 'The Washignton Post', 'Time', 'Vice News', 'Wired'}
     sources_popupMenu = tk.OptionMenu(buttons_frame, sources_option, *sources_choices)
-    sources_popupMenu.grid(row=1, padx=820, sticky=tk.W)
+    sources_popupMenu.grid(row=1, padx=880, sticky=tk.W)
     sources_option.trace_add('write', sources_option_changed)
 
 
