@@ -177,18 +177,18 @@ def buttons(i):
     keyword_entry.grid(row=0, padx=80, sticky=tk.W)
 
     totalResults_label = tk.Label(buttons_frame, text=f"Număr rezultate:{totalResults}")
-    totalResults_label.grid(row=0, padx=1200, sticky=tk.W)
+    totalResults_label.grid(row=1, sticky=tk.W)
 
     results_per_page_label = tk.Label(buttons_frame, text='Articole per pagină:')
-    results_per_page_label.grid(row=0, padx=220, sticky=tk.W)
+    results_per_page_label.grid(row=0, padx=215, sticky=tk.W)
     results_per_page_default = tk.IntVar(value=3)
     results_per_page_spinbox = tk.Spinbox(buttons_frame, from_=1, to=100, textvariable=results_per_page_default)
-    results_per_page_spinbox.grid(row=0, padx=300, sticky=tk.W)
+    results_per_page_spinbox.grid(row=0, padx=325, sticky=tk.W)
 
     page_number_label = tk.Label(buttons_frame, text='Numărul paginii:')
-    page_number_label.grid(row=0, padx=400, sticky=tk.W)
+    page_number_label.grid(row=0, padx=460, sticky=tk.W)
     page_number_spinbox = tk.Spinbox(buttons_frame, from_=1, to= 1+ int(totalResults)//int(results_per_page_spinbox.get()))
-    page_number_spinbox .grid(row=0, padx=500, sticky=tk.W)
+    page_number_spinbox .grid(row=0, padx=560, sticky=tk.W)
 
 
 
@@ -261,18 +261,18 @@ def buttons(i):
     
 
     L5=tk.Label(buttons_frame, text="Alegeți limba: ")
-    L5.grid(row=0, padx= 550, sticky=tk.W)
+    L5.grid(row=1, padx= 120, sticky=tk.W)
     language_option = tk.StringVar(buttons_frame)
     language_option.set(language_option.get())  
     language_choices = {'Arabă', 'Chineză', 'Ebraică', 'Engleză', 'Franceză', 'Germană', 'Italiană', 'Norvegiană', 'Olandeză', 'Portugheză', 
                'Rusă', 'Spaniolă', 'Suedeză', 'Turcă'}
     language_popupMenu = tk.OptionMenu(buttons_frame, language_option, *language_choices)
-    language_popupMenu.grid(row=0, padx=600, sticky=tk.W)
+    language_popupMenu.grid(row=1, padx=200, sticky=tk.W)
     language_option.trace_add('write', language_option_changed)
 
 
     L6=tk.Label(buttons_frame, text="Alegeți țara: ")
-    L6.grid(row=0, padx=700, sticky=tk.W)
+    L6.grid(row=1, padx=310, sticky=tk.W)
     country_option = tk.StringVar(buttons_frame)
     country_option.set(country_option.get())  
     country_choices = {'Africa de Sud', 'Arabia Saudită', 'Argentina', 'Australia' , 'Austria', 'Belgia', 'Brazilia', 'Bulgaria', 
@@ -283,20 +283,20 @@ def buttons(i):
                        'Slovenia', 'Statele Unite ale Americii', 'Suedia', 'Taiwan', 'Thailanda', 'Turcia', 'Ucraina', 'Ungaria', 
                        'Venezuela'}
     country_popupMenu = tk.OptionMenu(buttons_frame, country_option, *country_choices)
-    country_popupMenu.grid(row=0, padx=750, sticky=tk.W)
+    country_popupMenu.grid(row=0, padx=380, sticky=tk.W)
     country_option.trace_add('write', country_option_changed)
 
     L7=tk.Label(buttons_frame, text="Alegeți categoria: ")
-    L7.grid(row=0, padx=850, sticky=tk.W)
+    L7.grid(row=1, padx=560, sticky=tk.W)
     category_option = tk.StringVar(buttons_frame)
     category_option.set(category_option.get())  
     category_choices = {'Afaceri', 'Divertisment', 'General', 'Sănătate', 'Sport', 'Știință', 'Tehnologie'}
     category_popupMenu = tk.OptionMenu(buttons_frame, category_option, *category_choices)
-    category_popupMenu.grid(row=0, padx=900, sticky=tk.W)
+    category_popupMenu.grid(row=1, padx=650, sticky=tk.W)
     category_option.trace_add('write', category_option_changed)
 
     L8=tk.Label(buttons_frame, text="Alegeți sursa: ")
-    L8.grid(row=0, padx=1000, sticky=tk.W)
+    L8.grid(row=1, padx=730, sticky=tk.W)
     sources_option = tk.StringVar(buttons_frame)
     sources_option.set(sources_option.get())  
     sources_choices = {'Google News', 'BBC News', 'The Verge', 'CNN', 'USA Today', 'ABC News', 'Associated Press', 'Axios', 'Bloomberg',
@@ -307,14 +307,14 @@ def buttons(i):
                        'The American Conservative', 'The Hill', 'The Huffington Post', 'The Next Web', 'The Sport Bible', 
                        'The Times of India', 'The Washignton Post', 'Time', 'Vice News', 'Wired'}
     sources_popupMenu = tk.OptionMenu(buttons_frame, sources_option, *sources_choices)
-    sources_popupMenu.grid(row=0, padx=1050, sticky=tk.W)
+    sources_popupMenu.grid(row=1, padx=800, sticky=tk.W)
     sources_option.trace_add('write', sources_option_changed)
 
 
     
 
     button = tk.Button(buttons_frame, text="Căutare", command=lambda: keyword_articles(keyword_entry.get(), results_per_page_spinbox.get(), page_number_spinbox.get(), language_option.get(), country_option.get(), category_option.get(), sources_option.get()))
-    button.grid(row=0, padx=1150, sticky=tk.W)
+    button.grid(row=0, padx=1450, sticky=tk.W)
 
 
 
