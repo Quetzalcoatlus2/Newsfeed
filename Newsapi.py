@@ -176,8 +176,6 @@ def buttons(i):
     keyword_entry = tk.Entry(buttons_frame, bd=5)
     keyword_entry.grid(row=0, padx=80, sticky=tk.W)
 
-    totalResults_label = tk.Label(buttons_frame, text=f"Număr rezultate:{totalResults}")
-    totalResults_label.grid(row=1, padx=1400, sticky=tk.W)
 
     results_per_page_label = tk.Label(buttons_frame, text='Articole per pagină:')
     results_per_page_label.grid(row=0, padx=250, sticky=tk.W)
@@ -310,11 +308,15 @@ def buttons(i):
     sources_popupMenu.grid(row=1, padx=880, sticky=tk.W)
     sources_option.trace_add('write', sources_option_changed)
 
+    
+    totalResults_label = tk.Label(buttons_frame, text=f"Număr rezultate:{totalResults}")
+    totalResults_label.grid(row=0, padx=1400, sticky=tk.W)
+
 
     
 
     button = tk.Button(buttons_frame, text="Apăsați acest buton după ce ați ales toți parametrii pentru căutare", command=lambda: keyword_articles(keyword_entry.get(), results_per_page_spinbox.get(), page_number_spinbox.get(), language_option.get(), country_option.get(), category_option.get(), sources_option.get()))
-    button.grid(row=0, padx=1200, sticky=tk.W)
+    button.grid(row=1, padx=1145, sticky=tk.W)
 
 
 
