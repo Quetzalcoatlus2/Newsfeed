@@ -272,7 +272,7 @@ def buttons(i):
 
 
     L6=tk.Label(buttons_frame, text="Alegeți țara: ")
-    L6.grid(row=1, padx=190, sticky=tk.W)
+    L6.grid(row=1, padx=250, sticky=tk.W)
     country_option = tk.StringVar(buttons_frame)
     country_option.set(country_option.get())  
     country_choices = {'Africa de Sud', 'Arabia Saudită', 'Argentina', 'Australia' , 'Austria', 'Belgia', 'Brazilia', 'Bulgaria', 
@@ -283,20 +283,20 @@ def buttons(i):
                        'Slovenia', 'Statele Unite ale Americii', 'Suedia', 'Taiwan', 'Thailanda', 'Turcia', 'Ucraina', 'Ungaria', 
                        'Venezuela'}
     country_popupMenu = tk.OptionMenu(buttons_frame, country_option, *country_choices)
-    country_popupMenu.grid(row=1, padx=260, sticky=tk.W)
+    country_popupMenu.grid(row=1, padx=320, sticky=tk.W)
     country_option.trace_add('write', country_option_changed)
 
     L7=tk.Label(buttons_frame, text="Alegeți categoria: ")
-    L7.grid(row=1, padx=440, sticky=tk.W)
+    L7.grid(row=1, padx=530, sticky=tk.W)
     category_option = tk.StringVar(buttons_frame)
     category_option.set(category_option.get())  
     category_choices = {'Afaceri', 'Divertisment', 'General', 'Sănătate', 'Sport', 'Știință', 'Tehnologie'}
     category_popupMenu = tk.OptionMenu(buttons_frame, category_option, *category_choices)
-    category_popupMenu.grid(row=1, padx=530, sticky=tk.W)
+    category_popupMenu.grid(row=1, padx=620, sticky=tk.W)
     category_option.trace_add('write', category_option_changed)
 
     L8=tk.Label(buttons_frame, text="Alegeți sursa: ")
-    L8.grid(row=1, padx=610, sticky=tk.W)
+    L8.grid(row=1, padx=750, sticky=tk.W)
     sources_option = tk.StringVar(buttons_frame)
     sources_option.set(sources_option.get())  
     sources_choices = {'Google News', 'BBC News', 'The Verge', 'CNN', 'USA Today', 'ABC News', 'Associated Press', 'Axios', 'Bloomberg',
@@ -307,7 +307,7 @@ def buttons(i):
                        'The American Conservative', 'The Hill', 'The Huffington Post', 'The Next Web', 'The Sport Bible', 
                        'The Times of India', 'The Washignton Post', 'Time', 'Vice News', 'Wired'}
     sources_popupMenu = tk.OptionMenu(buttons_frame, sources_option, *sources_choices)
-    sources_popupMenu.grid(row=1, padx=680, sticky=tk.W)
+    sources_popupMenu.grid(row=1, padx=820, sticky=tk.W)
     sources_option.trace_add('write', sources_option_changed)
 
 
