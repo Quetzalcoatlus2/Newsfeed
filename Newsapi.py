@@ -172,9 +172,9 @@ def buttons(i):
     buttons_frame.grid(row=i, sticky=(tk.W, tk.E))
 
     keyword_label = tk.Label(buttons_frame, text='Cuvânt cheie:')
-    keyword_label.grid(row=0, column=0, sticky=tk.W)
+    keyword_label.grid(row=0, sticky=tk.W)
     keyword_entry = tk.Entry(buttons_frame, bd=5)
-    keyword_entry.grid(row=0, column=1, sticky=tk.W)
+    keyword_entry.grid(row=0, padx=80, sticky=tk.W)
 
     totalResults_label = tk.Label(buttons_frame, text=f"Număr rezultate:{totalResults}")
     totalResults_label.grid(row=1, column=0, sticky=tk.W)
