@@ -93,6 +93,57 @@ category_codes = {
     'Tehnologie': 'technology'
 }
 
+sources_codes = {
+    'Google News' : 'google-news', 
+    'BBC News' : 'bbc-news',
+    'The Verge': 'the-verge', 
+    'CNN' : 'cnn', 
+    'USA Today' : 'usa-today', 
+    'ABC News' : 'abc-news', 
+    'Associated Press' : 'associated-press', 
+    'Axios' : 'axios', 
+    'Bloomberg' : 'bloomberg', 
+    'Bussiness Insider' : 'business-insider', 
+    'CBC News' : 'cbc-news', 
+    'CNBC' : 'cnbc', 
+    'Engadget' : 'engadget', 
+    'Entertainment Weekly' : 'entertainment-weekly', 
+    'Fortune' : 'fortune', 
+    'For Sports' : 'fox-sports', 
+    'Google News California' : 'google-news-ca', 
+    'Google News Marea Britanie' : 'google-news-uk', 
+    'Hacker News' : 'hacker-news', 
+    'IGN' : 'ign', 
+    'Medical News Today' : 'medical-news-today', 
+    'MSNBC' : 'msnbc', 
+    'MTV News' : 'mtv-news', 
+    'National Geographic' : 'national-geographic', 
+    'NBC News' : 'nbc-news', 
+    'News24' : 'news24', 
+    'Newsweek' : 'newsweek', 
+    'New York Magazine' : 'new-york-magazine', 
+    'Next Big Future' : 'next-big-future', 
+    'NFL News' : 'nfl-news', 
+    'NHL News' : 'nhl-news', 
+    'Politico' : 'politico', 
+    'Polygon' : 'polygon', 
+    'Recode' : 'recode', 
+    'Reddit r/all' : 'reddit-r-all', 
+    'Reuters' : 'reuters', 
+    'Techcrunch' : 'techcrunch', 
+    'Techradar' : 'techradar', 
+    'The American Conservative' : 'the-american-conservative', 
+    'The Hill' : 'the-hill', 
+    'The Huffington Post' : 'the-huffington-post', 
+    'The Next Web' : 'the-next-web', 
+    'The Sport Bible' : 'the-sport-bible', 
+    'The Times of India' : 'the-times-of-india', 
+    'The Washignton Post' : 'the-washington-times', 
+    'Time' : 'time', 
+    'Vice News' : 'vice-news', 
+    'Wired' : 'wired'
+}
+
 previous_window = None
 totalResults = 0
 
@@ -232,9 +283,24 @@ def buttons(i):
     category_popupMenu = tk.OptionMenu(buttons_frame, category_option, *category_choices)
     category_popupMenu.grid(row=1, column=1, padx=700, sticky=tk.W)
     category_option.trace_add('write', category_option.get())
+
+    L8=tk.Label(buttons_frame, text="Alegeți categoria: ")
+    L8.grid(row=1, column=1, padx=750, sticky=tk.W)
+    sources_option = tk.StringVar(buttons_frame)
+    sources_option.set(sources_option.get())  
+    sources_choices = {'Google News', 'BBC News', 'The Verge', 'CNN', 'USA Today', 'ABC News', 'Associated Press', 'Axios', 'Bloomberg',
+                       'Bussiness Insider', 'CBC News', 'CNBC', 'Engadget', 'Entertainment Weekly', 'Fortune', 'For Sports',
+                       'Google News California', 'Google News Marea Britanie', 'Hacker News', 'IGN', 'Medical News Today', 'MSNBC', 
+                       'MTV News', 'National Geographic', 'NBC News', 'News24', 'Newsweek', 'New York Magazine', 'Next Big Future', 
+                       'NFL News', 'NHL News', 'Politico', 'Polygon', 'Recode', 'Reddit r/all', 'Reuters', 'Techcrunch', 'Techradar', 
+                       'The American Conservative', 'The Hill', 'The Huffington Post', 'The Next Web', 'The Sport Bible', 
+                       'The Times of India', 'The Washignton Post', 'Time', 'Vice News', 'Wired'}
+    sources_popupMenu = tk.OptionMenu(buttons_frame, sources_option, *sources_choices)
+    sources_popupMenu.grid(row=1, column=1, padx=800, sticky=tk.W)
+    sources_option.trace_add('write', sources_option.get())
     
 
-    button = tk.Button(buttons_frame, text="Căutare", command=lambda: keyword_articles(E1.get(), E2.get(), E3.get(), option.get(), country_option.get(), category_option.get()))
+    button = tk.Button(buttons_frame, text="Căutare", command=lambda: keyword_articles(E1.get(), E2.get(), E3.get(), option.get(), country_option.get(), category_option.get(), sources_option.get()))
     button.grid(row=1, column=1, padx=120, sticky=tk.W)
 
 def get_articles(apiKey, language, country, category, pageSize, page, q, sources):
@@ -279,14 +345,15 @@ def get_articles(apiKey, language, country, category, pageSize, page, q, sources
     
     
 
-def keyword_articles(E1, E2, E3, option, country_option, category_option):
+def keyword_articles(E1, E2, E3, option, country_option, category_option, sources_option):
     q = E1 if E1 else None
     page = E2 if E2 else None
     pageSize = E3 if E3 else None
     language = language_codes.get(option) if option else None
     country = country_codes.get(country_option) if option else None
     category = category_codes.get(category_option) if option else None
-    articles, error, status, code, message = get_articles(apiKey, language=language, country=country, category=category, sources=None , pageSize=pageSize, page=page, q=q)    
+    sources = sources_codes.get(sources_option) if option else None
+    articles, error, status, code, message = get_articles(apiKey, language=language, country=country, category=category, sources=sources , pageSize=pageSize, page=page, q=q)    
     display_articles_gui(articles, error, status, code, message)
 
 
@@ -472,51 +539,5 @@ For 'sources', fill in sources={'google-news', 'bbc-news', 'the-verge', 'cnn', '
  """
 
 
-{'Google News' : 'google-news', 
- 'BBC News' : 'bbc-news',
- 'The Verge': 'the-verge', 
- 'CNN' : 'cnn', 
- 'USA Today' : 'usa-today', 
- 'ABC News' : 'abc-news', 
- 'Associated Press' : 'associated-press', 
- 'Axios' : 'axios', 
- 'Bloomberg' : 'bloomberg', 
- 'Bussiness Insider' : 'business-insider', 
- 'CBC News' : 'cbc-news', 
- 'CNBC' : 'cnbc', 
- 'Engadget' : 'engadget', 
- 'Entertainment Weekly' : 'entertainment-weekly', 
- 'Fortune' : 'fortune', 
- 'For Sports' : 'fox-sports', 
- 'Google News California' : 'google-news-ca', 
- 'Google News Marea Britanie' : 'google-news-uk', 
- 'Hacker News' : 'hacker-news', 
- 'IGN' : 'ign', 
- 'Medical News Today' : 'medical-news-today', 
- 'MSNBC' : 'msnbc', 
- 'MTV News' : 'mtv-news', 
- 'National Geographic' : 'national-geographic', 
- 'NBC News' : 'nbc-news', 
- 'News24' : 'news24', 
- 'Newsweek' : 'newsweek', 
- 'New York Magazine' : 'new-york-magazine', 
- 'Next Big Future' : 'next-big-future', 
- 'NFL News' : 'nfl-news', 
- 'NHL News' : 'nhl-news', 
- 'Politico' : 'politico', 
- 'Polygon' : 'polygon', 
- 'Recode' : 'recode', 
- 'Reddit r/all' : 'reddit-r-all', 
- 'Reuters' : 'reuters', 
- 'Techcrunch' : 'techcrunch', 
- 'Techradar' : 'techradar', 
- 'The American Conservative' : 'the-american-conservative', 
- 'The Hill' : 'the-hill', 
- 'The Huffington Post' : 'the-huffington-post', 
- 'The Next Web' : 'the-next-web', 
- 'The Sport Bible' : 'the-sport-bible', 
- 'The Times of India' : 'the-times-of-india', 
- 'The Washignton Post' : 'the-washington-times', 
- 'Time' : 'time', 
- 'Vice News' : 'vice-news', 
- 'Wired' : 'wired'}
+
+  
