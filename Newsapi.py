@@ -186,9 +186,9 @@ def buttons(i):
     results_per_page_spinbox.grid(row=0, column=3, padx=240, sticky=tk.W)
 
     page_number_label = tk.Label(buttons_frame, text='Introduceți numărul paginii:')
-    page_number_label.grid(row=0, column=2, sticky=tk.W)
+    page_number_label.grid(row=0, column=4, sticky=tk.W)
     page_number_spinbox = tk.Spinbox(buttons_frame, from_=1, to= 1+ int(totalResults)//int(results_per_page_spinbox.get()))
-    page_number_spinbox .grid(row=1, column=1, padx=240, sticky=tk.W)
+    page_number_spinbox .grid(row=0, column=5, sticky=tk.W)
 
 
 
