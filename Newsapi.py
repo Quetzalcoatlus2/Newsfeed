@@ -147,39 +147,50 @@ sources_codes = {
 previous_window = None
 totalResults = 0
 
-def open_url(url):
-    webbrowser.open(url)
 
 
-def on_mousewheel(action):
+def mousewheel(action):
     canvas.yview_scroll(int(-1*(action.delta/80)), "u")
 
 
 def buttons(i):
     global totalResults
+
+    def language_option_changed(*args):
+        language_option.get()
+
+    def country_option_changed(*args):
+        country_option.get()
+
+    def category_option_changed(*args):
+        category_option.get()
+
+    def sources_option_changed(*args):
+        sources_option.get()
+
     buttons_frame = tk.Frame(window, padx=10)
     buttons_frame.grid(row=i, sticky=(tk.W, tk.E))
 
-    L1 = tk.Label(buttons_frame, text='Cuvânt cheie:')
-    L1.grid(row=0, column=0, sticky=tk.W)
-    E1 = tk.Entry(buttons_frame, bd=5)
-    E1.grid(row=0, column=1, sticky=tk.W)
+    keyword_label = tk.Label(buttons_frame, text='Cuvânt cheie:')
+    keyword_label.grid(row=0, column=0, sticky=tk.W)
+    keyword_entry = tk.Entry(buttons_frame, bd=5)
+    keyword_entry.grid(row=0, column=1, sticky=tk.W)
 
-    L2 = tk.Label(buttons_frame, text='Introduceți numărul paginii:')
-    L2.grid(row=0, column=2, sticky=tk.W)
-    E2 = tk.Entry(buttons_frame, bd=5)
-    E2.grid(row=0, column=3, sticky=tk.W)
+    totalResults_label = tk.Label(buttons_frame, text=f"Număr rezultate:{totalResults}")
+    totalResults_label.grid(row=1, column=0, sticky=tk.W)
 
-    L3 = tk.Label(buttons_frame, text='Introduceți numărul de rezultate per pagină (20 din oficiu):')
-    L3.grid(row=0, column=4, sticky=tk.W)
-    E3 = tk.Entry(buttons_frame, bd=5)
-    E3.grid(row=0, column=5, sticky=tk.W)
+    results_per_page_label = tk.Label(buttons_frame, text='Introduceți numărul de rezultate per pagină (20 din oficiu):')
+    results_per_page_label.grid(row=0, column=2, sticky=tk.W)
+    results_per_page_default = tk.IntVar(value=3)
+    results_per_page_spinbox = tk.Spinbox(buttons_frame, from_=1, to=100, textvariable=results_per_page_default)
+    results_per_page_spinbox.grid(row=0, column=3, padx=240, sticky=tk.W)
 
-    L4 = tk.Label(buttons_frame, text=f"Număr rezultate:{totalResults}")
-    L4.grid(row=1, column=0, sticky=tk.W)
+    page_number_label = tk.Label(buttons_frame, text='Introduceți numărul paginii:')
+    page_number_label.grid(row=0, column=2, sticky=tk.W)
+    page_number_spinbox = tk.Spinbox(buttons_frame, from_=1, to= 1+ int(totalResults)//int(results_per_page_spinbox.get()))
+    page_number_spinbox .grid(row=1, column=1, padx=240, sticky=tk.W)
 
-    #w = tk.Spinbox(buttons_frame, from_=0, to=10)
-    #w.grid(row=1, column=1, padx=240, sticky=tk.W)
+
 
     
     """def language(*args):
@@ -250,18 +261,18 @@ def buttons(i):
     
 
     L5=tk.Label(buttons_frame, text="Alegeți limba: ")
-    L5.grid(row=1, column=1, padx=360, sticky=tk.W)
-    option = tk.StringVar(buttons_frame)
-    option.set(option.get())  
-    choices = {'Arabă', 'Chineză', 'Ebraică', 'Engleză', 'Franceză', 'Germană', 'Italiană', 'Norvegiană', 'Olandeză', 'Portugheză', 
+    L5.grid(row=1, column=1, padx= 80, sticky=tk.W)
+    language_option = tk.StringVar(buttons_frame)
+    language_option.set(language_option.get())  
+    language_choices = {'Arabă', 'Chineză', 'Ebraică', 'Engleză', 'Franceză', 'Germană', 'Italiană', 'Norvegiană', 'Olandeză', 'Portugheză', 
                'Rusă', 'Spaniolă', 'Suedeză', 'Turcă'}
-    popupMenu = tk.OptionMenu(buttons_frame, option, *choices)
-    popupMenu.grid(row=1, column=1, padx=440, sticky=tk.W)
-    option.trace_add('write', option.get())
+    language_popupMenu = tk.OptionMenu(buttons_frame, language_option, *language_choices)
+    language_popupMenu.grid(row=1, column=1, padx=160, sticky=tk.W)
+    language_option.trace_add('write', language_option_changed)
 
 
     L6=tk.Label(buttons_frame, text="Alegeți țara: ")
-    L6.grid(row=1, column=1, padx=500, sticky=tk.W)
+    L6.grid(row=1, column=1, padx=250, sticky=tk.W)
     country_option = tk.StringVar(buttons_frame)
     country_option.set(country_option.get())  
     country_choices = {'Africa de Sud', 'Arabia Saudită', 'Argentina', 'Australia' , 'Austria', 'Belgia', 'Brazilia', 'Bulgaria', 
@@ -272,20 +283,20 @@ def buttons(i):
                        'Slovenia', 'Statele Unite ale Americii', 'Suedia', 'Taiwan', 'Thailanda', 'Turcia', 'Ucraina', 'Ungaria', 
                        'Venezuela'}
     country_popupMenu = tk.OptionMenu(buttons_frame, country_option, *country_choices)
-    country_popupMenu.grid(row=1, column=1, padx=580, sticky=tk.W)
-    country_option.trace_add('write', country_option.get())
+    country_popupMenu.grid(row=1, column=1, padx=320, sticky=tk.W)
+    country_option.trace_add('write', country_option_changed)
 
     L7=tk.Label(buttons_frame, text="Alegeți categoria: ")
-    L7.grid(row=1, column=1, padx=650, sticky=tk.W)
+    L7.grid(row=1, column=1, padx=400, sticky=tk.W)
     category_option = tk.StringVar(buttons_frame)
     category_option.set(category_option.get())  
-    category_choices = {'Arabă', 'Chineză', 'General', 'Sănătate', 'Sport', 'Știință', 'Tehnologie'}
+    category_choices = {'Afaceri', 'Divertisment', 'General', 'Sănătate', 'Sport', 'Știință', 'Tehnologie'}
     category_popupMenu = tk.OptionMenu(buttons_frame, category_option, *category_choices)
-    category_popupMenu.grid(row=1, column=1, padx=700, sticky=tk.W)
-    category_option.trace_add('write', category_option.get())
+    category_popupMenu.grid(row=1, column=1, padx=480, sticky=tk.W)
+    category_option.trace_add('write', category_option_changed)
 
     L8=tk.Label(buttons_frame, text="Alegeți categoria: ")
-    L8.grid(row=1, column=1, padx=750, sticky=tk.W)
+    L8.grid(row=1, column=1, padx=550, sticky=tk.W)
     sources_option = tk.StringVar(buttons_frame)
     sources_option.set(sources_option.get())  
     sources_choices = {'Google News', 'BBC News', 'The Verge', 'CNN', 'USA Today', 'ABC News', 'Associated Press', 'Axios', 'Bloomberg',
@@ -296,12 +307,17 @@ def buttons(i):
                        'The American Conservative', 'The Hill', 'The Huffington Post', 'The Next Web', 'The Sport Bible', 
                        'The Times of India', 'The Washignton Post', 'Time', 'Vice News', 'Wired'}
     sources_popupMenu = tk.OptionMenu(buttons_frame, sources_option, *sources_choices)
-    sources_popupMenu.grid(row=1, column=1, padx=800, sticky=tk.W)
-    sources_option.trace_add('write', sources_option.get())
+    sources_popupMenu.grid(row=1, column=1, padx=650, sticky=tk.W)
+    sources_option.trace_add('write', sources_option_changed)
+
+
     
 
-    button = tk.Button(buttons_frame, text="Căutare", command=lambda: keyword_articles(E1.get(), E2.get(), E3.get(), option.get(), country_option.get(), category_option.get(), sources_option.get()))
-    button.grid(row=1, column=1, padx=120, sticky=tk.W)
+    button = tk.Button(buttons_frame, text="Căutare", command=lambda: keyword_articles(keyword_entry.get(), results_per_page_spinbox.get(), page_number_spinbox.get(), language_option.get(), country_option.get(), category_option.get(), sources_option.get()))
+    button.grid(row=1, column=1, padx=800, sticky=tk.W)
+
+
+
 
 def get_articles(apiKey, language, country, category, pageSize, page, q, sources):
     newsapi_url = 'https://newsapi.org/v2/top-headlines'
@@ -345,15 +361,16 @@ def get_articles(apiKey, language, country, category, pageSize, page, q, sources
     
     
 
-def keyword_articles(E1, E2, E3, option, country_option, category_option, sources_option):
+def keyword_articles(E1, E2, E3, language_option, country_option, category_option, sources_option):
     q = E1 if E1 else None
     page = E2 if E2 else None
     pageSize = E3 if E3 else None
-    language = language_codes.get(option) if option else None
-    country = country_codes.get(country_option) if option else None
-    category = category_codes.get(category_option) if option else None
-    sources = sources_codes.get(sources_option) if option else None
-    articles, error, status, code, message = get_articles(apiKey, language=language, country=country, category=category, sources=sources , pageSize=pageSize, page=page, q=q)    
+    language = language_codes.get(language_option) if language_option else None
+    country = country_codes.get(country_option) if country_option else None
+    category = category_codes.get(category_option) if category_option else None
+    sources = sources_codes.get(sources_option) if sources_option else None
+    sources = {sources} if sources is not None else {}
+    articles, error, status, code, message = get_articles(apiKey, language=language, country=country, category=category, sources=sources, pageSize=pageSize, page=page, q=q)    
     display_articles_gui(articles, error, status, code, message)
 
 
@@ -384,7 +401,7 @@ def display_articles_gui(articles, error, status, code, message):
     canvas.grid(row=0, column=0, sticky=(tk.N, tk.S, tk.E, tk.W))
     scrollbar.grid(row=0, column=1, sticky=(tk.N, tk.S))
     canvas.create_window((0, 0), window=frame, anchor='nw')
-    canvas.bind_all("<MouseWheel>", on_mousewheel)
+    canvas.bind_all("<MouseWheel>", mousewheel)
     window.grid_rowconfigure(0, weight=1)
     window.grid_columnconfigure(0, weight=1)
 
@@ -437,7 +454,7 @@ def display_articles_gui(articles, error, status, code, message):
                     article_url_label.grid(row=5, sticky=(tk.W))
                     url_label = tk.Label(article_frame, text=f"{article['url']}", font=("Arial", 12), fg="blue", cursor="hand2")
                     url_label.grid(row=5, padx = 100, sticky=(tk.W))
-                    url_label.bind("<Button-1>", lambda event, url=article['url']: open_url(event, url))
+                    url_label.bind("<Button-1>", lambda event, url=article['url']: webbrowser.open(url))
                 else:
                     url_label = tk.Label(article_frame, text=f"Link articol: Nu am identificat link-ul articolului", font=("Arial", 12))
                     url_label.grid(row=5, sticky=(tk.W))
@@ -447,7 +464,7 @@ def display_articles_gui(articles, error, status, code, message):
                     image_link_label.grid(row=6, sticky=(tk.W))
                     urlToImage_label = tk.Label(article_frame, text=f"{article['urlToImage']}", font=("Arial", 12), fg="blue", cursor="hand2")
                     urlToImage_label.grid(row=6, padx = 100, sticky=(tk.W))
-                    urlToImage_label.bind("<Button-1>", lambda event, url=article['urlToImage']: open_url(event, url))
+                    urlToImage_label.bind("<Button-1>", lambda event, url=article['urlToImage']: webbrowser.open(url))
                 
                     try:
                         response_urlToImage = requests.get(article['urlToImage'])
