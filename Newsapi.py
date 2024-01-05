@@ -180,15 +180,15 @@ def buttons(i):
     totalResults_label.grid(row=1, padx=1400, sticky=tk.W)
 
     results_per_page_label = tk.Label(buttons_frame, text='Articole per pagină:')
-    results_per_page_label.grid(row=0, padx=215, sticky=tk.W)
+    results_per_page_label.grid(row=0, padx=250, sticky=tk.W)
     results_per_page_default = tk.IntVar(value=3)
     results_per_page_spinbox = tk.Spinbox(buttons_frame, from_=1, to=100, textvariable=results_per_page_default)
-    results_per_page_spinbox.grid(row=0, padx=325, sticky=tk.W)
+    results_per_page_spinbox.grid(row=0, padx=360, sticky=tk.W)
 
     page_number_label = tk.Label(buttons_frame, text='Numărul paginii:')
-    page_number_label.grid(row=0, padx=460, sticky=tk.W)
+    page_number_label.grid(row=0, padx=530, sticky=tk.W)
     page_number_spinbox = tk.Spinbox(buttons_frame, from_=1, to= 1+ int(totalResults)//int(results_per_page_spinbox.get()))
-    page_number_spinbox .grid(row=0, padx=560, sticky=tk.W)
+    page_number_spinbox .grid(row=0, padx=630, sticky=tk.W)
 
 
 
