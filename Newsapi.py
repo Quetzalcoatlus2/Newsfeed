@@ -179,16 +179,16 @@ def buttons(i):
     totalResults_label = tk.Label(buttons_frame, text=f"Număr rezultate:{totalResults}")
     totalResults_label.grid(row=1, column=0, sticky=tk.W)
 
-    results_per_page_label = tk.Label(buttons_frame, text='Introduceți numărul de rezultate per pagină (20 din oficiu):')
-    results_per_page_label.grid(row=0, column=2, sticky=tk.W)
+    results_per_page_label = tk.Label(buttons_frame, text='Introduceți numărul de rezultate per pagină (3 din oficiu):')
+    results_per_page_label.grid(row=0, padx=150, sticky=tk.W)
     results_per_page_default = tk.IntVar(value=3)
     results_per_page_spinbox = tk.Spinbox(buttons_frame, from_=1, to=100, textvariable=results_per_page_default)
-    results_per_page_spinbox.grid(row=0, column=3, padx=240, sticky=tk.W)
+    results_per_page_spinbox.grid(row=0, padx=400, sticky=tk.W)
 
     page_number_label = tk.Label(buttons_frame, text='Introduceți numărul paginii:')
-    page_number_label.grid(row=0, column=4, sticky=tk.W)
+    page_number_label.grid(row=0, padx=500, sticky=tk.W)
     page_number_spinbox = tk.Spinbox(buttons_frame, from_=1, to= 1+ int(totalResults)//int(results_per_page_spinbox.get()))
-    page_number_spinbox .grid(row=0, column=5, sticky=tk.W)
+    page_number_spinbox .grid(row=0, padx=650, sticky=tk.W)
 
 
 
