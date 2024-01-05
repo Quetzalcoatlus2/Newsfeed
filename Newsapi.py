@@ -313,8 +313,8 @@ def buttons(i):
 
     
 
-    button = tk.Button(buttons_frame, text="Căutare", command=lambda: keyword_articles(keyword_entry.get(), results_per_page_spinbox.get(), page_number_spinbox.get(), language_option.get(), country_option.get(), category_option.get(), sources_option.get()))
-    button.grid(row=0, padx=1450, sticky=tk.W)
+    button = tk.Button(buttons_frame, text="Apăsați acest buton după ce ați ales toți parametrii pentru căutare", command=lambda: keyword_articles(keyword_entry.get(), results_per_page_spinbox.get(), page_number_spinbox.get(), language_option.get(), country_option.get(), category_option.get(), sources_option.get()))
+    button.grid(row=0, padx=1200, sticky=tk.W)
 
 
 
