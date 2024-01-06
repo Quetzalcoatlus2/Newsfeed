@@ -241,48 +241,48 @@ def articles_gui(articles, error, status, code, message):
                     title_label.grid(row = 0, sticky = (tk.W))
 
                 if article['description'] != None:
-                    description_label = tk.Label(article_frame, text = f"Scurtă descriere: {article['description']}", font = ("Verdana", 9))
+                    description_label = tk.Label(article_frame, text = f"Scurtă descriere: {article['description']}", font = ("Verdana", 8))
                     description_label.grid(row = 1, sticky = (tk.W))
                 else:
-                    description_label = tk.Label(article_frame, text = f"Scurtă descriere: Nu am identificat descrierea articolului.", font = ("Verdana", 9))
+                    description_label = tk.Label(article_frame, text = f"Scurtă descriere: Nu am identificat descrierea articolului.", font = ("Verdana", 8))
                     description_label.grid(row = 1, sticky = (tk.W))
 
                 if article['source'] != None:
-                    source_label = tk.Label(article_frame, text = f"Sursă: {article['source']['name']}", font = ("Verdana", 9))
+                    source_label = tk.Label(article_frame, text = f"Sursă: {article['source']['name']}", font = ("Verdana", 8))
                     source_label.grid(row = 2, sticky = (tk.W))
                 else:
-                    source_label = tk.Label(article_frame, text = f"Sursă: Nu am identificat sursa articolului.", font = ("Verdana", 9))
+                    source_label = tk.Label(article_frame, text = f"Sursă: Nu am identificat sursa articolului.", font = ("Verdana", 8))
                     source_label.grid(row = 2, sticky = (tk.W))
 
                 if article['author'] != None:
-                    author_label = tk.Label(article_frame, text = f"Autori: {article['author']}", font = ("Verdana", 9))
+                    author_label = tk.Label(article_frame, text = f"Autori: {article['author']}", font = ("Verdana", 8))
                     author_label.grid(row = 3, sticky = (tk.W))
                 else:
-                    author_label = tk.Label(article_frame, text = f"Autori: Nu am identificat autorul/autorii.", font = ("Verdana", 9))
+                    author_label = tk.Label(article_frame, text = f"Autori: Nu am identificat autorul/autorii.", font = ("Verdana", 8))
                     author_label.grid(row = 3, sticky = (tk.W))
 
                 if article['publishedAt'] != None:
-                    publishedAt_label = tk.Label(article_frame, text = f"Publicat la: {article['publishedAt']}", font = ("Verdana", 9))
+                    publishedAt_label = tk.Label(article_frame, text = f"Publicat la: {article['publishedAt']}", font = ("Verdana", 8))
                     publishedAt_label.grid(row = 4, sticky = (tk.W))
                 else:
-                    publishedAt_label = tk.Label(article_frame, text = f"Publicat la: Nu am identificat momentul publicării.", font = ("Verdana", 9))
+                    publishedAt_label = tk.Label(article_frame, text = f"Publicat la: Nu am identificat momentul publicării.", font = ("Verdana", 8))
                     publishedAt_label.grid(row = 4, sticky = (tk.W))
 
                 if article['url'] != None:
-                    article_url_label = tk.Label(article_frame, text = "Link articol:  ", font = ("Verdana", 9))
+                    article_url_label = tk.Label(article_frame, text = "Link articol:  ", font = ("Verdana", 7))
                     article_url_label.grid(row = 5, sticky = (tk.W))
-                    url_label = tk.Label(article_frame, text = f"{article['url']}", font=("Terminal", 9), fg = "blue", cursor = "hand2")
-                    url_label.grid(row = 5, padx = 90, sticky = (tk.W))
+                    url_label = tk.Label(article_frame, text = f"{article['url']}", font=("Terminal", 7), fg = "blue", cursor = "hand2")
+                    url_label.grid(row = 5, padx = 75, sticky = (tk.W))
                     url_label.bind("<Button-1>", lambda action, url = article['url']: webbrowser.open(url))
                 else:
-                    url_label = tk.Label(article_frame, text = f"Link articol: Nu am identificat link-ul articolului", font = ("Verdana", 9))
+                    url_label = tk.Label(article_frame, text = f"Link articol: Nu am identificat link-ul articolului", font = ("Verdana", 7))
                     url_label.grid(row = 5, sticky = (tk.W))
 
                 if article['urlToImage'] != None:
-                    image_url_label = tk.Label(article_frame, text = "Link imagine: ", font = ("Verdana", 9))
+                    image_url_label = tk.Label(article_frame, text = "Link imagine: ", font = ("Verdana", 7))
                     image_url_label.grid(row = 6, sticky = (tk.W))
-                    urlToImage_label = tk.Label(article_frame, text = f"{article['urlToImage']}", font = ("Terminal", 9), fg = "blue", cursor = "hand2")
-                    urlToImage_label.grid(row = 6, padx = 90, sticky = (tk.W))
+                    urlToImage_label = tk.Label(article_frame, text = f"{article['urlToImage']}", font = ("Terminal", 7), fg = "blue", cursor = "hand2")
+                    urlToImage_label.grid(row = 6, padx = 75, sticky = (tk.W))
                     urlToImage_label.bind("<Button-1>", lambda action, url = article['urlToImage']: webbrowser.open(url))
                 
                     try:
@@ -306,7 +306,7 @@ def articles_gui(articles, error, status, code, message):
                     
        
                 else:
-                    urlToImage_label = tk.Label(article_frame, text = f"Link imagine: Nu am identificat link-ul imaginii articolului.", font = ("Verdana", 9))
+                    urlToImage_label = tk.Label(article_frame, text = f"Link imagine: Nu am identificat link-ul imaginii articolului.", font = ("Verdana", 7))
                     urlToImage_label.grid(row = 6, sticky = (tk.W))
 
 
