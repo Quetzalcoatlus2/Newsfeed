@@ -272,7 +272,7 @@ def articles_gui(articles, error, status, code, message):
                     article_url_label = tk.Label(article_frame, text = "Link articol:  ", font = ("Verdana", 9))
                     article_url_label.grid(row = 5, sticky = (tk.W))
                     url_label = tk.Label(article_frame, text = f"{article['url']}", font=("Terminal", 9), fg = "blue", cursor = "hand2")
-                    url_label.grid(row = 5, padx = 100, sticky = (tk.W))
+                    url_label.grid(row = 5, padx = 90, sticky = (tk.W))
                     url_label.bind("<Button-1>", lambda action, url = article['url']: webbrowser.open(url))
                 else:
                     url_label = tk.Label(article_frame, text = f"Link articol: Nu am identificat link-ul articolului", font = ("Verdana", 9))
@@ -282,7 +282,7 @@ def articles_gui(articles, error, status, code, message):
                     image_url_label = tk.Label(article_frame, text = "Link imagine: ", font = ("Verdana", 9))
                     image_url_label.grid(row = 6, sticky = (tk.W))
                     urlToImage_label = tk.Label(article_frame, text = f"{article['urlToImage']}", font = ("Terminal", 9), fg = "blue", cursor = "hand2")
-                    urlToImage_label.grid(row = 6, padx = 100, sticky = (tk.W))
+                    urlToImage_label.grid(row = 6, padx = 90, sticky = (tk.W))
                     urlToImage_label.bind("<Button-1>", lambda action, url = article['urlToImage']: webbrowser.open(url))
                 
                     try:
@@ -515,11 +515,11 @@ def buttons(i):
 
 
 
-def articles_search(keyword_entry, results_per_page_spinbox , page_number_spinbox, language_option, country_option, category_option, sources_option):
+def articles_search(keyword_entry, page_number_spinbox, results_per_page_spinbox , language_option, country_option, category_option, sources_option):
 
     q = keyword_entry if keyword_entry else None
-    page = results_per_page_spinbox if results_per_page_spinbox else None
     pageSize = page_number_spinbox if page_number_spinbox else None
+    page = results_per_page_spinbox if results_per_page_spinbox else None
     language = language_codes.get(language_option) if language_option else 'en'
     country = country_codes.get(country_option) if country_option else None
     category = category_codes.get(category_option) if category_option else None
