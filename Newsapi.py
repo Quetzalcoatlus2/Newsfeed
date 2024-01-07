@@ -269,20 +269,20 @@ def articles_gui(articles, error, status, code, message):
                     publishedAt_label.grid(row = 4, sticky = (tk.W))
 
                 if article['url'] != None:
-                    article_url_label = tk.Label(article_frame, text = "Link articol:  ", font = ("Verdana", 7))
+                    article_url_label = tk.Label(article_frame, text = "Link articol:  ", font = ("Verdana", 5))
                     article_url_label.grid(row = 5, sticky = (tk.W))
-                    url_label = tk.Label(article_frame, text = f"{article['url']}", font=("Terminal", 7), fg = "blue", cursor = "hand2")
-                    url_label.grid(row = 5, padx = 72, sticky = (tk.W))
+                    url_label = tk.Label(article_frame, text = f"{article['url']}", font=("Terminal", 5), fg = "blue", cursor = "hand2")
+                    url_label.grid(row = 5, padx = 48, sticky = (tk.W))
                     url_label.bind("<Button-1>", lambda action, url = article['url']: webbrowser.open(url))
                 else:
-                    url_label = tk.Label(article_frame, text = f"Link articol: Nu am identificat link-ul articolului", font = ("Verdana", 7))
+                    url_label = tk.Label(article_frame, text = f"Link articol: Nu am identificat link-ul articolului", font = ("Verdana",6))
                     url_label.grid(row = 5, sticky = (tk.W))
 
                 if article['urlToImage'] != None:
-                    image_url_label = tk.Label(article_frame, text = "Link imagine: ", font = ("Verdana", 7))
+                    image_url_label = tk.Label(article_frame, text = "Link imagine: ", font = ("Verdana", 5))
                     image_url_label.grid(row = 6, sticky = (tk.W))
-                    urlToImage_label = tk.Label(article_frame, text = f"{article['urlToImage']}", font = ("Terminal", 7), fg = "blue", cursor = "hand2")
-                    urlToImage_label.grid(row = 6, padx = 72, sticky = (tk.W))
+                    urlToImage_label = tk.Label(article_frame, text = f"{article['urlToImage']}", font = ("Terminal", 5), fg = "blue", cursor = "hand2")
+                    urlToImage_label.grid(row = 6, padx = 48, sticky = (tk.W))
                     urlToImage_label.bind("<Button-1>", lambda action, url = article['urlToImage']: webbrowser.open(url))
                 
                     try:
@@ -306,12 +306,11 @@ def articles_gui(articles, error, status, code, message):
                     
        
                 else:
-                    urlToImage_label = tk.Label(article_frame, text = f"Link imagine: Nu am identificat link-ul imaginii articolului.", font = ("Verdana", 7))
+                    urlToImage_label = tk.Label(article_frame, text = f"Link imagine: Nu am identificat link-ul imaginii articolului.", font = ("Verdana", 5))
                     urlToImage_label.grid(row = 6, sticky = (tk.W))
 
 
-                space_label = tk.Label(article_frame, text = "", height = 1)
-                space_label.grid(row = 7, sticky = (tk.W))
+               
 
             else:
                 continue
