@@ -388,7 +388,7 @@ def buttons(i):
 
     page_number_label = tk.Label(buttons_frame, text = 'Numărul paginii:')
     page_number_label.grid(row = 0, padx = 530, sticky = tk.W)
-    page_number_spinbox = tk.Spinbox(buttons_frame, from_ = 1, to = math.ceil(totalResults / int(results_per_page_spinbox.get())))
+    page_number_spinbox = tk.Spinbox(buttons_frame, from_ = 1, to = math.ceil(totalResults / int(results_per_page_spinbox.get())) if totalResults else 1)
     page_number_spinbox .grid(row = 0, padx = 630, sticky = tk.W)
 
 
@@ -515,8 +515,9 @@ def buttons(i):
 
 
     button = tk.Button(buttons_frame, text = "APĂSAȚI ACEST BUTON DUPĂ CE AȚI ALES TOȚI PARAMETRII DORIȚI PENTRU CĂUTARE!", 
-                       command = lambda: articles_search(keyword_entry.get(), results_per_page_spinbox.get(), page_number_spinbox.get(), language_option.get(), country_option.get(), category_option.get(), sources_option.get()))
-    button.grid(row = 1, padx = 1035, columnspan = 2, sticky = tk.E)
+                       command = lambda: articles_search(keyword_entry.get(), results_per_page_spinbox.get(), page_number_spinbox.get(), 
+                       language_option.get(), country_option.get(), category_option.get(), sources_option.get()))
+    button.grid(row = 1, padx = 1035, sticky = tk.W)
 
 
 
