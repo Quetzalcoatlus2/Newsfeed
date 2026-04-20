@@ -91,7 +91,7 @@ category_codes = {
     'Entertainment': 'entertainment',
     'General': 'general',
     'Health': 'health',
-    'Sports': 'sport',
+    'Sport': 'sport',
     'Science': 'science',
     'Technology': 'technology'
 }
@@ -137,7 +137,7 @@ sources_codes = {
     'The Hill' : 'the-hill', 
     'The Huffington Post' : 'the-huffington-post', 
     'The Next Web' : 'the-next-web', 
-    'The Sports Bible' : 'the-sport-bible', 
+    'The Sport Bible' : 'the-sport-bible', 
     'The Times of India' : 'the-times-of-india', 
     'The Verge': 'the-verge', 
     'The Washignton Post' : 'the-washington-times', 
@@ -491,7 +491,7 @@ def buttons(i):
     category_label.grid(row = 1, padx = 530, sticky = tk.W)
     category_option = tk.StringVar(buttons_frame)
     category_option.set(category_option.get())  
-    category_choices = {'Business', 'Entertainment', 'General', 'Health', 'Sports', 'Science', 'Technology'}
+    category_choices = {'Business', 'Entertainment', 'General', 'Health', 'Sport', 'Science', 'Technology'}
     category_popupMenu = tk.OptionMenu(buttons_frame, category_option, *category_choices)
     category_popupMenu.grid(row = 1, padx = 630, sticky = tk.W)
     category_option.trace_add('write', category_option_changed)
@@ -505,7 +505,7 @@ def buttons(i):
                        'Google News California', 'Google News UK', 'Hacker News', 'IGN', 'Medical News Today', 'MSNBC', 
                        'MTV News', 'National Geographic', 'NBC News', 'News24', 'Newsweek', 'New York Magazine', 'Next Big Future', 
                        'NFL News', 'NHL News', 'Politico', 'Polygon', 'Recode', 'Reddit r/all', 'Reuters', 'Techcrunch', 'Techradar', 
-                       'The American Conservative', 'The Hill', 'The Huffington Post', 'The Next Web', 'The Sports Bible', 
+                       'The American Conservative', 'The Hill', 'The Huffington Post', 'The Next Web', 'The Sport Bible', 
                        'The Times of India', 'The Washignton Post', 'Time', 'Vice News', 'Wired'}
     sources_popupMenu = tk.OptionMenu(buttons_frame, sources_option, *sources_choices)
     sources_popupMenu.grid(row = 1, padx = 840, sticky = tk.W)
