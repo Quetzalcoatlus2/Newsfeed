@@ -18,8 +18,8 @@ Newsfeed is a desktop news browser built with Python and Tkinter. It uses the [N
 
 ## Project structure
 
-- `/home/runner/work/Newsfeed/Newsfeed/Newsapi.py` – main application logic, API calls, and GUI.
-- `/home/runner/work/Newsfeed/Newsfeed/Fonts.py` – helper script to preview available Tkinter font families.
+- `Newsapi.py` – main application logic, API calls, and GUI.
+- `Fonts.py` – helper script to preview available Tkinter font families.
 
 ## Requirements
 
@@ -42,8 +42,8 @@ pip install newsapi-python requests Pillow
 
 ## Configuration
 
-The app currently uses a hardcoded API key in `Newsapi.py`.
-To use your own key, replace the existing value assigned to `apiKey` with your NewsAPI key.
+Use your own NewsAPI key and avoid committing credentials to source control.
+For safer local setup, prefer environment-based configuration (for example, storing your key in an environment variable and reading it at runtime) instead of hardcoding secrets.
 
 ## Run
 
