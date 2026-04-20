@@ -13,87 +13,87 @@ totalResults = 0
 apiKey = NewsApiClient(api_key= '33064a07856d4cf98dd5fd5d759d3ef4')
 
 language_codes = {
-    'Arabă': 'ar',
-    'Chineză': 'zh',
-    'Ebraică': 'he',
-    'Engleză': 'en',
-    'Franceză': 'fr',
-    'Germană': 'de',
-    'Italiană': 'it',
-    'Norvegiană': 'no',
-    'Olandeză': 'nl',
-    'Portugheză': 'pt',
-    'Rusă': 'ru',
-    'Spaniolă': 'es',
-    'Suedeză': 'sv',
-    'Turcă': 'tr'
+    'Arabic': 'ar',
+    'Chinese': 'zh',
+    'Hebrew': 'he',
+    'English': 'en',
+    'French': 'fr',
+    'German': 'de',
+    'Italian': 'it',
+    'Norwegian': 'no',
+    'Dutch': 'nl',
+    'Portuguese': 'pt',
+    'Russian': 'ru',
+    'Spanish': 'es',
+    'Swedish': 'sv',
+    'Turkish': 'tr'
 }
 
 country_codes = {
-    'Africa de Sud' : 'za',
-    'Arabia Saudită' : 'sa',
+    'South Africa' : 'za',
+    'Saudi Arabia' : 'sa',
     'Argentina' : 'ar',
     'Australia' : 'au',
     'Austria' : 'at',
-    'Belgia' : 'be',
-    'Brazilia' : 'br',
+    'Belgium' : 'be',
+    'Brazil' : 'br',
     'Bulgaria' : 'bg',
     'Canada' : 'ca',
-    'Cehia' : 'cz',
+    'Czech Republic' : 'cz',
     'China' : 'cn',
     'Columbia' : 'co',
-    'Coreea de Sud' : 'kr',
+    'South Korea' : 'kr',
     'Cuba' : 'cu',
-    'Egipt' : 'eg',
-    'Elveția' : 'ch',
-    'Emiratele Arabe Unite' : 'ae',
-    'Filipine' : 'ph',
-    'Franța' : 'fr',
-    'Germania' : 'de',
-    'Grecia' : 'gr',
+    'Egypt' : 'eg',
+    'Switzerland' : 'ch',
+    'United Arab Emirates' : 'ae',
+    'Philippines' : 'ph',
+    'France' : 'fr',
+    'Germany' : 'de',
+    'Greece' : 'gr',
     'Hong Kong' : 'hk',
     'India' : 'in',
-    'Indonezia' : 'id',
-    'Irlanda' : 'ie',
+    'Indonesia' : 'id',
+    'Ireland' : 'ie',
     'Israel' : 'il',
-    'Italia' : 'it',
-    'Japonia' : 'jp',
-    'Letonia' : 'lv',
-    'Lituania' : 'lt',
-    'Malaezia' : 'my',
-    'Marea Britanie' : 'gb',
-    'Maroc' : 'ma',
-    'Mexic' : 'mx',
+    'Italy' : 'it',
+    'Japan' : 'jp',
+    'Latvia' : 'lv',
+    'Lithuania' : 'lt',
+    'Malaysia' : 'my',
+    'United Kingdom' : 'gb',
+    'Morocco' : 'ma',
+    'Mexico' : 'mx',
     'Nigeria' : 'ng',
-    'Norvegia' : 'no',
-    'Noua Zeelandă' : 'nz',
-    'Olanda' : 'nl',
-    'Polonia' : 'pl',
-    'Portugalia' : 'pt',
-    'România' : 'ro',
-    'Rusia' : 'ru',
+    'Norway' : 'no',
+    'New Zealand' : 'nz',
+    'Netherlands' : 'nl',
+    'Poland' : 'pl',
+    'Portugal' : 'pt',
+    'Romania' : 'ro',
+    'Russia' : 'ru',
     'Serbia' : 'rs',
     'Singapore' : 'sg',
-    'Slovacia' : 'sk',
+    'Slovakia' : 'sk',
     'Slovenia' : 'si',
-    'Statele Unite ale Americii' : 'us',
-    'Suedia' : 'se',
+    'United States of America' : 'us',
+    'Sweden' : 'se',
     'Taiwan' : 'tw',
-    'Thailanda' : 'th',
-    'Turcia' : 'tr',
-    'Ucraina' : 'ua',
-    'Ungaria' : 'hu',
+    'Thailand' : 'th',
+    'Turkey' : 'tr',
+    'Ukraine' : 'ua',
+    'Hungary' : 'hu',
     'Venezuela' : 've'
 }
 
 category_codes = {
-    'Afaceri': 'business',
-    'Divertisment': 'entertainment',
+    'Business': 'business',
+    'Entertainment': 'entertainment',
     'General': 'general',
-    'Sănătate': 'health',
+    'Health': 'health',
     'Sport': 'sport',
-    'Știință': 'science',
-    'Tehnologie': 'technology'
+    'Science': 'science',
+    'Technology': 'technology'
 }
 
 sources_codes = {
@@ -112,7 +112,7 @@ sources_codes = {
     'For Sports' : 'fox-sports', 
     'Google News' : 'google-news', 
     'Google News California' : 'google-news-ca', 
-    'Google News Marea Britanie' : 'google-news-uk', 
+    'Google News UK' : 'google-news-uk', 
     'Hacker News' : 'hacker-news', 
     'IGN' : 'ign', 
     'Medical News Today' : 'medical-news-today', 
@@ -236,7 +236,7 @@ def articles_gui(articles, error, status, code, message):
             if i == 1:
                 totalResults_frame = tk.Frame(frame, padx = 10, pady = 10, bd = 5, relief = tk.RIDGE)
                 totalResults_frame.grid(row = 0, sticky = (tk.W, tk.E))
-                totalResults_label = tk.Label(totalResults_frame, text = f"Număr rezultate: {totalResults}", font = ("Segoe UI", 20))
+                totalResults_label = tk.Label(totalResults_frame, text = f"Number of results: {totalResults}", font = ("Segoe UI", 20))
                 totalResults_label.grid(row = 0, sticky = tk.W)
             
             if article['title'] != '[Removed]':    
@@ -248,49 +248,49 @@ def articles_gui(articles, error, status, code, message):
                     title_label = tk.Label(article_frame, text = f"#{i} {article['title']}", font = ("System", 16))
                     title_label.grid(row = 1, sticky = (tk.W))
                 else:
-                    title_label = tk.Label(article_frame, text = f"#{i} Titlu: Nu am identificat titlul articolului.", font = ("System", 16))
+                    title_label = tk.Label(article_frame, text = f"#{i} Title: The article title could not be identified.", font = ("System", 16))
                     title_label.grid(row = 1, sticky = (tk.W))
 
                 if article['description'] != None:
-                    description_label = tk.Label(article_frame, text = f"Scurtă descriere: {article['description']}", font = ("Verdana", 8))
+                    description_label = tk.Label(article_frame, text = f"Short description: {article['description']}", font = ("Verdana", 8))
                     description_label.grid(row = 2, sticky = (tk.W))
                 else:
-                    description_label = tk.Label(article_frame, text = f"Scurtă descriere: Nu am identificat descrierea articolului.", font = ("Verdana", 8))
+                    description_label = tk.Label(article_frame, text = f"Short description: The article description could not be identified.", font = ("Verdana", 8))
                     description_label.grid(row = 3, sticky = (tk.W))
 
                 if article['source'] != None:
-                    source_label = tk.Label(article_frame, text = f"Sursă: {article['source']['name']}", font = ("Verdana", 8))
+                    source_label = tk.Label(article_frame, text = f"Source: {article['source']['name']}", font = ("Verdana", 8))
                     source_label.grid(row = 3, sticky = (tk.W))
                 else:
-                    source_label = tk.Label(article_frame, text = f"Sursă: Nu am identificat sursa articolului.", font = ("Verdana", 8))
+                    source_label = tk.Label(article_frame, text = f"Source: The article source could not be identified.", font = ("Verdana", 8))
                     source_label.grid(row = 3, sticky = (tk.W))
 
                 if article['author'] != None:
-                    author_label = tk.Label(article_frame, text = f"Autori: {article['author']}", font = ("Verdana", 8))
+                    author_label = tk.Label(article_frame, text = f"Authors: {article['author']}", font = ("Verdana", 8))
                     author_label.grid(row = 4, sticky = (tk.W))
                 else:
-                    author_label = tk.Label(article_frame, text = f"Autori: Nu am identificat autorul/autorii.", font = ("Verdana", 8))
+                    author_label = tk.Label(article_frame, text = f"Authors: The author(s) could not be identified.", font = ("Verdana", 8))
                     author_label.grid(row = 4, sticky = (tk.W))
 
                 if article['publishedAt'] != None:
-                    publishedAt_label = tk.Label(article_frame, text = f"Publicat la: {article['publishedAt']}", font = ("Verdana", 8))
+                    publishedAt_label = tk.Label(article_frame, text = f"Published at: {article['publishedAt']}", font = ("Verdana", 8))
                     publishedAt_label.grid(row = 5, sticky = (tk.W))
                 else:
-                    publishedAt_label = tk.Label(article_frame, text = f"Publicat la: Nu am identificat momentul publicării.", font = ("Verdana", 8))
+                    publishedAt_label = tk.Label(article_frame, text = f"Published at: The publication time could not be identified.", font = ("Verdana", 8))
                     publishedAt_label.grid(row = 5, sticky = (tk.W))
 
                 if article['url'] != None:
-                    article_url_label = tk.Label(article_frame, text = "Link articol:  ", font = ("Verdana", 5))
+                    article_url_label = tk.Label(article_frame, text = "Article link:  ", font = ("Verdana", 5))
                     article_url_label.grid(row = 6, sticky = (tk.W))
                     url_label = tk.Label(article_frame, text = f"{article['url']}", font=("Terminal", 5), fg = "blue", cursor = "hand2")
                     url_label.grid(row = 6, padx = 48, sticky = (tk.W))
                     url_label.bind("<Button-1>", lambda action, url = article['url']: webbrowser.open(url))
                 else:
-                    url_label = tk.Label(article_frame, text = f"Link articol: Nu am identificat link-ul articolului", font = ("Verdana",6))
+                    url_label = tk.Label(article_frame, text = f"Article link: The article link could not be identified.", font = ("Verdana",6))
                     url_label.grid(row = 6, sticky = (tk.W))
 
                 if article['urlToImage'] != None:
-                    image_url_label = tk.Label(article_frame, text = "Link imagine: ", font = ("Verdana", 5))
+                    image_url_label = tk.Label(article_frame, text = "Image link: ", font = ("Verdana", 5))
                     image_url_label.grid(row = 7, sticky = (tk.W))
                     urlToImage_label = tk.Label(article_frame, text = f"{article['urlToImage']}", font = ("Terminal", 5), fg = "blue", cursor = "hand2")
                     urlToImage_label.grid(row = 7, padx = 48, sticky = (tk.W))
@@ -317,7 +317,7 @@ def articles_gui(articles, error, status, code, message):
                     
        
                 else:
-                    urlToImage_label = tk.Label(article_frame, text = f"Link imagine: Nu am identificat link-ul imaginii articolului.", font = ("Verdana", 5))
+                    urlToImage_label = tk.Label(article_frame, text = f"Image link: The article image link could not be identified.", font = ("Verdana", 5))
                     urlToImage_label.grid(row = 7, sticky = (tk.W))
 
 
@@ -336,14 +336,14 @@ def articles_gui(articles, error, status, code, message):
         error_label .grid(row = 1, column = 0, sticky = (tk.W))
         status_label  = tk.Label(window, text = f"Status: {status}", font = ("Segoe UI", 11))
         status_label .grid(row = 2, column = 0, sticky = (tk.W))
-        code_label  = tk.Label(window, text = f"Cod: {code}", font = ("Segoe UI", 11))
+        code_label  = tk.Label(window, text = f"Code: {code}", font = ("Segoe UI", 11))
         code_label .grid(row = 3, column = 0, sticky = (tk.W))
-        message_label  = tk.Label(window, text = f"Mesaj: {message}", font = ("Segoe UI", 11))
+        message_label  = tk.Label(window, text = f"Message: {message}", font = ("Segoe UI", 11))
         message_label .grid(row = 4, column = 0, sticky = (tk.W))
         buttons(5)
 
     else:
-        no_articles = tk.Label(window, text = "Nu s-au găsit articole. Încercați din nou.", font = ("Segoe UI", 60))
+        no_articles = tk.Label(window, text = "No articles were found. Please try again.", font = ("Segoe UI", 60))
         no_articles.grid(row = 0, column = 0, sticky = (tk.W))
         buttons(1)
     
@@ -375,18 +375,18 @@ def buttons(i):
     buttons_frame = tk.Frame(window, padx = 10)
     buttons_frame.grid(row = i, sticky = (tk.W, tk.E))
 
-    keyword_label = tk.Label(buttons_frame, text = 'Cuvânt cheie:')
+    keyword_label = tk.Label(buttons_frame, text = 'Keyword:')
     keyword_label.grid(row = 0, sticky = tk.W)
     keyword_entry = tk.Entry(buttons_frame, bd = 10)
     keyword_entry.grid(row = 0, padx = 80, sticky = tk.W)
 
-    results_per_page_label = tk.Label(buttons_frame, text = 'Articole per pagină:')
+    results_per_page_label = tk.Label(buttons_frame, text = 'Articles per page:')
     results_per_page_label.grid(row = 0, padx = 250, sticky = tk.W)
     results_per_page_default = tk.IntVar(value = 3)
     results_per_page_spinbox = tk.Spinbox(buttons_frame, from_ = 1, to = 100, textvariable = results_per_page_default)
     results_per_page_spinbox.grid(row = 0, padx = 360, sticky = tk.W)
 
-    page_number_label = tk.Label(buttons_frame, text = 'Numărul paginii:')
+    page_number_label = tk.Label(buttons_frame, text = 'Page number:')
     page_number_label.grid(row = 0, padx = 530, sticky = tk.W)
     page_number_spinbox = tk.Spinbox(buttons_frame, from_ = 1, to = math.ceil(totalResults / int(results_per_page_spinbox.get())) if totalResults else 1)
     page_number_spinbox .grid(row = 0, padx = 630, sticky = tk.W)
@@ -396,113 +396,113 @@ def buttons(i):
     
     """def language(*args):
 
-        def Arabă():
+        def Arabic():
             return 'ar'
 
-        def Chineză():
+        def Chinese():
             return 'zh'
         
-        def Ebraică():
+        def Hebrew():
             return 'he'
         
-        def Engleză():
+        def English():
             return 'en'
         
-        def Franceză():
+        def French():
             return 'fr'
         
-        def Germană():
+        def German():
             return 'de'
         
-        def Italiană():
+        def Italian():
             return 'it'
         
-        def Norvegiană():
+        def Norwegian():
             return 'no'
         
-        def Olandeză():
+        def Dutch():
             return 'nl'
         
-        def Portugheză():
+        def Portuguese():
             return 'pt'
         
-        def Rusă():
+        def Russian():
             return 'ru'
         
-        def Spaniolă():
+        def Spanish():
             return 'es'
         
-        def Suedeză():
+        def Swedish():
             return 'sv'
         
-        def Turcă():
-            return 'ud'
+        def Turkish():
+            return 'tr'
 
 
         switch = {
-            'Arabă': Arabă,
-            'Chineză': Chineză,
-            'Ebraică': Ebraică,
-            'Engleză': Engleză,
-            'Franceză': Franceză,
-            'Germană': Germană,
-            'Italiană': Italiană,
-            'Norvegiană': Norvegiană,
-            'Olandeză': Olandeză,
-            'Portugheză': Portugheză,
-            'Rusă': Rusă,
-            'Spaniolă': Spaniolă,
-            'Suedeză': Suedeză,
-            'Turcă': Turcă
+            'Arabic': Arabic,
+            'Chinese': Chinese,
+            'Hebrew': Hebrew,
+            'English': English,
+            'French': French,
+            'German': German,
+            'Italian': Italian,
+            'Norwegian': Norwegian,
+            'Dutch': Dutch,
+            'Portuguese': Portuguese,
+            'Russian': Russian,
+            'Spanish': Spanish,
+            'Swedish': Swedish,
+            'Turkish': Turkish
             }
         case=option.get()
         switch_case = switch.get(case)
-        print(f"switch_case este {switch_case}")
+        print(f"switch_case is {switch_case}")
         return switch_case()"""
     
 
-    language_label = tk.Label(buttons_frame, text = "Alegeți limba: ")
+    language_label = tk.Label(buttons_frame, text = "Choose language: ")
     language_label.grid(row = 1, sticky = tk.W)
     language_option = tk.StringVar(buttons_frame)
     language_option.set(language_option.get())  
-    language_choices = {'Arabă', 'Chineză', 'Ebraică', 'Engleză', 'Franceză', 'Germană', 'Italiană', 'Norvegiană', 'Olandeză', 
-                        'Portugheză', 'Rusă', 'Spaniolă', 'Suedeză', 'Turcă'}
+    language_choices = {'Arabic', 'Chinese', 'Hebrew', 'English', 'French', 'German', 'Italian', 'Norwegian', 'Dutch', 
+                        'Portuguese', 'Russian', 'Spanish', 'Swedish', 'Turkish'}
     language_popupMenu = tk.OptionMenu(buttons_frame, language_option, *language_choices)
     language_popupMenu.grid(row = 1, padx = 80, sticky = tk.W)
     language_option.trace_add('write', language_option_changed)
 
 
-    country_label = tk.Label(buttons_frame, text = "Alegeți țara: ")
+    country_label = tk.Label(buttons_frame, text = "Choose country: ")
     country_label.grid(row = 1, padx = 250, sticky = tk.W)
     country_option = tk.StringVar(buttons_frame)
     country_option.set(country_option.get())  
-    country_choices = {'Africa de Sud', 'Arabia Saudită', 'Argentina', 'Australia' , 'Austria', 'Belgia', 'Brazilia', 'Bulgaria', 
-                       'Canada', 'Cehia', 'China', 'Columbia', 'Coreea de Sud', 'Cuba', 'Egipt', 'Elveția', 'Emiratele Arabe Unite', 
-                       'Filipine', 'Franța', 'Germania', 'Grecia', 'Hong Kong', 'India', 'Indonezia', 'Irlanda', 'Israel', 'Italia', 
-                       'Japonia', 'Letonia', 'Lituania', 'Malaezia', 'Marea Britanie', 'Maroc', 'Mexic', 'Nigeria', 'Norvegia', 
-                       'Noua Zeelandă', 'Olanda', 'Polonia', 'Portugalia', 'România', 'Rusia', 'Serbia', 'Singapore', 'Slovacia', 
-                       'Slovenia', 'Statele Unite ale Americii', 'Suedia', 'Taiwan', 'Thailanda', 'Turcia', 'Ucraina', 'Ungaria', 
+    country_choices = {'South Africa', 'Saudi Arabia', 'Argentina', 'Australia' , 'Austria', 'Belgium', 'Brazil', 'Bulgaria', 
+                       'Canada', 'Czech Republic', 'China', 'Columbia', 'South Korea', 'Cuba', 'Egypt', 'Switzerland', 'United Arab Emirates', 
+                       'Philippines', 'France', 'Germany', 'Greece', 'Hong Kong', 'India', 'Indonesia', 'Ireland', 'Israel', 'Italy', 
+                       'Japan', 'Latvia', 'Lithuania', 'Malaysia', 'United Kingdom', 'Morocco', 'Mexico', 'Nigeria', 'Norway', 
+                       'New Zealand', 'Netherlands', 'Poland', 'Portugal', 'Romania', 'Russia', 'Serbia', 'Singapore', 'Slovakia', 
+                       'Slovenia', 'United States of America', 'Sweden', 'Taiwan', 'Thailand', 'Turkey', 'Ukraine', 'Hungary', 
                        'Venezuela'}
     country_popupMenu = tk.OptionMenu(buttons_frame, country_option, *country_choices)
     country_popupMenu.grid(row = 1, padx = 320, sticky = tk.W)
     country_option.trace_add('write', country_option_changed)
 
-    category_label = tk.Label(buttons_frame, text = "Alegeți categoria: ")
+    category_label = tk.Label(buttons_frame, text = "Choose category: ")
     category_label.grid(row = 1, padx = 530, sticky = tk.W)
     category_option = tk.StringVar(buttons_frame)
     category_option.set(category_option.get())  
-    category_choices = {'Afaceri', 'Divertisment', 'General', 'Sănătate', 'Sport', 'Știință', 'Tehnologie'}
+    category_choices = {'Business', 'Entertainment', 'General', 'Health', 'Sport', 'Science', 'Technology'}
     category_popupMenu = tk.OptionMenu(buttons_frame, category_option, *category_choices)
     category_popupMenu.grid(row = 1, padx = 630, sticky = tk.W)
     category_option.trace_add('write', category_option_changed)
 
-    source_label = tk.Label(buttons_frame, text = "Alegeți sursa: ")
+    source_label = tk.Label(buttons_frame, text = "Choose source: ")
     source_label.grid(row = 1, padx = 767, sticky = tk.W)
     sources_option = tk.StringVar(buttons_frame)
     sources_option.set(sources_option.get())  
     sources_choices = {'Google News', 'BBC News', 'The Verge', 'CNN', 'USA Today', 'ABC News', 'Associated Press', 'Axios', 'Bloomberg',
                        'Bussiness Insider', 'CBC News', 'CNBC', 'Engadget', 'Entertainment Weekly', 'Fortune', 'For Sports',
-                       'Google News California', 'Google News Marea Britanie', 'Hacker News', 'IGN', 'Medical News Today', 'MSNBC', 
+                       'Google News California', 'Google News UK', 'Hacker News', 'IGN', 'Medical News Today', 'MSNBC', 
                        'MTV News', 'National Geographic', 'NBC News', 'News24', 'Newsweek', 'New York Magazine', 'Next Big Future', 
                        'NFL News', 'NHL News', 'Politico', 'Polygon', 'Recode', 'Reddit r/all', 'Reuters', 'Techcrunch', 'Techradar', 
                        'The American Conservative', 'The Hill', 'The Huffington Post', 'The Next Web', 'The Sport Bible', 
@@ -514,7 +514,7 @@ def buttons(i):
 
 
 
-    button = tk.Button(buttons_frame, text = "APĂSAȚI ACEST BUTON DUPĂ CE AȚI ALES TOȚI PARAMETRII DORIȚI PENTRU CĂUTARE!", 
+    button = tk.Button(buttons_frame, text = "CLICK THIS BUTTON AFTER YOU HAVE CHOSEN ALL THE SEARCH PARAMETERS YOU WANT!", 
                        command = lambda: articles_search(keyword_entry.get(), results_per_page_spinbox.get(), page_number_spinbox.get(), 
                        language_option.get(), country_option.get(), category_option.get(), sources_option.get()))
     button.grid(row = 1, padx = 1035, sticky = tk.W)
