@@ -436,7 +436,7 @@ def buttons(i):
             return 'sv'
         
         def Turkish():
-            return 'ud'
+            return 'tr'
 
 
         switch = {
